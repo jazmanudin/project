@@ -1,6 +1,6 @@
 <?php
 
-class Model_frontend extends CI_Model
+class Model_penjualan extends CI_Model
 {
 
   function kategori_barang()

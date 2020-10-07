@@ -1,11 +1,11 @@
 <div class="row container-grid scrolled">
     <?php foreach ($barang->result() as $b) { ?>
         <div class="col-xl-3 col-md-4 col-sm-6 branding designing">
-            <div class="gallery-box mt-4">
+            <div class="">
                 <?php if ($b->foto != "") { ?>
                     <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="<?php echo base_url(); ?>assets/images/barang/<?php echo $k->foto; ?>" /></a>
                 <?php } else { ?>
-                    <a href="#" class="inputbarang" style="margin-botton:10px;" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="assets/images/small/img-11.jpg" /></a>
+                    <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="assets/images/small/img-11.jpg" /></a>
                 <?php } ?>
                 <div class="gallery-overlay">
                     <div class="overlay-content">

@@ -6,7 +6,7 @@ foreach ($data->result() as $d) {
 ?>
     <tr>
         <td><?php echo $d->nama_barang; ?></td>
-        <td align="right"><?php echo number_format($d->harga)." @ ".$d->qty; ?></td>
+        <td align="right"><?php echo number_format($d->harga) . " @ " . $d->qty; ?></td>
         <td align="right"><?php echo number_format($subtotal); ?></td>
         <td align="center">
             <a class="btn btn-sm btn-danger hapus" href="#" data-kode="<?php echo $d->kode_barang; ?>"><i class="fa fa-trash"></i></a>
@@ -14,14 +14,19 @@ foreach ($data->result() as $d) {
     </tr>
 <?php } ?>
 <tr>
-    <th colspan="2">Total</th>
-    <th style="text-align: right;"><?php echo number_format($total, 2); ?></th>
+    <th colspan="2" style="text-align:center;">Total</th>
+    <th style="text-align: right;" id="total"><?php echo number_format($total, 2); ?></th>
     <th></th>
 </tr>
 <tr>
     <th colspan="2">Potongan</th>
     <th style="text-align: right;" colspan="2">
-    <input class="form-control form-control-sm" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan">
+        <input class="form-control form-control-sm" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan">
+    </th>
+</tr>
+<tr>
+    <th colspan="2">Subtotal</th>
+    <th style="text-align: right;" id="subtotal"><?php echo number_format($total, 2); ?></th>
     </th>
 </tr>
 <tr>
@@ -45,6 +50,12 @@ foreach ($data->result() as $d) {
                 }
             });
         }
+
+        $('#potongan').change(function() {
+            var total = $('#total').text();
+            var potongan = $('#potongan').val();
+            $('#subtotal').text(total+potongan);
+        });
 
         $('.hapus').click(function(e) {
             e.preventDefault();

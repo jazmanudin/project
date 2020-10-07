@@ -56,7 +56,7 @@
             var kode_kategori = $(this).attr('data-filter');
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>frontend/view_barang',
+                url: '<?php echo base_url(); ?>Penjualan/view_barang',
                 data: {
                     kode_kategori: kode_kategori
                 },
@@ -70,7 +70,7 @@
         function view_penjualantemp() {
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>frontend/view_penjualan_temp',
+                url: '<?php echo base_url(); ?>Penjualan/view_penjualan_temp',
                 data: '',
                 cache: false,
                 success: function(respond) {
@@ -84,7 +84,7 @@
             var kode_kategori = $(this).attr('data-filter');
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>frontend/view_barang',
+                url: '<?php echo base_url(); ?>Penjualan/view_barang',
                 data: {
                     kode_kategori: kode_kategori
                 },

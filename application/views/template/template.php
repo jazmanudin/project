@@ -137,12 +137,12 @@
                             <div class="collapse navbar-collapse" id="topnav-menu-content">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>Frontend">
+                                        <a class="nav-link" href="<?php echo base_url(); ?>Penjualan">
                                             <i class="fa fa-home"></i> Home
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>Perusahaan">
+                                        <a class="nav-link" href="<?php echo base_url(); ?>Perusahaan/view_perusahaan">
                                             <i class="fa fa-home"></i> Perusahaan
                                         </a>
                                     </li>
