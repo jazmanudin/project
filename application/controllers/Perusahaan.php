@@ -41,6 +41,7 @@ class Perusahaan extends CI_Controller
 				if ($this->upload->do_upload('foto')) {
 					$_data                     = array('upload_data' => $this->upload->data());
 					$foto                      = $_data['upload_data']['file_name'];
+					// unlink(base_url("assets/perusahaan/images/".$foto));
 					$config['image_library']   = 'gd2';
 					$config['source_image']    = './assets/images/perusahaan' . $foto;
 					$config['create_thumb']    = FALSE;
