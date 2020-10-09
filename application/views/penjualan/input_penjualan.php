@@ -6,7 +6,7 @@
     }
 </style>
 <div class="row">
-    <div class="col-xl-8">
+    <div class="col-xl-8 col-md-7 col-sm-6">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="col-xl-4">
+    <div class="col-xl-4 col-md-5 col-sm-6">
         <div class="card">
             <div class="card-body">
                 <table id="tech-companies-1" class="table table-striped table-bordered table-hover table-sm">
@@ -94,6 +94,7 @@
                 }
             });
         });
+
 
     });
 </script>

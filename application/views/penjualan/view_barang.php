@@ -5,7 +5,7 @@
                 <?php if ($b->foto != "") { ?>
                     <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="<?php echo base_url(); ?>assets/images/barang/<?php echo $k->foto; ?>" /></a>
                 <?php } else { ?>
-                    <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="assets/images/small/img-11.jpg" /></a>
+                    <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="../assets/images/small/img-11.jpg" /></a>
                 <?php } ?>
                 <div class="gallery-overlay">
                     <div class="overlay-content">
@@ -24,7 +24,7 @@
         function view_penjualantemp() {
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>frontend/view_penjualan_temp',
+                url: '<?php echo base_url(); ?>penjualan/view_penjualan_temp',
                 data: '',
                 cache: false,
                 success: function(respond) {
@@ -40,7 +40,7 @@
             var qty = "1";
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>frontend/input_temp',
+                url: '<?php echo base_url(); ?>penjualan/insert_penjualan_temp',
                 data: {
                     kode_barang: kode_barang,
                     qty: qty,

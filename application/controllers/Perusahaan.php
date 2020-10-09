@@ -27,7 +27,6 @@ class Perusahaan extends CI_Controller
 	{
 		$kode_perusahaan = $this->uri->segment(3);
 		return $this->db->query("DELETE FROM perusahaan WHERE kode_perusahaan = '$kode_perusahaan' ");
-		redirect('perusahaan/view_perusahaan');
 	}
 
 	function input_perusahaan()
@@ -88,7 +87,8 @@ class Perusahaan extends CI_Controller
 				redirect('perusahaan/view_perusahaan');
 			}
 		} else {
-			$this->template->load('template/template', 'perusahaan/edit_perusahaan');
+			$data['getdata'] = $this->Model_perusahaan->get_perusahaan()->row_array();
+			$this->template->load('template/template', 'perusahaan/edit_perusahaan',$data);
 		}
 	}
 }

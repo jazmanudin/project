@@ -18,6 +18,7 @@
                                     <th>No HP</th>
                                     <th>Email</th>
                                     <th>Exp Date</th>
+                                    <th>Foto</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -33,18 +34,18 @@
                                         <td><?php echo $d->no_hp; ?></td>
                                         <td><?php echo $d->email; ?></td>
                                         <td><?php echo $d->exp_date; ?></td>
+                                        <td><img width="100px" src="<?php echo base_url();?>assets/images/perusahaan/<?php if($d->foto != ""){echo $d->foto;}else{ echo "perusahaan.png";}?>"></td>
                                         <td>
                                             <div class="btn-group" role="group">
                                                 <a data-kode="<?php echo $d->kode_perusahaan; ?>" class="btn btn-outline-secondary btn-sm detail" title="View">
                                                     <i class="mdi mdi-eye"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-outline-secondary btn-sm delete" data-href="<?php echo base_url(); ?>perusahaan/edit_perusahaan/<?php echo $d->kode_perusahaan; ?>" title="Delete">
-                                                    <a class="btn btn-outline-secondary btn-sm" title="Edit">
-                                                        <i class="mdi mdi-pencil"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-outline-secondary btn-sm delete" data-href="<?php echo base_url(); ?>perusahaan/hapus_perusahaan/<?php echo $d->kode_perusahaan; ?>" title="Delete">
-                                                        <i class="mdi mdi-trash-can"></i>
-                                                    </a>
+                                                <a href="<?php echo base_url(); ?>perusahaan/edit_perusahaan/<?php echo $d->kode_perusahaan; ?>"  class="btn btn-outline-secondary btn-sm" title="Edit">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-outline-secondary btn-sm delete" data-href="<?php echo base_url(); ?>perusahaan/hapus_perusahaan/<?php echo $d->kode_perusahaan; ?>" title="Delete">
+                                                    <i class="mdi mdi-trash-can"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -97,6 +98,36 @@
                     $("#detailperusahaan").modal("show");
                 }
             });
+        });
+
+        $('.delete').click(function(e) {
+            e.preventDefault();
+            var getLink = $(this).attr('data-href');
+            Swal.fire({
+                title: 'Yakin Mau di Hapus??',
+                text: "Data tidak akan kembali lagi..",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.dismiss) {
+                    Swal.fire(
+                        'Batal',
+                        'Batal di Hapus, Data Masih Aman',
+                        'error'
+                    )
+                } else {
+                    Swal.fire(
+                        'Hapus',
+                        'Berhasil di Hapus',
+                        'success'
+                    )
+                    window.location.href = getLink
+                }
+                location.reload();
+            })
         });
 
     });
