@@ -31,10 +31,11 @@ class Auth extends CI_Controller
           'email'           => $data_user['email'],
           'no_hp'           => $data_user['no_hp'],
           'level_user'      => $data_user['level'],
-          'id_member'       => $data_user['kode_perusahaan']
+          'id_member'       => $data_user['kode_perusahaan'],
+          'bayar'           => $data_user['jenis_pembayaran']
         );
         $this->session->set_userdata($data_session);
-        redirect('Penjualan');
+        redirect('Penjualan/view_penjualan');
       } else {
         redirect('auth/login');
       }

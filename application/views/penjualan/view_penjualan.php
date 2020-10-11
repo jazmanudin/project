@@ -12,31 +12,31 @@
                                     <th>No Faktur</th>
                                     <th>Tanggal</th>
                                     <th>Pelanggan</th>
-                                    <th>Keterangan</th>
+                                    <th>Total</th>
+                                    <th>Potongan</th>
                                     <th>Bayar</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data as $d) { ?>
+                                <?php foreach ($data as $d) { 
+                                    ?>
                                     <tr>
                                         <td><?php echo $d->no_fak_penj; ?></td>
                                         <td><?php echo $d->tgl_transaksi; ?></td>
                                         <td><?php echo $d->kode_pelanggan; ?></td>
+                                        <td><?php echo number_format($d->total); ?></td>
+                                        <td><?php echo number_format($d->potongan); ?></td>
+                                        <td><?php echo number_format($d->jumlahbayar); ?></td>
                                         <td><?php echo $d->keterangan; ?></td>
-                                        <td><?php echo $d->jumlahbayar; ?></td>
+                                        <td><?php if($d->jumlahbayar >= $d->total-$d->potongan){ echo "Lunas";}else{ echo "Belum Lunas"; }?> </td>
                                         <td>
-                                            <div class="btn-group" role="group">
-                                                <a data-kode="<?php echo $d->no_fak_penj; ?>" class="btn btn-outline-secondary btn-sm detail" title="View">
-                                                    <i class="mdi mdi-eye"></i>
-                                                </a>
-                                                <a class="btn btn-outline-secondary btn-sm" title="Edit">
-                                                    <i class="mdi mdi-pencil"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-outline-secondary btn-sm delete" data-href="<?php echo base_url(); ?>penjualan/hapus_penjualan/<?php echo $d->no_fak_penj; ?>" title="Delete">
-                                                    <i class="mdi mdi-trash-can"></i>
-                                                </a>
-                                            </div>
+                                           <a class="btn btn-info btn-sm" href="#"><i class="mdi mdi-eye"></i></a>
+                                           <a class="btn btn-danger btn-sm" href="#"><i class="mdi mdi-trash-can"></i></a>
+                                           <a class="btn btn-warning btn-sm" href="#"><i class="mdi mdi-pencil"></i></a>
+                                            <a class="btn btn-primary btn-sm bayar" href="#"><i class="mdi mdi-file-document"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

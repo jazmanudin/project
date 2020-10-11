@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group">
                     <label>Email Perusahaan</label>
-                    <input type="text" value="<?php echo $getdata['email']; ?>" nama="email" id="email" class="form-control form-control-sm" placeholder="Email Perusahaan" />
+                    <input type="text" value="<?php echo $getdata['email']; ?>" name="email" id="email" class="form-control form-control-sm" placeholder="Email Perusahaan" />
                 </div>
                 <div class="form-group">
                     <label>No HP</label>
@@ -46,11 +46,8 @@
                 </div>
                 <div class="form-group">
                     <label>Foto</label>
-                    <?php if ($getdata['exp_date'] != "") { ?>
-                        <input type="file" name="foto" id="foto" value="<?php echo $getdata['foto']; ?>" class="form-control form-control-sm" placeholder="Foto" />
-                    <?php } else { ?>
-                        <input type="file" name="foto" id="foto" class="form-control form-control-sm" placeholder="Foto" />
-                    <?php } ?>
+                    <input type="hidden" name="fotoold" id="fotoold" value="<?php echo $getdata['foto']; ?>" class="form-control form-control-sm" placeholder="Foto" />
+                    <input type="file" name="foto" id="foto" class="form-control form-control-sm" placeholder="Foto" />
                 </div>
 
                 <div class="form-group mb-0">

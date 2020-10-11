@@ -34,19 +34,17 @@
                                         <td><?php echo $d->no_hp; ?></td>
                                         <td><?php echo $d->email; ?></td>
                                         <td><?php echo $d->exp_date; ?></td>
-                                        <td><img width="100px" src="<?php echo base_url();?>assets/images/perusahaan/<?php if($d->foto != ""){echo $d->foto;}else{ echo "perusahaan.png";}?>"></td>
                                         <td>
-                                            <div class="btn-group" role="group">
-                                                <a data-kode="<?php echo $d->kode_perusahaan; ?>" class="btn btn-outline-secondary btn-sm detail" title="View">
-                                                    <i class="mdi mdi-eye"></i>
-                                                </a>
-                                                <a href="<?php echo base_url(); ?>perusahaan/edit_perusahaan/<?php echo $d->kode_perusahaan; ?>"  class="btn btn-outline-secondary btn-sm" title="Edit">
-                                                    <i class="mdi mdi-pencil"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-outline-secondary btn-sm delete" data-href="<?php echo base_url(); ?>perusahaan/hapus_perusahaan/<?php echo $d->kode_perusahaan; ?>" title="Delete">
-                                                    <i class="mdi mdi-trash-can"></i>
-                                                </a>
-                                            </div>
+                                            <img width="70px" src="<?php echo base_url(); ?>assets/images/perusahaan/<?php if ($d->foto != "") {
+                                                                                                                            echo $d->foto;
+                                                                                                                        } else {
+                                                                                                                            echo "perusahaan.png";
+                                                                                                                        } ?>">
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d->kode_perusahaan; ?>"><i class="mdi mdi-eye"></i></a>
+                                            <a class="btn btn-danger btn-sm delete" href="#" data-href="<?php echo base_url(); ?>perusahaan/hapus_perusahaan/<?php echo $d->kode_perusahaan; ?>"><i class="mdi mdi-trash-can"></i></a>
+                                            <a class="btn btn-warning btn-sm" href="<?php echo base_url(); ?>perusahaan/edit_perusahaan/<?php echo $d->kode_perusahaan; ?>"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

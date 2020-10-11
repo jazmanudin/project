@@ -22,17 +22,28 @@ class Model_penjualan extends CI_Model
 
     $query = "SELECT 
     penjualan.no_fak_penj,
-    keterangan,kode_pelanggan,
-    tgl_transaksi,
-    hs.jumlahbayar 
+    penjualan.potongan,
+    penjualan.keterangan,
+    penjualan.kode_pelanggan,
+    penjualan.total,
+    penjualan.tgl_transaksi,
+    hs.jumlahbayar
     
     FROM penjualan
-
     LEFT JOIN(
       SELECT no_fak_penj,SUM(jumlah) AS jumlahbayar FROM penjualan_histori_bayar 
       GROUP BY no_fak_penj
       ) hs ON (penjualan.no_fak_penj = hs.no_fak_penj)
+  
     WHERE penjualan.id_member = '$id_member'
+    GROUP BY 
+    penjualan.no_fak_penj,
+    penjualan.potongan,
+    penjualan.keterangan,
+    penjualan.kode_pelanggan,
+    penjualan.tgl_transaksi,
+    penjualan.total,
+    hs.jumlahbayar
     ";
     return $this->db->query($query);
   }
@@ -86,12 +97,17 @@ class Model_penjualan extends CI_Model
     $tgl_transaksi      = Date('Y-m-d');
     $id_member          = $this->session->userdata('id_member');
     $id_user            = $this->session->userdata('id_user');
-    $jmlbayar           = $this->input->post('jmlbayar');
-    $keterangan         = $this->input->post('keterangan');
+    $potongan           = str_replace(",","",$this->input->post('potongan'));
+    $total              = str_replace(",","",$this->input->post('total'));
+    $jmlbayar           = str_replace(",","",$this->input->post('jmlbayar'));
+    $kembalian          = str_replace(",","",$this->input->post('kembalian'));
+    $keterangan         = str_replace(",","",$this->input->post('keterangan'));
 
     $data = array(
       'no_fak_penj'     => $no_fak_penj,
       'kode_pelanggan'  => "-",
+      'potongan'        => $potongan,
+      'total'           => $total,
       'tgl_transaksi'   => $tgl_transaksi,
       'keterangan'      => $keterangan,
       'id_member'       => $id_member
@@ -101,10 +117,10 @@ class Model_penjualan extends CI_Model
     $data = array(
       'no_fak_penj'     => $no_fak_penj,
       'tgl_bayar'       => $tgl_transaksi,
-      'jumlah'          => $jmlbayar,
+      'jumlah'          => $jmlbayar-$kembalian,
       'id_member'       => $id_member
     );
-    $this->db->insert('penjualan_histori_penj', $data);
+    $this->db->insert('penjualan_histori_bayar', $data);
 
     $datapenj = $this->db->query("SELECT * FROM penjualan_temp WHERE id_user = '$id_user'");
     foreach ($datapenj->result() as $d) {

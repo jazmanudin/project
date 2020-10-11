@@ -41,8 +41,7 @@ class Perusahaan extends CI_Controller
 				if ($this->upload->do_upload('foto')) {
 					$_data                     = array('upload_data' => $this->upload->data());
 					$foto                      = $_data['upload_data']['file_name'];
-					// unlink(base_url("assets/perusahaan/images/".$foto));
-					$config['image_library']   = 'gd2';
+					// unlink(base_url("assets/perusahaan/images/".$foto0	$config['image_library']   = 'gd2';
 					$config['source_image']    = './assets/images/perusahaan' . $foto;
 					$config['create_thumb']    = FALSE;
 					$config['maintain_ratio']  = FALSE;
@@ -64,11 +63,12 @@ class Perusahaan extends CI_Controller
 	function edit_perusahaan()
 	{
 		if (isset($_POST['submit'])) {
-
 			if (!empty($_FILES['foto']['name'])) {
+				$fotoold = $this->input->post('fotoold');
+				unlink("./assets/images/perusahaan/$fotoold");
 				$config['upload_path']    	= './assets/images/perusahaan/';
 				$config['allowed_types']    = 'gif|jpg|png|jpeg|bmp';
-				$config['file_name']       = $this->input->post('kode_perusahaan');
+				$config['file_name']       	= $this->input->post('kode_perusahaan');
 				$this->upload->initialize($config);
 				if ($this->upload->do_upload('foto')) {
 					$_data                     = array('upload_data' => $this->upload->data());
@@ -84,12 +84,13 @@ class Perusahaan extends CI_Controller
 					redirect('perusahaan/view_perusahaan');
 				}
 			} else {
-				$this->Model_perusahaan->update_perusahaan();
+				$foto = $this->input->post('fotoold');
+				$this->Model_perusahaan->update_perusahaan($foto);
 				redirect('perusahaan/view_perusahaan');
 			}
 		} else {
 			$data['getdata'] = $this->Model_perusahaan->get_perusahaan()->row_array();
-			$this->template->load('template/template', 'perusahaan/edit_perusahaan',$data);
+			$this->template->load('template/template', 'perusahaan/edit_perusahaan', $data);
 		}
 	}
 }

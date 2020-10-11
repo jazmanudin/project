@@ -137,7 +137,7 @@
                             <div class="collapse navbar-collapse" id="topnav-menu-content">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>Penjualan">
+                                        <a class="nav-link" href="<?php echo base_url(); ?>Penjualan/view_penjualan">
                                             <i class="fa fa-home"></i> Home
                                         </a>
                                     </li>
@@ -147,7 +147,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>Penjualan">
+                                        <a class="nav-link" href="<?php echo base_url(); ?>Penjualan/view_penjualan">
                                             <i class="fa fa-home"></i> Penjualan
                                         </a>
                                     </li>

@@ -31,8 +31,8 @@ class Model_perusahaan extends CI_Model
         $provinsi           = $this->input->post('provinsi');
         $kota               = $this->input->post('kota');
         $kecamatan          = $this->input->post('kecamatan');
-        $desa               = $this->input->post('desa');
         $no_hp              = $this->input->post('no_hp');
+        $desa               = $this->input->post('desa');
         $email              = $this->input->post('email');
         $exp_date           = $this->input->post('exp_date');
 

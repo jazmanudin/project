@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group">
                     <label>Email Perusahaan</label>
-                    <input type="text" nama="email" id="email" class="form-control form-control-sm" placeholder="Email Perusahaan" />
+                    <input type="text" name="email" id="email" class="form-control form-control-sm" placeholder="Email Perusahaan" />
                 </div>
                 <div class="form-group">
                     <label>No HP</label>
