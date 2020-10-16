@@ -29,7 +29,7 @@
         <div class="card">
             <div class="card-body">
                 <table id="tech-companies-1" class="table table-striped table-bordered table-hover table-sm">
-                    <thead class="thead-dark" style="font-size: 13px;">
+                    <thead style="background-color: #0085cd;color:white">
                         <tr>
                             <th>Nama</th>
                             <th style="width: 25%;">Harga</th>

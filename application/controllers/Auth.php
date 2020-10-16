@@ -35,7 +35,7 @@ class Auth extends CI_Controller
           'bayar'           => $data_user['jenis_pembayaran']
         );
         $this->session->set_userdata($data_session);
-        redirect('Penjualan/view_penjualan');
+        redirect('dashboard/view_dashboard');
       } else {
         redirect('auth/login');
       }

@@ -19,7 +19,7 @@
 
 </head>
 
-<body class="bg-primary bg-pattern">
+<body class="bg-primary bg-pattern" style="font-family:Roboto,HelveticaNeue,Arial,sans-serif;">
 
     <div class="account-pages my-5 pt-sm-5">
         <div class="container">
@@ -44,7 +44,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group form-group-custom mb-4">
-                                                <input type="text" class="form-control" name="username" id="username" required>
+                                                <input type="text" class="form-control" autofocus name="username" id="username" required>
                                                 <label for="username">User Name</label>
                                             </div>
 

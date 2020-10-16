@@ -19,6 +19,13 @@
     <link href="<?php echo base_url(); ?>assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
     <link href="<?php echo base_url(); ?>assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
+    <!-- DataTables -->
+    <link href="<?php echo base_url(); ?>assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="<?php echo base_url(); ?>assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
     <!-- Bootstrap Css -->
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -48,6 +55,10 @@
     <script src="<?php echo base_url(); ?>assets/libs/air-datepicker/js/datepicker.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/air-datepicker/js/i18n/datepicker.en.js"></script>
 
+    <!-- Required datatable js -->
+    <script src="<?php echo base_url(); ?>assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
     <script src="<?php echo base_url(); ?>assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
@@ -63,14 +74,15 @@
     <script src="<?php echo base_url(); ?>assets/js/pages/table-responsive.init.js"></script>
     <!-- Form Advanced init -->
     <script src="<?php echo base_url(); ?>assets/js/pages/form-advanced.init.js"></script>
+
 </head>
 
-<body data-topbar="dark" data-layout="horizontal" data-layout-size="boxed">
+<body style="font-family:Roboto,HelveticaNeue,Arial,sans-serif;" data-topbar="dark" data-layout="horizontal" data-layout-size="boxed">
 
     <!-- Begin page -->
     <div id="layout-wrapper" style="background-color: #0085cd;">
 
-        <header id="page-topbar" style="background-color:  #0085cd">
+        <header id="page-topbar" style="background-color:  #151f48">
             <div class="navbar-header">
                 <div class="container-fluid">
                     <div class="float-right">
@@ -137,21 +149,25 @@
                             <div class="collapse navbar-collapse" id="topnav-menu-content">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>Penjualan/view_penjualan">
-                                            <i class="fa fa-home"></i> Home
+                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>Dashboard/view_dashboard">
+                                            <i class="fa fa-home"></i> Dashboard
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>Perusahaan/view_perusahaan">
+                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>Perusahaan/view_perusahaan">
                                             <i class="fa fa-home"></i> Perusahaan
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>Penjualan/view_penjualan">
-                                            <i class="fa fa-home"></i> Penjualan
+                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>Penjualan/view_penjualan">
+                                            <i class="fa fa-list" style="color:skyblue"></i> Penjualan
                                         </a>
                                     </li>
-
+                                    <li class="nav-item">
+                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>pembelian/view_pembelian">
+                                            <i class="fa fa-list" style="color:skyblue"></i> Pembelian
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </nav>
@@ -165,13 +181,12 @@
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-        <div class="main-content">
+        <div class="main-content" style="min-height: 667px;">
 
             <div class="page-content">
-                <div style="height: 20px;">
-                </div>
-                <?php echo $contents; ?>
 
+                <?php echo $contents; ?>
+                <br>
             </div>
             <!-- End Page-content -->
 
@@ -494,13 +509,12 @@
 
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
-
-
     <script src="<?php echo base_url(); ?>assets/js/app.js"></script>
     <script>
         $(document).ready(function() {
 
-      
+            $('.selectize').selectize({});
+
         });
     </script>
 </body>

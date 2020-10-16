@@ -23,13 +23,13 @@ foreach ($data->result() as $d) {
         <input class="form-control form-control-sm" readonly id="total" name="total" value="<?php echo number_format($total); ?>" style="text-align: right;" placeholder="Jumlah Bayar">
     </th>
 </tr>
+<tr>
+    <th colspan="1">Potongan</th>
+    <th colspan="3">
+        <input class="form-control form-control-sm" value="0" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan">
+    </th>
+</tr>
 <?php if ($this->session->userdata('bayar') == "Sekarang") { ?>
-    <tr>
-        <th colspan="1">Potongan</th>
-        <th colspan="3">
-            <input class="form-control form-control-sm" value="0" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan">
-        </th>
-    </tr>
     <tr>
         <th colspan="1">Jumlah Bayar</th>
         <th colspan="3">
@@ -103,7 +103,7 @@ foreach ($data->result() as $d) {
 
             potonganlebih = total - potongan;
             if (potonganlebih < 0) {
-                alert("Potongan Melebihi Total");
+                Swal.fire('Oppss..', 'Potongan Melebihi Total', 'warning')
                 $('#sisabayar').val(formatAngka(total));
                 $('#potongan').val(0);
                 $('#kembalian').val(0);
@@ -157,7 +157,7 @@ foreach ($data->result() as $d) {
             } else {
                 $.ajax({
                     type: 'POST',
-                    url: '<?php echo base_url(); ?>penjualan/insert_penjualaan',
+                    url: '<?php echo base_url(); ?>penjualan/insert_penjualan',
                     data: {
                         keterangan: keterangan,
                         potongan: potongan,

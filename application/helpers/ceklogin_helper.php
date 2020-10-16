@@ -21,7 +21,7 @@ function check_log(){
     $session    = $CI->session->userdata('level_user');
     if (!empty($session)){
         //echo $session;
-        redirect('penjualan/view_penjualan');
+        redirect('dashboard/view_dashboard');
     }
 
 }
