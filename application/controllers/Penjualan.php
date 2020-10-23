@@ -14,7 +14,8 @@ class Penjualan extends CI_Controller
     public function view_penjualan()
     {
         $data['no_fak_penj']    = $this->input->post('no_fak_penj');
-        $data['tgl_transaksi']  = $this->input->post('tgl_transaksi');
+        $data['dari']           = $this->input->post('dari');
+        $data['sampai']         = $this->input->post('sampai');
         $data['data']           = $this->Model_penjualan->view_penjualan()->result();
         $this->template->load('template/template', 'penjualan/view_penjualan', $data);
     }

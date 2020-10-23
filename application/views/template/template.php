@@ -10,6 +10,22 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/favicon.ico">
 
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0;
+            /* <-- Apparently some margin are still there even though it's hidden */
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+    </style>
+
+
     <!-- Responsive Table css -->
     <link href="<?php echo base_url(); ?>assets/libs/RWD-Table-Patterns/css/rwd-table.min.css" rel="stylesheet" type="text/css" />
 
@@ -149,23 +165,28 @@
                             <div class="collapse navbar-collapse" id="topnav-menu-content">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>Dashboard/view_dashboard">
+                                        <a class="nav-link" href="<?php echo base_url(); ?>dashboard/view_dashboard">
                                             <i class="fa fa-home"></i> Dashboard
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>Perusahaan/view_perusahaan">
+                                        <a class="nav-link" href="<?php echo base_url(); ?>perusahaan/view_perusahaan">
                                             <i class="fa fa-home"></i> Perusahaan
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>Penjualan/view_penjualan">
-                                            <i class="fa fa-list" style="color:skyblue"></i> Penjualan
+                                        <a class="nav-link" href="<?php echo base_url(); ?>barang/view_barang">
+                                            <i class="fa fa-home"></i> Barang
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a style="color:white" class="nav-link" href="<?php echo base_url(); ?>pembelian/view_pembelian">
-                                            <i class="fa fa-list" style="color:skyblue"></i> Pembelian
+                                        <a class="nav-link" href="<?php echo base_url(); ?>penjualan/view_penjualan">
+                                            <i class="fa fa-list"></i> Penjualan
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<?php echo base_url(); ?>pembelian/view_pembelian">
+                                            <i class="fa fa-list"></i> Pembelian
                                         </a>
                                     </li>
                                 </ul>

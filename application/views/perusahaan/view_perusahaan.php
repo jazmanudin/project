@@ -6,8 +6,8 @@
                 <div class="table-rep-plugin">
                     <a href="<?php echo base_url(); ?>perusahaan/input_perusahaan" class="btn btn-primary btn-sm input">Tambah Data</a>
                     <div class="table-responsive mb-0">
-                        <table id="tech-companies-1" class="table table-striped table-bordered table-hover table-sm">
-                            <thead class="thead-dark">
+                        <table id="datatable" class="table table-striped table-bordered table-hover table-sm">
+                            <thead style="background-color: #0085cd;color:white">
                                 <tr>
                                     <th>Perusahaan</th>
                                     <th>Alamat</th>
@@ -80,6 +80,13 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $('#datatable').dataTable({
+            bFilter: false,
+            searching: true,
+            paging: true,
+            info: false
+        });
 
         $('.detail').click(function(e) {
             e.preventDefault();

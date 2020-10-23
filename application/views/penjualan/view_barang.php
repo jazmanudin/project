@@ -2,7 +2,7 @@
     <?php foreach ($barang->result() as $b) { ?>
         <div class="col-xl-3 col-md-4 col-sm-6 branding designing">
             <?php if ($b->foto != "") { ?>
-                <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="<?php echo base_url(); ?>assets/images/menu/<?php echo $b->foto; ?>" /></a>
+                <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="<?php echo base_url(); ?>assets/images/barang/<?php echo $b->foto; ?>" /></a>
             <?php } else { ?>
                 <a href="#" class="inputbarang" data-kode="<?php echo $b->kode_barang; ?>" data-harga="<?php echo $b->harga; ?>"><img class="gallery-demo-img img-fluid mx-auto" src="../assets/images/small/img-11.jpg" /></a>
             <?php } ?>

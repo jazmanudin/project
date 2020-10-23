@@ -26,20 +26,20 @@ foreach ($data->result() as $d) {
 <tr>
     <th colspan="1">Potongan</th>
     <th colspan="3">
-        <input class="form-control form-control-sm" value="0" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan">
+        <input class="form-control form-control-sm" autocomplete="off" value="0" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan">
     </th>
 </tr>
 <?php if ($this->session->userdata('bayar') == "Sekarang") { ?>
     <tr>
         <th colspan="1">Jumlah Bayar</th>
         <th colspan="3">
-            <input class="form-control form-control-sm" value="0" id="jmlbayar" name="jmlbayar" style="text-align: right;" placeholder="Jumlah Bayar">
+            <input class="form-control form-control-sm" autocomplete="off" value="0" id="jmlbayar" name="jmlbayar" style="text-align: right;" placeholder="Jumlah Bayar">
         </th>
     </tr>
     <tr>
         <th colspan="1">Sisa Bayar</th>
         <th colspan="3">
-            <input class="form-control form-control-sm" value="0" readonly id="sisabayar" name="sisabayar" style="text-align: right;" placeholder="Sisa Bayar">
+            <input class="form-control form-control-sm" value="<?php echo number_format($total); ?>" readonly id="sisabayar" name="sisabayar" style="text-align: right;" placeholder="Sisa Bayar">
         </th>
     </tr>
     <tr>
@@ -52,7 +52,13 @@ foreach ($data->result() as $d) {
 <tr>
     <th colspan="1">Keterangan</th>
     <th colspan="3">
-        <input class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan">
+        <input class="form-control form-control-sm" autocomplete="off" id="keterangan" name="keterangan" placeholder="Keterangan">
+    </th>
+</tr>
+<tr>
+    <th colspan="1">No Meja</th>
+    <th colspan="3">
+        <input class="form-control form-control-sm" autocomplete="off" id="no_meja" name="no_meja" placeholder="No Meja">
     </th>
 </tr>
 <tr>
@@ -151,6 +157,7 @@ foreach ($data->result() as $d) {
             var jmlbayar = $('#jmlbayar').val();
             var potongan = $('#potongan').val();
             var kembalian = $('#kembalian').val();
+            var no_meja = $('#no_meja').val();
             if (total == "0") {
                 Swal.fire('Oppss..', 'Silahkan Pilih Menu terlebih dahulu', 'warning')
                 return false;
@@ -163,6 +170,7 @@ foreach ($data->result() as $d) {
                         potongan: potongan,
                         total: total,
                         kembalian: kembalian,
+                        no_meja: no_meja,
                         jmlbayar: jmlbayar
                     },
                     cache: false,

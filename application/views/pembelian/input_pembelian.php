@@ -20,6 +20,7 @@
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:7px;padding-right:0px">No Faktur</label>
                     <div class="col-md-8" style="padding-left:7px;padding-right:0px">
                         <input class="form-control form-control-sm" readonly id="no_fak_pemb" name="no_fak_pemb" placeholder="Faktur Pembelian">
+                        <input type="hidden" autocomplete="off" name="cekbarang" id="cekbarang" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
                     </div>
                 </div>
                 <div class="row">
@@ -65,25 +66,25 @@
                         <input class="form-control form-control-sm" readonly id="nama_barang" name="nama_barang" placeholder="Nama Barang">
                     </div>
                     <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="5">
+                        <input class="form-control form-control-sm" readonly id="satuan" name="satuan" placeholder="Satuan">
+                    </div>
+                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
+                        <input class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="5">
                     </div>
                     <div class="col-md-1" style="padding-left:7px;padding-right:0px">
                         <input class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="6">
                     </div>
                     <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" id="diskonrp" name="diskonrp" placeholder="Diskon (Rp)" tabindex="7">
+                        <input class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="diskon" name="diskon" placeholder="Diskon (Rp)" tabindex="7">
                     </div>
                     <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" id="diskonpersen" name="diskonpersen" placeholder="Dsikon (%)" tabindex="8">
-                    </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" readonly id="total" name="total" placeholder="Total">
+                        <input class="form-control form-control-sm" readonly id="total" style="text-align:right" name="total" placeholder="Total">
                     </div>
                     <div class="col-md-2" style="padding-left:7px;padding-right:0px">
                         <input class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="9">
                     </div>
                     <div class="col-md-1" style="padding-left:7px;padding-right:0px;color:white">
-                        <a class="btn btn-sm btn-info btn-block" id="simpantemp" name="simpantemp" tabindex="10"><i class="fa fa-plus"></i> Tambah</a>
+                        <a class="btn btn-sm btn-info btn-block" id="inputbarang" name="inputbarang" tabindex="10"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="row">
@@ -92,11 +93,14 @@
                             <table id="tech-companies-1" class="table table-striped table-bordered table-hover table-sm">
                                 <thead style="background-color: #0085cd;color:white">
                                     <tr>
-                                        <th style="width: 15%;">Kode</th>
+                                        <th style="width: 5%;">Kode</th>
                                         <th>Nama</th>
-                                        <th style="width: 25%;">Harga</th>
-                                        <th style="width: 20%;">Jumlah</th>
-                                        <th style="width: 20%;">Total</th>
+                                        <th style="width: 5%;">Satuan</th>
+                                        <th style="width: 10%;">Harga</th>
+                                        <th style="width: 10%;">Jumlah</th>
+                                        <th style="width: 10%;">Diskon (Rp)</th>
+                                        <th style="width: 10%;">Total</th>
+                                        <th>Keterangan</th>
                                         <th style="width: 5%;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -159,7 +163,7 @@
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label">Konfirmasi Pembayaran</label>
                     <div class="col-md-8">
-                        <a class="btn btn-sm btn-primary btn-block" href="#" id="inputbarang" tabindex="14"><i class="fa  fa-shopping-cart"></i> Bayar</a>
+                        <a class="btn btn-sm btn-primary btn-block" href="#" id="inputpembelian" tabindex="14"><i class="fa  fa-shopping-cart"></i> Bayar</a>
                     </div>
                 </div>
             </div>
@@ -196,17 +200,25 @@
         }
 
         view_pembeliantemp();
+        cekbarang();
+
+        function cekbarang() {
+            var kode_barang = $('#kode_barang').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url(); ?>pembelian/cekbarang',
+                data: {
+                    kode_barang: kode_barang
+                },
+                cache: false,
+                success: function(respond) {
+                    $("#cekbarang").val(respond);
+                }
+            });
+        }
 
         function view_pembeliantemp() {
-
-            var totals = $('#totals').text();
-            $('#subtotal').val(formatAngka(totals * 1));
-
-            if (totals = "0") {
-                $('#pembayaran').hide();
-            } else {
-                $('#pembayaran').show();
-            }
 
             $.ajax({
                 type: 'POST',
@@ -231,16 +243,30 @@
 
         $('.caribarang').click(function(e) {
             e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url(); ?>pembelian/view_barang',
-                data: '',
-                cache: false,
-                success: function(respond) {
-                    $("#loadbarang").html(respond);
-                    $("#viewbarang").modal("show");
-                }
-            });
+            var kode_supplier = $('#kode_supplier').val();
+            var tgl_transaksi = $('#tgl_transaksi').val();
+            var jatuh_tempo = $('#jatuh_tempo').val();
+            if (kode_supplier == "") {
+                Swal.fire('Oppss..', 'Silahkan pilih Supplier terlebih dahulu', 'warning')
+                return false;
+            } else if (tgl_transaksi == "") {
+                Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
+                return false;
+            } else if (jatuh_tempo == "") {
+                Swal.fire('Oppss..', 'Tanggal jatuh tempo tidak boleh kosong', 'warning')
+                return false;
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url(); ?>pembelian/view_barang',
+                    data: '',
+                    cache: false,
+                    success: function(respond) {
+                        $("#loadbarang").html(respond);
+                        $("#viewbarang").modal("show");
+                    }
+                });
+            }
         });
 
         $('#harga_modal').on("input", function() {
@@ -255,10 +281,25 @@
             $('#qty').val(formatAngka(qty * 1));
         });
 
-        $('#diskonrp').on("input", function() {
-            var diskonrp = $('#diskonrp').val();
-            var diskonrp = diskonrp.replace(/[^\d]/g, "");
-            $('#diskonrp').val(formatAngka(diskonrp * 1));
+        $('#diskon').on("input", function() {
+            var diskon = $('#diskon').val();
+            var diskon = diskon.replace(/[^\d]/g, "");
+            $('#diskon').val(formatAngka(diskon * 1));
+        });
+
+
+        $('#qty,#harga_modal,#diskon').on("input", function() {
+            var qty = $('#qty').val();
+            var harga_modal = $('#harga_modal').val();
+            var diskon = $('#diskon').val();
+
+            var qty = qty.replace(/[^\d]/g, "");
+            var harga_modal = harga_modal.replace(/[^\d]/g, "");
+            var diskon = diskon.replace(/[^\d]/g, "");
+
+            var hasiltotal = qty * harga_modal - diskon;
+
+            $('#total').val(formatAngka(hasiltotal * 1));
         });
 
         $('#potongan,#jmlbayar').on("input", function() {
@@ -306,59 +347,78 @@
 
         });
 
-        $('.filterkategori').click(function(e) {
+        $('#inputbarang').click(function(e) {
             e.preventDefault();
-            var kode_kategori = $(this).attr('data-filter');
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url(); ?>pembelian/view_barang',
-                data: {
-                    kode_kategori: kode_kategori
-                },
-                cache: false,
-                success: function(respond) {
-                    $("#loadviewbarang").html(respond);
-                }
-            });
-        });
+            var kode_barang = $('#kode_barang').val();
+            var qty = $('#qty').val();
+            var harga_modal = $('#harga_modal').val();
+            var diskon = $('#diskon').val();
+            var total = $('#total').val();
+            var keterangan = $('#ket').val();
+            var jatuh_tempo = $('#jatuh_tempo').val();
+            var tgl_transaksi = $('#tgl_transaksi').val();
+            var kode_supplier = $('#kode_supplier').val();
+            var cekbarang = $('#cekbarang').val();
 
-        $('.inputbarang').click(function(e) {
-            e.preventDefault();
-            var kode_barang   = $('#kode_barang').val();
-            var qty           = $('#qty').val();
-            var harga_modal   = $('#harga_modal').val();
-            var diskonrp      = $('#diskonrp').val();
-            var diskonpersen  = $('#diskonpersen').val();
-            var total         = $('#total').val();
-            var keterangan    = $('#keterangan').val();
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url(); ?>pembelian/insert_pembelian_temp',
-                data: {
-                    kode_barang   : kode_barang,
-                    qty           : qty,
-                    harga_modal   : harga_modal,
-                    diskonrp      : diskonrp,
-                    diskonpersen  : diskonpersen,
-                    total         : total,
-                    keterangan    : keterangan
-                },
-                cache: false,
-                success: function(respond) {
-                    view_pembeliantemp();
-                }
-            });
+            if (kode_barang == "") {
+                Swal.fire('Oppss..', 'Silahkan pilih Barang terlebih dahulu', 'warning')
+            } else if (cekbarang >= 1) {
+                Swal.fire('Oppss..', 'Barang sudah ada', 'warning')
+            } else if (kode_supplier == "") {
+                Swal.fire('Oppss..', 'Silahkan pilih Supllier terlebih dahulu', 'warning')
+            } else if (tgl_transaksi == "") {
+                Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
+            } else if (jatuh_tempo == "") {
+                Swal.fire('Oppss..', 'Jatuh tempo tidak boleh kosong', 'warning')
+            } else if (qty == "") {
+                Swal.fire('Oppss..', 'Qty tidak boleh kosong', 'warning')
+            } else if (harga_modal == "") {
+                Swal.fire('Oppss..', 'Harga Modal tidak boleh kosong', 'warning')
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url(); ?>pembelian/insert_pembelian_temp',
+                    data: {
+                        kode_barang: kode_barang,
+                        qty: qty,
+                        harga_modal: harga_modal,
+                        diskon: diskon,
+                        total: total,
+                        keterangan: keterangan
+                    },
+                    cache: false,
+                    success: function(respond) {
+                        view_pembeliantemp();
+                        $('#ket').val("");
+                        $('#kode_barang').val("");
+                        $('#nama_barang').val("");
+                        $('#qty').val("");
+                        $('#harga_modal').val("");
+                        $('#diskon').val("");
+                        $('#total').val("");
+                    }
+                });
+            }
         });
 
         $('#inputpembelian').click(function(e) {
             e.preventDefault();
             var keterangan = $('#keterangan').val();
-            var total = $('#total').val();
+            var subtotal = $('#subtotal').val();
             var jmlbayar = $('#jmlbayar').val();
             var potongan = $('#potongan').val();
             var kembalian = $('#kembalian').val();
-            if (total == "0") {
+            var jatuh_tempo = $('#jatuh_tempo').val();
+            var tgl_transaksi = $('#tgl_transaksi').val();
+            var kode_supplier = $('#kode_supplier').val();
+            if (subtotal == "0") {
                 Swal.fire('Oppss..', 'Silahkan pilih Barang terlebih dahulu', 'warning')
+                return false;
+            } else if (tgl_transaksi == "") {
+                Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
+                return false;
+            } else if (jatuh_tempo == "") {
+                Swal.fire('Oppss..', 'Tanggal jatuh tempo tidak boleh kosong', 'warning')
                 return false;
             } else {
                 $.ajax({
@@ -367,18 +427,21 @@
                     data: {
                         keterangan: keterangan,
                         potongan: potongan,
-                        total: total,
+                        subtotal: subtotal,
                         kembalian: kembalian,
+                        tgl_transaksi: tgl_transaksi,
+                        kode_supplier: kode_supplier,
+                        jatuh_tempo: jatuh_tempo,
                         jmlbayar: jmlbayar
                     },
                     cache: false,
                     success: function(respond) {
+                        Swal.fire('Oppss..', 'Berhasil di Simpan', 'success')
                         location.reload();
                     }
                 });
             }
         });
-
 
     });
 </script>

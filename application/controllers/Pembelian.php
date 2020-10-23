@@ -86,22 +86,11 @@ class Pembelian extends CI_Controller
 
     public function codeotomatis()
     {
-        $tahun    = date('y');
-        $bulan    = date('m');
-        $this->db->select('right(pembelian.no_fak_pemb,3) as kode ', false);
-        $this->db->where('mid(no_fak_pemb,5,2)', $bulan);
-        $this->db->where('mid(no_fak_pemb,7,2)', $tahun);
-        $this->db->order_by('no_fak_pemb', 'desc');
-        $this->db->limit('13');
-        $query    = $this->db->get('pembelian');
-        if ($query->num_rows() <> 0) {
-            $data   = $query->row();
-            $kode   = intval($data->kode) + 1;
-        } else {
-            $kode   = 1;
-        }
-        $kodemax  = str_pad($kode, 3, "0", STR_PAD_LEFT);
-        echo "FAK-" . $bulan . "" . $tahun . "" . $kodemax;
+        $this->Model_pembelian->codeotomatis();
     }
-    
+
+    public function cekbarang()
+    {
+        $this->Model_pembelian->cekbarang();
+    }
 }

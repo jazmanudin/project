@@ -16,6 +16,7 @@ class Model_penjualan extends CI_Model
     $no_fak_penj    = $this->uri->segment(3);
     $this->db->query("DELETE FROM penjualan WHERE no_fak_penj = '$no_fak_penj' AND id_member = '$id_member' ");
     $this->db->query("DELETE FROM penjualan_detail WHERE no_fak_penj = '$no_fak_penj' AND id_member = '$id_member' ");
+    $this->db->query("DELETE FROM penjualan_histori_bayar WHERE no_fak_penj = '$no_fak_penj' AND id_member = '$id_member' ");
     redirect('penjualan/view_penjualan');
   }
 
@@ -30,14 +31,15 @@ class Model_penjualan extends CI_Model
   {
     $id_member          = $this->session->userdata('id_member');
     $no_fak_penj        = $this->input->post('no_fak_penj');
-    $tgl_transaksi      = $this->input->post('tgl_transaksi');
+    $dari               = $this->input->post('dari');
+    $sampai             = $this->input->post('sampai');
 
     if ($no_fak_penj != "") {
       $no_fak_penj = "AND penjualan.no_fak_penj = '" . $no_fak_penj . "' ";
     }
 
-    if ($tgl_transaksi != "") {
-      $tgl_transaksi = "AND penjualan.tgl_transaksi = '" . $tgl_transaksi . "' ";
+    if ($dari != "") {
+      $dari = "AND penjualan.tgl_transaksi BETWEEN '" . $dari . "' AND '" . $sampai . "' ";
     }
 
     $query = "SELECT 
@@ -47,6 +49,7 @@ class Model_penjualan extends CI_Model
     penjualan.kode_pelanggan,
     penjualan.total,
     penjualan.tgl_transaksi,
+    penjualan.no_meja,
     hs.jumlahbayar
     
     FROM penjualan
@@ -57,7 +60,7 @@ class Model_penjualan extends CI_Model
   
     WHERE penjualan.id_member = '$id_member' "
       . $no_fak_penj
-      . $tgl_transaksi
+      . $dari
       . "
     GROUP BY 
     penjualan.no_fak_penj,
@@ -67,7 +70,8 @@ class Model_penjualan extends CI_Model
     penjualan.tgl_transaksi,
     penjualan.total,
     hs.jumlahbayar
-    LIMIT 20
+    ORDER BY penjualan.tgl_transaksi DESC
+    LIMIT 100
     ";
     return $this->db->query($query);
   }
@@ -84,6 +88,7 @@ class Model_penjualan extends CI_Model
     penjualan.kode_pelanggan,
     penjualan.total,
     penjualan.tgl_transaksi,
+    penjualan.no_meja,
     hs.jumlahbayar
     
     FROM penjualan
@@ -172,7 +177,8 @@ class Model_penjualan extends CI_Model
     $total              = str_replace(",", "", $this->input->post('total'));
     $jmlbayar           = str_replace(",", "", $this->input->post('jmlbayar'));
     $kembalian          = str_replace(",", "", $this->input->post('kembalian'));
-    $keterangan         = str_replace(",", "", $this->input->post('keterangan'));
+    $no_meja            = str_replace(",", "", $this->input->post('no_meja'));
+    $keterangan         = $this->input->post('keterangan');
 
     $data = array(
       'no_fak_penj'     => $no_fak_penj,
@@ -181,6 +187,7 @@ class Model_penjualan extends CI_Model
       'total'           => $total,
       'tgl_transaksi'   => $tgl_transaksi,
       'keterangan'      => $keterangan,
+      'no_meja'         => $no_meja,
       'id_member'       => $id_member
     );
     $this->db->insert('penjualan', $data);
@@ -220,6 +227,7 @@ class Model_penjualan extends CI_Model
         'id_member'       => $id_member
       );
       $this->db->insert('penjualan_detail', $data);
+      $this->db->query("UPDATE barang SET stok = stok-'$d->qty' WHERE kode_barang = '$d->kode_barang' AND id_member = '$id_member'");
     }
     $datapenj = $this->db->query("DELETE FROM penjualan_temp WHERE id_user = '$id_user'");
   }

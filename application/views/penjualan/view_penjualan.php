@@ -10,7 +10,14 @@
                                 <input class="form-control form-control-sm" value="<?php echo $no_fak_penj; ?>" name="no_fak_penj" placeholder="No Faktur">
                             </div>
                             <div class="form-group">
-                                <input type="text" value="<?php echo $tgl_transaksi; ?>" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" />
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <input type="text" value="<?php echo $dari; ?>" name="dari" id="dari" placeholder="Dari" class="form-control form-control-sm datepicker-here" data-language="en" />
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <input type="text" value="<?php echo $sampai; ?>" name="sampai" id="sampai" placeholder="Sampai" class="form-control form-control-sm datepicker-here" data-language="en" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group" align="right">
                                 <button type="submit" name="submit" class="btn btn-info btn-sm btn-block mr-2" value="1"><i class="fa fa-search mr-2"></i>CARI</button>
@@ -21,22 +28,24 @@
                 <div class="table-rep-plugin">
                     <a href="<?php echo base_url(); ?>penjualan/input_penjualan" class="btn btn-primary btn-sm input">Tambah Data</a>
                     <div class="table-responsive mb-0">
-                        <table id="tech-companies-1" class="table table-striped table-bordered table-hover table-sm">
+                        <table id="datatable" class="table table-striped table-bordered table-hover table-sm">
                             <thead style="background-color: #0085cd;color:white">
                                 <tr>
-                                    <th>No Faktur</th>
-                                    <th>Tanggal</th>
-                                    <th>Total</th>
-                                    <th>Potongan</th>
-                                    <th>Bayar</th>
-                                    <th>Sisa Bayar</th>
+                                    <th style="width: 8%;">No Faktur</th>
+                                    <th style="width: 7%;">Tanggal</th>
+                                    <th style="width: 8%;">Total</th>
+                                    <th style="width: 8%;">Potongan</th>
+                                    <th style="width: 8%;">Bayar</th>
+                                    <th style="width: 8%;">Sisa Bayar</th>
                                     <th>Keterangan</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
+                                    <th style="width: 8%;">No Meja</th>
+                                    <th style="width: 10%;">Status</th>
+                                    <th style="width: 9%;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data as $d) {
+                                <?php
+                                foreach ($data as $d) {
                                 ?>
                                     <tr>
                                         <td><?php echo $d->no_fak_penj; ?></td>
@@ -44,18 +53,19 @@
                                         <td align="right"><?php echo number_format($d->total); ?></td>
                                         <td align="right"><?php echo number_format($d->potongan); ?></td>
                                         <td align="right"><?php echo number_format($d->jumlahbayar); ?></td>
-                                        <td align="right"><?php echo number_format($d->total-$d->jumlahbayar); ?></td>
+                                        <td align="right"><?php echo number_format($d->total - $d->jumlahbayar - $d->potongan); ?></td>
                                         <td><?php echo $d->keterangan; ?></td>
+                                        <td><?php echo $d->no_meja; ?></td>
                                         <td>
                                             <?php if ($d->jumlahbayar >= $d->total - $d->potongan) {
-                                                echo "<a href'#' class='btn btn-info btn-sm' style='color:blue; font-weight: bold'>Lunas</a> ";
+                                                echo "<a href'#' class='btn btn-info btn-sm' style='color:white; font-weight: bold'>Lunas</a> ";
                                             } else {
-                                                echo "<a href'#' class='btn btn-warning btn-sm' style='color:red; font-weight: bold'>Belum Lunas</a> ";
+                                                echo "<a href'#' class='btn btn-danger btn-sm' style='color:white; font-weight: bold'>Belum Lunas</a> ";
                                             } ?>
                                         </td>
                                         <td>
                                             <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d->no_fak_penj; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" data-href="<?php echo base_url(); ?>penjualan/hapus_penjualan/<?php echo $d->no_fak_penj; ?>"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>penjualan/hapus_penjualan/<?php echo $d->no_fak_penj; ?>"><i class="fa fa-trash"></i></a>
                                             <!-- <a class="btn btn-warning btn-sm" href="#"><i class="mdi mdi-pencil"></i></a> -->
                                             <?php if ($d->jumlahbayar >= $d->total - $d->potongan) { ?>
                                             <?php } else { ?>
@@ -63,7 +73,8 @@
                                             <?php } ?>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php
+                                } ?>
                             </tbody>
                         </table>
                     </div>
@@ -114,6 +125,15 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $('#datatable').dataTable({
+            bFilter: false,
+            searching: false,
+            paging: true,
+            info: false,
+            bAutoWidth: false,
+            bLengthChange: false
+        });
 
         $('.bayar').click(function(e) {
             e.preventDefault();

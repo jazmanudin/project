@@ -5,15 +5,19 @@
                 <h2 class="header-title" align="center">DATA PEMBELIAN</h2>
                 <form class="form-horizontal" method="post" action="<?php echo base_url(); ?>pembelian/view_pembelian" autocomplete="off">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <input class="form-control form-control-sm" value="<?php echo $no_fak_pemb; ?>" name="no_fak_pemb" placeholder="No Faktur">
                             </div>
                             <div class="form-group">
-                                <input type="text" value="<?php echo $dari; ?>" name="dari" id="dari" placeholder="Dari" class="form-control form-control-sm datepicker-here" data-language="en" />
-                            </div>
-                            <div class="form-group">
-                                <input type="text" value="<?php echo $sampai; ?>" name="sampai" id="sampai" placeholder="Sampai" class="form-control form-control-sm datepicker-here" data-language="en" />
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <input type="text" value="<?php echo $dari; ?>" name="dari" id="dari" placeholder="Dari" class="form-control form-control-sm datepicker-here" data-language="en" />
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <input type="text" value="<?php echo $sampai; ?>" name="sampai" id="sampai" placeholder="Sampai" class="form-control form-control-sm datepicker-here" data-language="en" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group" align="right">
                                 <button type="submit" name="submit" class="btn btn-info btn-sm btn-block mr-2" value="1"><i class="fa fa-search mr-2"></i>CARI</button>
@@ -27,15 +31,16 @@
                         <table id="tech-companies-1" class="table table-striped table-bordered table-hover table-sm">
                             <thead style="background-color: #0085cd;color:white">
                                 <tr>
-                                    <th>No Faktur</th>
-                                    <th>Tanggal</th>
-                                    <th>Total</th>
-                                    <th>Potongan</th>
-                                    <th>Bayar</th>
-                                    <th>Sisa Bayar</th>
+                                    <th style="width: 8%;">No Faktur</th>
+                                    <th style="width: 7%;">Tanggal</th>
+                                    <th style="width: 15%;">Supplier</th>
+                                    <th style="width: 8%;">Total</th>
+                                    <th style="width: 8%;">Potongan</th>
+                                    <th style="width: 8%;">Bayar</th>
+                                    <th style="width: 8%;">Sisa Bayar</th>
                                     <th>Keterangan</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
+                                    <th style="width: 5%;">Status</th>
+                                    <th style="width: 5%;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,6 +49,7 @@
                                     <tr>
                                         <td><?php echo $d->no_fak_pemb; ?></td>
                                         <td><?php echo $d->tgl_transaksi; ?></td>
+                                        <td><?php echo $d->nama_supplier; ?></td>
                                         <td align="right"><?php echo number_format($d->total); ?></td>
                                         <td align="right"><?php echo number_format($d->potongan); ?></td>
                                         <td align="right"><?php echo number_format($d->jumlahbayar); ?></td>
@@ -51,15 +57,14 @@
                                         <td><?php echo $d->keterangan; ?></td>
                                         <td>
                                             <?php if ($d->jumlahbayar >= $d->total - $d->potongan) {
-                                                echo "<a href'#' class='btn btn-info btn-sm' style='color:blue; font-weight: bold'>Lunas</a> ";
+                                                echo "<a href'#' class='btn btn-info btn-sm' style='color:white; font-weight: bold'>Lunas</a> ";
                                             } else {
-                                                echo "<a href'#' class='btn btn-warning btn-sm' style='color:red; font-weight: bold'>Belum Lunas</a> ";
+                                                echo "<a href'#' class='btn btn-danger btn-sm' style='color:white; font-weight: bold'>Belum Lunas</a> ";
                                             } ?>
                                         </td>
                                         <td>
                                             <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d->no_fak_pemb; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" data-href="<?php echo base_url(); ?>pembelian/hapus_pembelian/<?php echo $d->no_fak_pemb; ?>"><i class="fa fa-trash"></i></a>
-                                            <!-- <a class="btn btn-warning btn-sm" href="#"><i class="mdi mdi-pencil"></i></a> -->
+                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>pembelian/hapus_pembelian/<?php echo $d->no_fak_pemb; ?>"><i class="fa fa-trash"></i></a>
                                             <?php if ($d->jumlahbayar >= $d->total - $d->potongan) { ?>
                                             <?php } else { ?>
                                                 <a class="btn btn-primary btn-sm bayar" href="#" data-kode="<?php echo $d->no_fak_pemb; ?>"><i class="mdi mdi-file-document"></i></a>
