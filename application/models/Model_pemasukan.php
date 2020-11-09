@@ -57,7 +57,7 @@ class Model_pemasukan extends CI_Model
     $query = "SELECT 
     pemasukan.no_pemasukan,
     pemasukan.keterangan,
-    pemasukan.asal_barang,
+    pemasukan.jenis_pemasukan,
     pemasukan.tgl_transaksi
     
     FROM pemasukan
@@ -69,7 +69,7 @@ class Model_pemasukan extends CI_Model
     GROUP BY 
     pemasukan.no_pemasukan,
     pemasukan.keterangan,
-    pemasukan.asal_barang,
+    pemasukan.jenis_pemasukan,
     pemasukan.tgl_transaksi
     LIMIT 20
     ";
@@ -149,12 +149,12 @@ class Model_pemasukan extends CI_Model
     $id_member          = $this->session->userdata('id_member');
     $id_user            = $this->session->userdata('id_user');
     $tgl_transaksi      = $this->input->post('tgl_transaksi');
-    $asal_barang      = $this->input->post('asal_barang');
+    $jenis_pemasukan      = $this->input->post('jenis_pemasukan');
     $keterangan         = $this->input->post('keterangan');
 
     $data = array(
       'no_pemasukan'    => $no_pemasukan,
-      'asal_barang'     => $asal_barang,
+      'jenis_pemasukan'     => $jenis_pemasukan,
       'tgl_transaksi'   => $tgl_transaksi,
       'keterangan'      => $keterangan,
       'id_member'       => $id_member

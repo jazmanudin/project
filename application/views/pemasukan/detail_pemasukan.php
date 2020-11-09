@@ -14,6 +14,7 @@
                 <?php
                 $total = 0;
                 foreach ($data as $d) {
+                    $total +=  $d->qty;
                 ?>
                     <tr>
                         <td><?php echo $d->kode_barang; ?></td>
@@ -26,7 +27,7 @@
                 <thead style="background-color: #0085cd;color:white">
                     <tr>
                         <th colspan="3">Total</th>
-                        <th style="text-align:right"><?php echo number_format($total); ?></th>
+                        <th style="text-align:left"><?php echo number_format($total); ?></th>
                         <th></th>
                     </tr>
                 </thead>

@@ -1,9 +1,13 @@
 <div class="col-lg-6">
     <div class="card">
         <div class="card-body">
-            <h4 align="center">Input Data Barang</h4>
+            <h5 style="text-align: center;color:black;"><b>INPUT BARANG</b></h5>
             <form autocomplete="off" id="form" class="pelangganForm" method="POST" enctype="multipart/form-data" data-action="<?php echo base_url(); ?>barang/input_barang">
 
+                <div class="form-group">
+                    <label>Kode Barang</label>
+                    <input type="text" name="kode_barang" id="kode_barang" class="data_kosong form-control form-control-sm" placeholder="Kode Barang" />
+                </div>
                 <div class="form-group">
                     <label>Nama Barang</label>
                     <input type="text" name="nama_barang" id="nama_barang" class="data_kosong form-control form-control-sm" placeholder="Nama Barang" />
@@ -17,8 +21,24 @@
                     <input type="text" name="harga_modal" id="harga_modal" class="data_kosong form-control form-control-sm" placeholder="Harga Modal" />
                 </div>
                 <div class="form-group">
-                    <label>Harga Jual</label>
-                    <input type="text" name="harga" id="harga" class="data_kosong form-control form-control-sm" placeholder="Harga Jual" />
+                    <label>Harga Pel. Tetap</label>
+                    <input type="text" name="pelanggan_tetap" id="pelanggan_tetap" class="data_kosong form-control form-control-sm" placeholder="Harga Pel. Tetap" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Pel. Tidak Tetap</label>
+                    <input type="text" name="tidak_tetap" id="tidak_tetap" class="data_kosong form-control form-control-sm" placeholder="Harga Pel. Tidak Tetap" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Grosir</label>
+                    <input type="text" name="grosir" id="grosir" class="data_kosong form-control form-control-sm" placeholder="Harga Grosir" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Eceran</label>
+                    <input type="text" name="eceran" id="eceran" class="data_kosong form-control form-control-sm" placeholder="Harga Eceran" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Lainnya</label>
+                    <input type="text" name="lainnya" id="lainnya" class="data_kosong form-control form-control-sm" placeholder="Harga Lainnya" />
                 </div>
                 <div class="form-group">
                     <label>Diskon</label>
@@ -33,7 +53,7 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Jenis Barang</label>
                     <select class="selectize data_kosong" id="jenis_barang" name="jenis_barang">
                         <option value="">Pilih Jenis Barang</option>
@@ -42,7 +62,7 @@
                         <option value="Bahan Baku">Bahan Baku</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label>Keterangan</label>
                     <input type="text" name="keterangan" id="keterangan" class="data_kosong form-control form-control-sm" placeholder="Keterangan" />

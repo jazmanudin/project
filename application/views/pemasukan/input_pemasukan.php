@@ -26,13 +26,17 @@
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:7px;padding-right:0px">Tgl Transaksi</label>
                     <div class="col-md-8" style="padding-left:7px;padding-right:0px">
-                        <input type="text" autocomplete="off" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
+                        <input type="text" autocomplete="off" value="<?php echo Date('Y-m-d');?>" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
                     </div>
                 </div>
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:7px;padding-right:0px">Asal Barang</label>
                     <div class="col-md-8" style="padding-left:7px;padding-right:0px">
-                        <input type="text" autocomplete="off" name="asal_barang" id="asal_barang" placeholder="Asal Barang" class="form-control form-control-sm" tabindex="2" />
+                        <select class="selectize" name="jenis_pemasukan" id="jenis_pemasukan">
+                            <option value="">-- Pilih Asal Barang--</option>
+                            <option value="Pengembalian Retur">Pengembalian Retur</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -174,16 +178,16 @@
 
         $('.caribarang').click(function(e) {
             e.preventDefault();
-            var asal_barang = $('#asal_barang').val();
+            var jenis_pemasukan = $('#jenis_pemasukan').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
-            var asal_barang = $('#asal_barang').val();
-            if (asal_barang == "") {
+            var jenis_pemasukan = $('#jenis_pemasukan').val();
+            if (jenis_pemasukan == "") {
                 Swal.fire('Oppss..', 'Silahkan pilih Supplier terlebih dahulu', 'warning')
                 return false;
             } else if (tgl_transaksi == "") {
                 Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
                 return false;
-            } else if (asal_barang == "") {
+            } else if (jenis_pemasukan == "") {
                 Swal.fire('Oppss..', 'Asal barang tidak boleh kosong', 'warning')
                 return false;
             } else {
@@ -212,16 +216,16 @@
             var kode_barang = $('#kode_barang').val();
             var qty = $('#qty').val();
             var keterangan = $('#ket').val();
-            var asal_barang = $('#asal_barang').val();
+            var jenis_pemasukan = $('#jenis_pemasukan').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
-            var asal_barang = $('#asal_barang').val();
+            var jenis_pemasukan = $('#jenis_pemasukan').val();
             var cekbarang = $('#cekbarang').val();
 
             if (kode_barang == "") {
                 Swal.fire('Oppss..', 'Silahkan pilih Barang terlebih dahulu', 'warning')
             } else if (cekbarang >= 1) {
                 Swal.fire('Oppss..', 'Barang sudah ada', 'warning')
-            } else if (asal_barang == "") {
+            } else if (jenis_pemasukan == "") {
                 Swal.fire('Oppss..', 'Asal Barang tidak boleh kosong', 'warning')
             } else if (tgl_transaksi == "") {
                 Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
@@ -251,13 +255,13 @@
         $('#simpanpemasukan').click(function(e) {
             e.preventDefault();
             var keterangan = $('#keterangan').val();
-            var asal_barang = $('#asal_barang').val();
+            var jenis_pemasukan = $('#jenis_pemasukan').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
 
             if (tgl_transaksi == "") {
                 Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
                 return false;
-            } else if (asal_barang == "") {
+            } else if (jenis_pemasukan == "") {
                 Swal.fire('Oppss..', 'Tanggal jatuh tempo tidak boleh kosong', 'warning')
                 return false;
             } else {
@@ -267,7 +271,7 @@
                     data: {
                         keterangan: keterangan,
                         tgl_transaksi: tgl_transaksi,
-                        asal_barang: asal_barang
+                        jenis_pemasukan: jenis_pemasukan
                     },
                     cache: false,
                     success: function(respond) {

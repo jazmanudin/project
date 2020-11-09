@@ -1024,8 +1024,9 @@ body[data-layout=horizontal] .main-content {
 
 @media (min-width:992px) {
 	.topnav .dropdown-item {
-		padding: .7rem 1.5rem;
-		min-width: 200px
+		min-width: 200px;
+		padding-top: 8px;
+		padding-bottom: 8px;
 	}
 	.topnav .dropdown .dropdown-menu {
 		margin-top: 0

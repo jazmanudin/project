@@ -37,6 +37,7 @@ class Model_supplier extends CI_Model
         $nama_supplier  = $this->input->post('nama_supplier');
         $alamat         = $this->input->post('alamat');
         $no_hp          = $this->input->post('no_hp');
+        $jatuh_tempo    = $this->input->post('jatuh_tempo');
         $keterangan     = $this->input->post('keterangan');
         $id_member      = $this->session->userdata('id_member');
         $id_user        = $this->session->userdata('id_user');
@@ -46,6 +47,7 @@ class Model_supplier extends CI_Model
                 'nama_supplier'                     => $nama_supplier,
                 'alamat'                            => $alamat,
                 'no_hp'                             => $no_hp,
+                'jatuh_tempo'                       => $jatuh_tempo,
                 'keterangan'                        => $keterangan,
                 'id_member'                         => $id_member,
                 'id_user'                           => $id_user,
@@ -60,6 +62,7 @@ class Model_supplier extends CI_Model
                 'nama_supplier'                     => $nama_supplier,
                 'alamat'                            => $alamat,
                 'no_hp'                             => $no_hp,
+                'jatuh_tempo'                       => $jatuh_tempo,
                 'keterangan'                        => $keterangan,
                 'id_member'                         => $id_member,
                 'id_user'                           => $id_user,

@@ -17,33 +17,37 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:7px;padding-right:0px">No Faktur</label>
-                    <div class="col-md-8" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" readonly id="no_fak_pemb" name="no_fak_pemb" placeholder="Faktur Pembelian">
-                        <input type="hidden" autocomplete="off" name="cekbarang" id="cekbarang" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">No Faktur</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly id="no_fak_pemb" name="no_fak_pemb" placeholder="Faktur Pembelian">
+                        <input type="hidden" class="form-control form-control-sm" value="0" id="kode_edit" name="kode_edit" >
+                        <?php
+                        if ($this->uri->segment(3) != "") {
+                            $no_po = $this->uri->segment(3);
+                        } else {
+                            $no_po = "-";
+                        }
+                        ?>
+                        <input type="hidden" autocomplete="off" value="<?php echo $no_po; ?>" name="no_po" id="no_po" placeholder="No PO" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
                     </div>
                 </div>
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:7px;padding-right:0px">Supplier</label>
-                    <div class="col-md-8" style="padding-left:7px;padding-right:0px">
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Supplier</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
                         <select class="selectize" id="kode_supplier" name="kode_supplier" tabindex="1">
                             <option value="">-- Pilih Supplier --</option>
                             <?php foreach ($supplier->result() as $s) { ?>
-                                <option value="<?php echo $s->kode_supplier; ?>"><?php echo $s->nama_supplier; ?></option>
+                                <option <?php if ($this->uri->segment(4) == $s->kode_supplier) {
+                                            echo "selected";
+                                        } ?> value="<?php echo $s->kode_supplier; ?>"><?php echo $s->nama_supplier; ?></option>
                             <?php } ?>
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:7px;padding-right:0px">Tgl Transaksi</label>
-                    <div class="col-md-8" style="padding-left:7px;padding-right:0px">
-                        <input type="text" autocomplete="off" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:7px;padding-right:0px">Jatuh Tempo</label>
-                    <div class="col-md-8" style="padding-left:7px;padding-right:0px">
-                        <input type="text" autocomplete="off" name="jatuh_tempo" id="jatuh_tempo" placeholder="Jatuh Tempo" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="3" />
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Tgl Transaksi</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <input type="text" autocomplete="off" value="<?php echo date('Y-m-d'); ?>" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
                     </div>
                 </div>
             </div>
@@ -56,39 +60,39 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <a class="btn btn-info btn-sm btn-block caribarang" href="#" tabindex="3">Cari</a>
                     </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" id="kode_barang" name="kode_barang" placeholder="Kode" tabindex="4">
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="kode_barang" name="kode_barang" placeholder="Kode" tabindex="4">
                     </div>
-                    <div class="col-md-2" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" readonly id="nama_barang" name="nama_barang" placeholder="Nama Barang">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly id="nama_barang" name="nama_barang" placeholder="Nama Barang">
                     </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" readonly id="satuan" name="satuan" placeholder="Satuan">
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly id="satuan" name="satuan" placeholder="Satuan">
                     </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="5">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="4">
                     </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="6">
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm  datepicker-here" autocomplete="off" style="text-align:right" id="exp_date" name="exp_date" placeholder="Exp Date" data-language="en" tabindex="5">
                     </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="diskon" name="diskon" placeholder="Diskon (Rp)" tabindex="7">
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="5">
                     </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" readonly id="total" style="text-align:right" name="total" placeholder="Total">
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="6">
                     </div>
-                    <div class="col-md-2" style="padding-left:7px;padding-right:0px">
-                        <input class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="9">
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly id="total" style="text-align:right" name="total" placeholder="Total">
                     </div>
-                    <div class="col-md-1" style="padding-left:7px;padding-right:0px;color:white">
-                        <a class="btn btn-sm btn-info btn-block" id="inputbarang" name="inputbarang" tabindex="10"><i class="fa fa-plus"></i></a>
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px;color:white">
+                        <a class="btn btn-sm btn-info btn-block" id="inputbarang" href="#" tabindex="8"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12" style="padding-left:7px;padding-right:0px">
+                    <div class="col-md-12" style="padding-left:2px;padding-right:0px">
                         <div class="table-responsive mb-0">
                             <table id="tech-companies-1" class="table table-striped table-bordered table-hover table-sm">
                                 <thead style="background-color: #0085cd;color:white">
@@ -96,11 +100,11 @@
                                         <th style="width: 5%;">Kode</th>
                                         <th>Nama</th>
                                         <th style="width: 5%;">Satuan</th>
-                                        <th style="width: 10%;">Harga</th>
-                                        <th style="width: 10%;">Jumlah</th>
-                                        <th style="width: 10%;">Diskon (Rp)</th>
-                                        <th style="width: 10%;">Total</th>
                                         <th>Keterangan</th>
+                                        <th style="width: 10%;">Exp Date</th>
+                                        <th style="width: 10%;text-align:right;">Harga</th>
+                                        <th style="width: 10%;text-align:center;">Jumlah</th>
+                                        <th style="width: 10%;text-align:right;">Total</th>
                                         <th style="width: 5%;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -121,49 +125,57 @@
     <div class="col-sm-4" id="pembayaran">
         <div class="card">
             <div class="card-body">
-                <h5 style="text-align: center;" colspan="4">PEMBAYARAN</h5>
+                <!-- <h5 style="text-align: center;" colspan="4">PEMBAYARAN</h5> -->
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label">Subtotal</label>
-                    <div class="col-md-8">
-                        <input class="form-control form-control-sm" readonly id="subtotal" name="subtotal" style="text-align: right;" placeholder="Jumlah Bayar">
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Subtotal</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly id="subtotal" name="subtotal" style="text-align: right;" placeholder="Jumlah Bayar">
                     </div>
                 </div>
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label">Potongan</label>
-                    <div class="col-md-8">
-                        <input class="form-control form-control-sm" autocomplete="off" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan" tabindex="11">
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Potongan</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan" tabindex="11">
                     </div>
                 </div>
-                <?php if ($this->session->userdata('bayar') == "Sekarang") { ?>
+                <div class="row">
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Sisa Bayar</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly id="sisabayar" name="sisabayar" style="text-align: right;" placeholder="Sisa Bayar">
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Keterangan</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan" tabindex="13">
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Jenis Transaksi</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <select class="form-control form-control-sm" id="jenis_transaksi" name="jenis_transaksi" tabindex="14">
+                            <option value="Tunai">Tunai</option>
+                            <option value="Kredit">Kredit</option>
+                        </select>
+                    </div>
+                </div>
+                <?php if ($this->uri->segment(3) == "") { ?>
                     <div class="row">
-                        <label for="example-text-input" class="col-md-4 col-form-label">Jumlah Bayar</label>
-                        <div class="col-md-8">
-                            <input class="form-control form-control-sm" autocomplete="off" id="jmlbayar" name="jmlbayar" style="text-align: right;" placeholder="Jumlah Bayar" tabindex="12">
+                        <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">PPN</label>
+                        <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                            <select class="form-control form-control-sm" id="ppn" name="ppn" tabindex="15">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="row">
-                        <label for="example-text-input" class="col-md-4 col-form-label">Sisa Bayar</label>
-                        <div class="col-md-8">
-                            <input class="form-control form-control-sm" readonly id="sisabayar" name="sisabayar" style="text-align: right;" placeholder="Sisa Bayar">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="example-text-input" class="col-md-4 col-form-label">Kembalian</label>
-                        <div class="col-md-8">
-                            <input class="form-control form-control-sm" readonly id="kembalian" name="kembalian" style="text-align: right;" placeholder="Kembalian">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="example-text-input" class="col-md-4 col-form-label">Keterangan</label>
-                        <div class="col-md-8">
-                            <input class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan" tabindex="13">
-                        </div>
-                    </div>
+                <?php } else { ?>
+                    <input type="hidden" class="form-control form-control-sm" id="ppn" name="ppn" placeholder="PPN" value="<?php echo $this->uri->segment(5);?>">
                 <?php } ?>
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label">Konfirmasi Pembayaran</label>
-                    <div class="col-md-8">
-                        <a class="btn btn-sm btn-primary btn-block" href="#" id="inputpembelian" tabindex="14"><i class="fa  fa-shopping-cart"></i> Bayar</a>
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Konfirmasi</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <a class="btn btn-sm btn-primary btn-block" href="#" id="inputpembelian" tabindex="16"><i class="fa  fa-save"></i> Simpan</a>
                     </div>
                 </div>
             </div>
@@ -175,7 +187,7 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Input Pembayaran Hutang</h5>
+                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Data Barang</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -200,30 +212,17 @@
         }
 
         view_pembeliantemp();
-        cekbarang();
-
-        function cekbarang() {
-            var kode_barang = $('#kode_barang').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url(); ?>pembelian/cekbarang',
-                data: {
-                    kode_barang: kode_barang
-                },
-                cache: false,
-                success: function(respond) {
-                    $("#cekbarang").val(respond);
-                }
-            });
-        }
 
         function view_pembeliantemp() {
+
+            var no_po = $('#no_po').val();
 
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url(); ?>pembelian/view_pembelian_temp',
-                data: '',
+                data: {
+                    no_po: no_po
+                },
                 cache: false,
                 success: function(respond) {
                     $("#loadpembeliantemp").html(respond);
@@ -245,15 +244,11 @@
             e.preventDefault();
             var kode_supplier = $('#kode_supplier').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
-            var jatuh_tempo = $('#jatuh_tempo').val();
             if (kode_supplier == "") {
                 Swal.fire('Oppss..', 'Silahkan pilih Supplier terlebih dahulu', 'warning')
                 return false;
             } else if (tgl_transaksi == "") {
                 Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
-                return false;
-            } else if (jatuh_tempo == "") {
-                Swal.fire('Oppss..', 'Tanggal jatuh tempo tidak boleh kosong', 'warning')
                 return false;
             } else {
                 $.ajax({
@@ -281,69 +276,46 @@
             $('#qty').val(formatAngka(qty * 1));
         });
 
-        $('#diskon').on("input", function() {
-            var diskon = $('#diskon').val();
-            var diskon = diskon.replace(/[^\d]/g, "");
-            $('#diskon').val(formatAngka(diskon * 1));
-        });
-
-
-        $('#qty,#harga_modal,#diskon').on("input", function() {
+        $('#qty,#harga_modal').on("input", function() {
             var qty = $('#qty').val();
             var harga_modal = $('#harga_modal').val();
-            var diskon = $('#diskon').val();
 
             var qty = qty.replace(/[^\d]/g, "");
             var harga_modal = harga_modal.replace(/[^\d]/g, "");
-            var diskon = diskon.replace(/[^\d]/g, "");
 
-            var hasiltotal = qty * harga_modal - diskon;
+            var hasiltotal = qty * harga_modal;
 
             $('#total').val(formatAngka(hasiltotal * 1));
         });
 
-        $('#potongan,#jmlbayar').on("input", function() {
+        $('#potongan').on("input", function() {
 
             var potongan = $('#potongan').val();
-            var jmlbayar = $('#jmlbayar').val();
             var subtotal = $('#subtotal').val();
             var sisabayar = $('#sisabayar').val();
 
             var sisabayar = sisabayar.replace(/[^\d]/g, "");
             var subtotal = subtotal.replace(/[^\d]/g, "");
             var potongan = potongan.replace(/[^\d]/g, "");
-            var jmlbayar = jmlbayar.replace(/[^\d]/g, "");
 
 
             $('#potongan').val(formatAngka(potongan * 1));
-            $('#jmlbayar').val(formatAngka(jmlbayar * 1));
 
-            var sisabayar = subtotal - potongan - jmlbayar;
+            var sisabayar = subtotal - potongan;
             if (sisabayar < 1) {
                 var sisabayar = 0;
             } else {
-                var sisabayar = subtotal - potongan - jmlbayar;
-            }
-
-            var kembalian = jmlbayar - (subtotal - potongan);
-            if (kembalian < 1) {
-                var kembalian = 0;
-            } else {
-                var kembalian = jmlbayar - (subtotal - potongan);
+                var sisabayar = subtotal - potongan;
             }
 
             potonganlebih = subtotal - potongan;
             if (potonganlebih < 0) {
                 Swal.fire('Oppss..', 'Potongan Melebihi Total', 'warning')
-                $('#sisabayar').val(formatAngka(total));
+                $('#sisabayar').val(formatAngka(subtotal));
                 $('#potongan').val(0);
-                $('#kembalian').val(0);
-                $('#jmlbayar').val(0);
             } else {
                 $('#sisabayar').val(formatAngka(sisabayar));
-                $('#kembalian').val(formatAngka(kembalian));
             }
-
 
         });
 
@@ -352,24 +324,21 @@
             var kode_barang = $('#kode_barang').val();
             var qty = $('#qty').val();
             var harga_modal = $('#harga_modal').val();
-            var diskon = $('#diskon').val();
             var total = $('#total').val();
             var keterangan = $('#ket').val();
-            var jatuh_tempo = $('#jatuh_tempo').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
+            var kode_edit = $('#kode_edit').val();
+            var exp_date = $('#exp_date').val();
             var kode_supplier = $('#kode_supplier').val();
-            var cekbarang = $('#cekbarang').val();
 
             if (kode_barang == "") {
                 Swal.fire('Oppss..', 'Silahkan pilih Barang terlebih dahulu', 'warning')
-            } else if (cekbarang >= 1) {
-                Swal.fire('Oppss..', 'Barang sudah ada', 'warning')
             } else if (kode_supplier == "") {
                 Swal.fire('Oppss..', 'Silahkan pilih Supllier terlebih dahulu', 'warning')
             } else if (tgl_transaksi == "") {
                 Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
-            } else if (jatuh_tempo == "") {
-                Swal.fire('Oppss..', 'Jatuh tempo tidak boleh kosong', 'warning')
+            } else if (exp_date == "") {
+                Swal.fire('Oppss..', 'Exp Date tidak boleh kosong', 'warning')
             } else if (qty == "") {
                 Swal.fire('Oppss..', 'Qty tidak boleh kosong', 'warning')
             } else if (harga_modal == "") {
@@ -380,9 +349,10 @@
                     url: '<?php echo base_url(); ?>pembelian/insert_pembelian_temp',
                     data: {
                         kode_barang: kode_barang,
+                        exp_date: exp_date,
                         qty: qty,
+                        kode_edit: kode_edit,
                         harga_modal: harga_modal,
-                        diskon: diskon,
                         total: total,
                         keterangan: keterangan
                     },
@@ -391,10 +361,11 @@
                         view_pembeliantemp();
                         $('#ket').val("");
                         $('#kode_barang').val("");
+                        $('#exp_date').val("");
                         $('#nama_barang').val("");
+                        $('#kode_edit').val(0);
                         $('#qty').val("");
                         $('#harga_modal').val("");
-                        $('#diskon').val("");
                         $('#total').val("");
                     }
                 });
@@ -405,20 +376,17 @@
             e.preventDefault();
             var keterangan = $('#keterangan').val();
             var subtotal = $('#subtotal').val();
-            var jmlbayar = $('#jmlbayar').val();
             var potongan = $('#potongan').val();
-            var kembalian = $('#kembalian').val();
-            var jatuh_tempo = $('#jatuh_tempo').val();
+            var no_po = $('#no_po').val();
+            var jenis_transaksi = $('#jenis_transaksi').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
             var kode_supplier = $('#kode_supplier').val();
+            var ppn = $('#ppn').val();
             if (subtotal == "0") {
                 Swal.fire('Oppss..', 'Silahkan pilih Barang terlebih dahulu', 'warning')
                 return false;
             } else if (tgl_transaksi == "") {
                 Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
-                return false;
-            } else if (jatuh_tempo == "") {
-                Swal.fire('Oppss..', 'Tanggal jatuh tempo tidak boleh kosong', 'warning')
                 return false;
             } else {
                 $.ajax({
@@ -427,17 +395,17 @@
                     data: {
                         keterangan: keterangan,
                         potongan: potongan,
+                        no_po: no_po,
                         subtotal: subtotal,
-                        kembalian: kembalian,
                         tgl_transaksi: tgl_transaksi,
+                        jenis_transaksi: jenis_transaksi,
                         kode_supplier: kode_supplier,
-                        jatuh_tempo: jatuh_tempo,
-                        jmlbayar: jmlbayar
+                        ppn: ppn
                     },
                     cache: false,
                     success: function(respond) {
                         Swal.fire('Oppss..', 'Berhasil di Simpan', 'success')
-                        location.reload();
+                        window.location.href = "<?php echo base_url(); ?>pembelian/input_pembelian";
                     }
                 });
             }

@@ -103,24 +103,6 @@
                 <div class="container-fluid">
                     <div class="float-right">
 
-                        <div class="dropdown d-inline-block ml-2">
-                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-magnify"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-search-dropdown">
-
-                                <form class="p-3">
-                                    <div class="form-group m-0">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
 
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
@@ -169,25 +151,102 @@
                                             <i class="fa fa-home"></i> Dashboard
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>perusahaan/view_perusahaan">
-                                            <i class="fa fa-home"></i> Perusahaan
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-table"></i> Data Master <div class="arrow-down"></div>
                                         </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-more">
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>barang/view_barang" class="dropdown-item">Data Barang</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>supplier/view_supplier" class="dropdown-item">Data Supplier</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>kategori/view_kategori" class="dropdown-item">Data Kategori Barang</a>
+                                            </div>
+                                        </div>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>barang/view_barang">
-                                            <i class="fa fa-home"></i> Barang
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-list"></i> Pembelian <div class="arrow-down"></div>
                                         </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-more">
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>purchaseorder/view_purchaseorder" class="dropdown-item">Purchase Order</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>pembelian/view_pembelian" class="dropdown-item">Pembelian</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>pembayaran/view_pembayaran_hutang" class="dropdown-item">Pembayaran Hutang</a>
+                                            </div>
+                                        </div>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>penjualan/view_penjualan">
-                                            <i class="fa fa-list"></i> Penjualan
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-list"></i> Penjualan <div class="arrow-down"></div>
                                         </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-more">
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>salesorder/view_salesorder" class="dropdown-item">Sales Order</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>penjualan/view_penjualan" class="dropdown-item">Penjualan</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>pembayaran/view_pembayaran_piutang" class="dropdown-item">Pembayaran Hutang</a>
+                                            </div>
+                                        </div>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?php echo base_url(); ?>pembelian/view_pembelian">
-                                            <i class="fa fa-list"></i> Pembelian
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-book"></i> Laporan <div class="arrow-down"></div>
                                         </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-more">
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Pembelian <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-auth">
+                                                    <a href="<?php echo base_url(); ?>laporanpembelian/pembelian" class="dropdown-item">Lap. Pembelian</a>
+                                                    <a href="<?php echo base_url(); ?>laporanpembelian/pembelian_detail" class="dropdown-item">Lap. Pembelian Detail</a>
+                                                    <a href="<?php echo base_url(); ?>laporanpembelian/kartu_hutang" class="dropdown-item">Lap. Kartu Hutang</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-utility" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Penjualan <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-utility">
+                                                    <a href="<?php echo base_url(); ?>laporanpenjualan/penjualan" class="dropdown-item">Lap. Penjualan</a>
+                                                    <a href="<?php echo base_url(); ?>laporanpenjualan/penjualan_detail" class="dropdown-item">Lap. Penjualan Detail</a>
+                                                    <a href="<?php echo base_url(); ?>laporanpenjualan/kartu_piutang" class="dropdown-item">Lap. Kartu Hutang</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-layout" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Gudang <div class="arrow-down"></div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-layout">
+                                                    <a href="<?php echo base_url(); ?>laporangudang/persediaan_barang" class="dropdown-item">Lap. Persediaan Barang</a>
+                                                    <a href="<?php echo base_url(); ?>laporangudang/kartu_gudang" class="dropdown-item">Lap. Kartu Stok Gudang</a>
+                                                    <a href="<?php echo base_url(); ?>laporangudang/pemasukan" class="dropdown-item">Lap. Pemasukan Barang</a>
+                                                    <a href="<?php echo base_url(); ?>laporangudang/pengeluaran" class="dropdown-item">Lap. Pengeluaran Barang</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-cog"></i> Settings <div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-more">
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>saldoawal/view_saldoawal" class="dropdown-item">Saldo Awal</a>
+                                            </div>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -196,13 +255,12 @@
                 </div>
             </div>
 
-
         </header>
 
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-        <div class="main-content" style="min-height: 667px;">
+        <div class="main-content" style="min-height: 740px; zoom: 90%;">
 
             <div class="page-content">
 

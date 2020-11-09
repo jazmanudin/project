@@ -13,9 +13,8 @@
                                     <th style="width: 20%;">Nama</th>
                                     <th style="width: 5%;">Satuan</th>
                                     <th style="width: 10%;">Kategori</th>
-                                    <th style="width: 10%;">Jenis Barang</th>
+                                    <!-- <th style="width: 10%;">Jenis Barang</th> -->
                                     <th style="width: 8%;">Harga Modal</th>
-                                    <th style="width: 8%;">Harga Jual</th>
                                     <th style="width: 8%;">Diskon</th>
                                     <th style="width: 5%;">Stok</th>
                                     <th>Keterangan</th>
@@ -29,9 +28,8 @@
                                         <td><?php echo $d->nama_barang; ?></td>
                                         <td><?php echo $d->satuan; ?></td>
                                         <td><?php echo $d->nama_kategori; ?></td>
-                                        <td><?php echo $d->jenis_barang; ?></td>
+                                        <!-- <td><?php echo $d->jenis_barang; ?></td> -->
                                         <td align="right"><?php echo number_format($d->harga_modal); ?></td>
-                                        <td align="right"><?php echo number_format($d->harga); ?></td>
                                         <td align="right"><?php echo number_format($d->diskon); ?></td>
                                         <td align="right"><?php echo number_format($d->stok); ?></td>
                                         <td><?php echo $d->keterangan; ?></td>

@@ -1,32 +1,48 @@
 <div class="col-lg-6">
     <div class="card">
         <div class="card-body">
-            <h4 align="center">Edit Data Barang</h4>
+            <h5 style="text-align: center;color:black;"><b>EDIT BARANG</b></h5>
             <form autocomplete="off" id="form" class="pelangganForm" method="POST" enctype="multipart/form-data" data-action="<?php echo base_url(); ?>barang/edit_barang">
 
                 <div class="form-group">
                     <label>Kode Barang</label>
-                    <input type="text"  value="<?php echo $getdata['kode_barang']; ?>" name="kode_barang" id="kode_barang" class="data_kosong form-control form-control-sm" placeholder="Kode Barang" />
+                    <input type="text" value="<?php echo $getdata['kode_barang']; ?>" readonly name="kode_barang" id="kode_barang" class="data_kosong form-control form-control-sm" placeholder="Kode Barang" />
                 </div>
                 <div class="form-group">
                     <label>Nama Barang</label>
-                    <input type="text"  value="<?php echo $getdata['nama_barang']; ?>" name="nama_barang" id="nama_barang" class="data_kosong form-control form-control-sm" placeholder="Nama Barang" />
+                    <input type="text" value="<?php echo $getdata['nama_barang']; ?>" name="nama_barang" id="nama_barang" class="data_kosong form-control form-control-sm" placeholder="Nama Barang" />
                 </div>
                 <div class="form-group">
                     <label>Satuan Barang</label>
-                    <input type="text"  value="<?php echo $getdata['satuan']; ?>" name="satuan" id="satuan" class="data_kosong form-control form-control-sm" placeholder="Satuan Barang" />
+                    <input type="text" value="<?php echo $getdata['satuan']; ?>" name="satuan" id="satuan" class="data_kosong form-control form-control-sm" placeholder="Satuan Barang" />
                 </div>
                 <div class="form-group">
                     <label>Harga Modal</label>
-                    <input type="text"  value="<?php echo number_format($getdata['harga_modal']); ?>" name="harga_modal" id="harga_modal" class="data_kosong form-control form-control-sm" placeholder="Harga Modal" />
+                    <input type="text" value="<?php echo number_format($getdata['harga_modal']); ?>" name="harga_modal" id="harga_modal" class="data_kosong form-control form-control-sm" placeholder="Harga Modal" />
                 </div>
                 <div class="form-group">
-                    <label>Harga Jual</label>
-                    <input type="text"  value="<?php echo number_format($getdata['harga']); ?>" name="harga" id="harga" class="data_kosong form-control form-control-sm" placeholder="Harga Jual" />
+                    <label>Harga Pel. Tetap</label>
+                    <input type="text" value="<?php echo number_format($getdata['pelanggan_tetap']); ?>" name="pelanggan_tetap" id="pelanggan_tetap" class="data_kosong form-control form-control-sm" placeholder="Harga Pel. Tetap" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Pel. Tidak Tetap</label>
+                    <input type="text" value="<?php echo number_format($getdata['tidak_tetap']); ?>" name="tidak_tetap" id="tidak_tetap" class="data_kosong form-control form-control-sm" placeholder="Harga Pel. Tidak Tetap" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Grosir</label>
+                    <input type="text" value="<?php echo number_format($getdata['grosir']); ?>" name="grosir" id="grosir" class="data_kosong form-control form-control-sm" placeholder="Harga Grosir" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Eceran</label>
+                    <input type="text" value="<?php echo number_format($getdata['eceran']); ?>" name="eceran" id="eceran" class="data_kosong form-control form-control-sm" placeholder="Harga Eceran" />
+                </div>
+                <div class="form-group">
+                    <label>Harga Lainnya</label>
+                    <input type="text" value="<?php echo number_format($getdata['lainnya']); ?>" name="lainnya" id="lainnya" class="data_kosong form-control form-control-sm" placeholder="Harga Lainnya" />
                 </div>
                 <div class="form-group">
                     <label>Diskon</label>
-                    <input type="text"  value="<?php echo number_format($getdata['diskon']); ?>" name="diskon" id="diskon" class="data_kosong form-control form-control-sm" placeholder="Diskon" />
+                    <input type="text" value="<?php echo number_format($getdata['diskon']); ?>" name="diskon" id="diskon" class="data_kosong form-control form-control-sm" placeholder="Diskon" />
                 </div>
                 <div class="form-group">
                     <label>Kategori Barang</label>
@@ -34,12 +50,12 @@
                         <option value="">Pilih Kategori</option>
                         <?php foreach ($kategori as $k) { ?>
                             <option <?php if ($getdata['kode_kategori'] == $k->kode_kategori) {
-                                    echo "selected";
-                                } ?> value="<?php echo $k->kode_kategori; ?>"><?php echo $k->nama_kategori; ?></option>
+                                        echo "selected";
+                                    } ?> value="<?php echo $k->kode_kategori; ?>"><?php echo $k->nama_kategori; ?></option>
                         <?php } ?>
                     </select>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Jenis Barang</label>
                     <select class="selectize" id="jenis_barang" name="jenis_barang">
                         <option value="">Pilih Jenis Barang</option>
@@ -53,10 +69,10 @@
                                     echo "selected";
                                 } ?> value="Bahan Baku">Bahan Baku</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label>Keterangan</label>
-                    <input type="text"  value="<?php echo $getdata['keterangan']; ?>" name="keterangan" id="keterangan" class="data_kosong form-control form-control-sm" placeholder="Keterangan" />
+                    <input type="text" value="<?php echo $getdata['keterangan']; ?>" name="keterangan" id="keterangan" class="data_kosong form-control form-control-sm" placeholder="Keterangan" />
                 </div>
                 <div class="form-group">
                     <label>Foto</label>

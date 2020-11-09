@@ -33,7 +33,7 @@
                                 <tr>
                                     <th style="width: 8%;">No Pemasukan</th>
                                     <th style="width: 7%;">Tanggal</th>
-                                    <th style="width: 15%;">Asal Barang</th>
+                                    <th style="width: 15%;">Jenis Pemasukan</th>
                                     <th>Keterangan</th>
                                     <th style="width: 5%;">Aksi</th>
                                 </tr>
@@ -44,7 +44,7 @@
                                     <tr>
                                         <td><?php echo $d->no_pemasukan; ?></td>
                                         <td><?php echo $d->tgl_transaksi; ?></td>
-                                        <td><?php echo $d->asal_barang; ?></td>
+                                        <td><?php echo $d->jenis_pemasukan; ?></td>
                                         <td><?php echo $d->keterangan; ?></td>
                                         <td>
                                             <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d->no_pemasukan; ?>"><i class="mdi mdi-eye"></i></a>
@@ -65,7 +65,7 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Detail pemasukan</h5>
+                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Detail</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

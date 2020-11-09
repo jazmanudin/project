@@ -25,8 +25,9 @@ class Barang extends CI_Controller
 
 	public function hapus_barang()
 	{
-		$kode_barang = $this->uri->segment(3);
-		$this->db->query("DELETE FROM barang WHERE kode_barang = '$kode_barang' ");
+		$kode_barang 	= $this->uri->segment(3);
+		$id_member 		= $this->session->userdata('id_member');
+		$this->db->query("DELETE FROM barang WHERE kode_barang = '$kode_barang' AND id_member = '$id_member' ");
 	}
 
 	function input_barang()
@@ -52,12 +53,13 @@ class Barang extends CI_Controller
 					redirect('barang/view_barang');
 				}
 			} else {
-				$this->Model_barang->insert_barang();
+				$foto = "";
+				$this->Model_barang->insert_barang($foto);
 				redirect('barang/view_barang');
 			}
 		} else {
 			$data['kategori'] = $this->Model_barang->get_kategori()->result();
-			$this->template->load('template/template', 'barang/input_barang',$data);
+			$this->template->load('template/template', 'barang/input_barang', $data);
 		}
 	}
 
