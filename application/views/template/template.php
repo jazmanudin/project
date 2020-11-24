@@ -51,6 +51,7 @@
 
     <!-- spectrum colorpicker -->
     <link href="<?php echo base_url(); ?>assets/libs/spectrum-colorpicker/spectrum.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery.autocomplete.css" />
 
     <script src="<?php echo base_url(); ?>assets/libs/jquery/jquery.min.js"></script>
 
@@ -59,6 +60,7 @@
     <script src="<?php echo base_url(); ?>assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/simplebar/simplebar.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/libs/node-waves/waves.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/jquery.autocomplete.js"></script>
 
     <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
     <!-- Spectrum colorpicker -->
@@ -91,9 +93,11 @@
     <!-- Form Advanced init -->
     <script src="<?php echo base_url(); ?>assets/js/pages/form-advanced.init.js"></script>
 
+    <!-- Plugin Js-->
+    <script src="<?php echo base_url(); ?>assets/libs/apexcharts/apexcharts.min.js"></script>
 </head>
 
-<body style="font-family:Roboto,HelveticaNeue,Arial,sans-serif;" data-topbar="dark" data-layout="horizontal" data-layout-size="boxed">
+<body style="font-family:Roboto,HelveticaNeue,Arial,sans-serif;font-size:14px" data-topbar="dark" data-layout="horizontal" data-layout-size="boxed">
 
     <!-- Begin page -->
     <div id="layout-wrapper" style="background-color: #0085cd;">
@@ -163,6 +167,9 @@
                                                 <a href="<?php echo base_url(); ?>supplier/view_supplier" class="dropdown-item">Data Supplier</a>
                                             </div>
                                             <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>pelanggan/view_pelanggan" class="dropdown-item">Data Pelanggan</a>
+                                            </div>
+                                            <div class="dropdown">
                                                 <a href="<?php echo base_url(); ?>kategori/view_kategori" class="dropdown-item">Data Kategori Barang</a>
                                             </div>
                                         </div>
@@ -195,7 +202,23 @@
                                                 <a href="<?php echo base_url(); ?>penjualan/view_penjualan" class="dropdown-item">Penjualan</a>
                                             </div>
                                             <div class="dropdown">
-                                                <a href="<?php echo base_url(); ?>pembayaran/view_pembayaran_piutang" class="dropdown-item">Pembayaran Hutang</a>
+                                                <a href="<?php echo base_url(); ?>penjualan/view_suratjalan" class="dropdown-item">Surat Jalan</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>pembayaran/view_pembayaran_piutang" class="dropdown-item">Pembayaran Piutang</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-list"></i> Gudang <div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-more">
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>pemasukan/view_pemasukan" class="dropdown-item">Pemasukan</a>
+                                            </div>
+                                            <div class="dropdown">
+                                                <a href="<?php echo base_url(); ?>pengeluaran/view_pengeluaran" class="dropdown-item">Pengeluaran</a>
                                             </div>
                                         </div>
                                     </li>
@@ -220,6 +243,8 @@
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="topnav-utility">
                                                     <a href="<?php echo base_url(); ?>laporanpenjualan/penjualan" class="dropdown-item">Lap. Penjualan</a>
+                                                    <a href="<?php echo base_url(); ?>laporanpenjualan/rekap_penjualan_sales" class="dropdown-item">Lap. Rekap Penj Sales</a>
+                                                    <a href="<?php echo base_url(); ?>laporanpenjualan/rekap_penjualan_barang" class="dropdown-item">Lap. Rekap Penj Barang</a>
                                                     <a href="<?php echo base_url(); ?>laporanpenjualan/penjualan_detail" class="dropdown-item">Lap. Penjualan Detail</a>
                                                     <a href="<?php echo base_url(); ?>laporanpenjualan/kartu_piutang" class="dropdown-item">Lap. Kartu Hutang</a>
                                                 </div>
@@ -230,7 +255,10 @@
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="topnav-layout">
                                                     <a href="<?php echo base_url(); ?>laporangudang/persediaan_barang" class="dropdown-item">Lap. Persediaan Barang</a>
+                                                    <a href="<?php echo base_url(); ?>laporangudang/barang_opname" class="dropdown-item">Lap. Barang Opname</a>
                                                     <a href="<?php echo base_url(); ?>laporangudang/kartu_gudang" class="dropdown-item">Lap. Kartu Stok Gudang</a>
+                                                    <a href="<?php echo base_url(); ?>laporangudang/barang_minimum" class="dropdown-item">Lap. Stok Minimum</a>
+                                                    <a href="<?php echo base_url(); ?>laporangudang/barang_exp" class="dropdown-item">Lap. Barang Kadaluarsa</a>
                                                     <a href="<?php echo base_url(); ?>laporangudang/pemasukan" class="dropdown-item">Lap. Pemasukan Barang</a>
                                                     <a href="<?php echo base_url(); ?>laporangudang/pengeluaran" class="dropdown-item">Lap. Pengeluaran Barang</a>
                                                 </div>
@@ -245,6 +273,8 @@
                                         <div class="dropdown-menu" aria-labelledby="topnav-more">
                                             <div class="dropdown">
                                                 <a href="<?php echo base_url(); ?>saldoawal/view_saldoawal" class="dropdown-item">Saldo Awal</a>
+                                                <a href="<?php echo base_url(); ?>opname/view_opname" class="dropdown-item">Opname Stok</a>
+                                                <a href="<?php echo base_url(); ?>barcode/input_barcode" class="dropdown-item">Generate Barcode</a>
                                             </div>
                                         </div>
                                     </li>
@@ -260,7 +290,7 @@
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-        <div class="main-content" style="min-height: 740px; zoom: 90%;">
+        <div class="main-content" style="min-height: 667px; zoom: 100%;">
 
             <div class="page-content">
 
@@ -589,6 +619,7 @@
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
     <script src="<?php echo base_url(); ?>assets/js/app.js"></script>
+    <!-- <script src="<?php echo base_url(); ?>assets/js/pages/apex.init.js"></script> -->
     <script>
         $(document).ready(function() {
 

@@ -5,25 +5,22 @@ class Model_laporangudang extends CI_Model
 
   function getSupplier()
   {
-    $id_member      = $this->session->userdata('id_member');
-    return $this->db->query("SELECT * FROM supplier WHERE id_member = '$id_member' ");
+    return $this->db->query("SELECT * FROM supplier ");
   }
 
   function getBarang($kode_barang)
   {
-    $id_member      = $this->session->userdata('id_member');
 
     if ($kode_barang != "") {
-      $kode_barang = "AND barang.kode_barang = '" . $kode_barang . "' ";
+      $kode_barang = "WHERE barang.kode_barang = '" . $kode_barang . "' ";
     }
 
-    return $this->db->query("SELECT * FROM barang 
-    WHERE id_member = '$id_member' AND jenis_barang != 'Produksi' "
+    return $this->db->query("SELECT * FROM barang  "
       . $kode_barang
       . "
       ");
   }
-  
+
   function saldoAwal($bulan, $tahun, $kode_barang)
   {
     if ($kode_barang != "") {
@@ -35,12 +32,12 @@ class Model_laporangudang extends CI_Model
     FROM saldoawal_detail 
     INNER JOIN saldoawal ON saldoawal.kode_saldoawal=saldoawal_detail.kode_saldoawal
     WHERE bulan = '$bulan' AND tahun = '$tahun' "
-    .$kode_barang
-    ."
+      . $kode_barang
+      . "
     ";
     return $this->db->query($query);
   }
-  
+
   function list_pengeluaran($dari, $sampai, $kode_barang)
   {
 
@@ -48,14 +45,13 @@ class Model_laporangudang extends CI_Model
       $kode_barang = "AND barang.kode_barang = '" . $kode_barang . "' ";
     }
 
-    $id_member      = $this->session->userdata('id_member');
     return $this->db->query("SELECT 
     * FROM pengeluaran_detail
     INNER JOIN pengeluaran ON pengeluaran.no_pengeluaran=pengeluaran_detail.no_pengeluaran
     INNER JOIN barang ON barang.kode_barang=pengeluaran_detail.kode_barang
-    WHERE pengeluaran.id_member = '$id_member' AND pengeluaran.tgl_transaksi BETWEEN '$dari' AND '$sampai' "
-    .$kode_barang
-    ."
+    WHERE pengeluaran.tgl_transaksi BETWEEN '$dari' AND '$sampai' "
+      . $kode_barang
+      . "
     ORDER BY pengeluaran.tgl_transaksi,pengeluaran.no_pengeluaran
      ");
   }
@@ -67,15 +63,54 @@ class Model_laporangudang extends CI_Model
       $kode_barang = "AND barang.kode_barang = '" . $kode_barang . "' ";
     }
 
-    $id_member      = $this->session->userdata('id_member');
     return $this->db->query("SELECT 
     * FROM pemasukan_detail
     INNER JOIN pemasukan ON pemasukan.no_pemasukan=pemasukan_detail.no_pemasukan
     INNER JOIN barang ON barang.kode_barang=pemasukan_detail.kode_barang
-    WHERE pemasukan.id_member = '$id_member' AND pemasukan.tgl_transaksi BETWEEN '$dari' AND '$sampai' "
-    .$kode_barang
-    ."
+    WHERE pemasukan.tgl_transaksi BETWEEN '$dari' AND '$sampai' "
+      . $kode_barang
+      . "
     ORDER BY pemasukan.tgl_transaksi,pemasukan.no_pemasukan
+     ");
+  }
+
+  function list_barang_minimum($kode_barang)
+  {
+
+    if ($kode_barang != "") {
+      $kode_barang = "WHERE barang.kode_barang = '" . $kode_barang . "' ";
+    }
+
+    return $this->db->query("SELECT min_stok,db.stok,barang.kode_barang,nama_barang,satuan,nama_kategori,harga_modal,grosir,eceran,tidak_tetap,pelanggan_tetap,lainnya,keterangan 
+    FROM barang
+    INNER JOIN kategori ON kategori.kode_kategori=barang.kode_kategori
+    
+    LEFT JOIN(SELECT kode_barang,SUM(stok) AS stok 
+    FROM barang_detail 
+    GROUP BY kode_barang) db ON (barang.kode_barang=db.kode_barang)
+    "
+      . $kode_barang
+      . "
+    ORDER BY nama_barang
+     ");
+  }
+
+  function list_barang_exp($kode_barang)
+  {
+
+    if ($kode_barang != "") {
+      $kode_barang = "AND barang.kode_barang = '" . $kode_barang . "' ";
+    }
+
+    return $this->db->query("SELECT exp_date,min_stok,stok,barang.kode_barang,nama_barang,satuan,nama_kategori,keterangan 
+    FROM barang
+    INNER JOIN kategori ON kategori.kode_kategori=barang.kode_kategori
+    INNER JOIN barang_detail ON barang.kode_barang=barang_detail.kode_barang
+    WHERE barang_detail.stok != '0'
+    "
+      . $kode_barang
+      . "
+    ORDER BY nama_barang,exp_date
      ");
   }
 
@@ -91,10 +126,9 @@ class Model_laporangudang extends CI_Model
     // }
 
     if ($kode_barang != "") {
-      $kode_barang = "AND barang.kode_barang = '" . $kode_barang . "' ";
+      $kode_barang = "WHERE barang.kode_barang = '" . $kode_barang . "' ";
     }
 
-    $id_member      = $this->session->userdata('id_member');
     return $this->db->query("SELECT 
     barang.kode_barang,
     barang.nama_barang,
@@ -107,7 +141,8 @@ class Model_laporangudang extends CI_Model
     kl.qtyretur,
     kl.qtybuang,
     kl.qtykeluarlainnya,
-    sa.qtysaldoawal
+    sa.qtysaldoawal,
+    op.qtyopname
     
     FROM barang
 
@@ -118,6 +153,15 @@ class Model_laporangudang extends CI_Model
     INNER JOIN saldoawal ON saldoawal_detail.kode_saldoawal = saldoawal.kode_saldoawal 
     WHERE bulan = '$bulan' AND tahun = '$tahun' 
     GROUP BY saldoawal_detail.kode_barang) sa ON (barang.kode_barang = sa.kode_barang)
+
+    
+    LEFT JOIN (SELECT 
+    opname_detail.kode_barang,
+    SUM(qty) AS qtyopname
+    FROM opname_detail 
+    INNER JOIN opname ON opname_detail.kode_opname = opname.kode_opname 
+    WHERE bulan = '$bulan' AND tahun = '$tahun' 
+    GROUP BY opname_detail.kode_barang) op ON (barang.kode_barang = op.kode_barang)
 
     LEFT JOIN (SELECT 
     pembelian_detail.kode_barang,
@@ -153,8 +197,7 @@ class Model_laporangudang extends CI_Model
     INNER JOIN pengeluaran ON pengeluaran_detail.no_pengeluaran = pengeluaran.no_pengeluaran 
     WHERE MONTH(tgl_transaksi) = '$bulan' AND YEAR(tgl_transaksi) = '$tahun' 
     GROUP BY pengeluaran_detail.kode_barang) kl ON (barang.kode_barang = kl.kode_barang)
-
-    WHERE barang.id_member = '$id_member' "
+    "
       . $kode_barang
       . "
     ORDER BY barang.jenis_barang,barang.nama_barang ");

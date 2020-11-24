@@ -28,6 +28,7 @@ foreach ($data->result() as $d) {
 
         var totals = $('#totals').text();
         $('#subtotal').val(totals);
+        $('#totalkeranjang').html(totals);
 
         function formatAngka(angka) {
             if (typeof(angka) != 'string') angka = angka.toString();
@@ -83,6 +84,7 @@ foreach ($data->result() as $d) {
             $('#harga_modal').val(formatAngka(harga_modal));
             $('#total').val(formatAngka(harga_modal * qty));
             $('#kode_barang').val(kode_barang);
+            $('#qty').focus();
 
         });
 

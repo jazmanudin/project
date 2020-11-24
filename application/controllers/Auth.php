@@ -15,7 +15,7 @@ class Auth extends CI_Controller
     check_log();
     if (isset($_POST['submit'])) {
       $username    = $this->input->post('username');
-      $password    = md5($this->input->post('password'));
+      $password    = $this->input->post('password');
       $user        = $this->Model_auth->cek_user($username, $password);
       $cek_user    = $user->num_rows();
       $data_user   = $user->row_array();

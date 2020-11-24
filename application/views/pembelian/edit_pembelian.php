@@ -13,33 +13,25 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">No Faktur</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" value="<?php echo $getpemb['no_fak_pemb']; ?>" readonly id="no_fak_pemb" name="no_fak_pemb" placeholder="Faktur Pembelian">
                         <input type="hidden" class="form-control form-control-sm" value="0" id="kode_edit" name="kode_edit">
                     </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Supplier</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <select class="selectize" id="kode_supplier" name="kode_supplier" tabindex="1">
-                            <option value="">-- Pilih Supplier --</option>
-                            <?php foreach ($supplier->result() as $s) { ?>
-                                <option <?php if ($getpemb['kode_supplier'] == $s->kode_supplier) {
-                                            echo "selected";
-                                        } ?> value="<?php echo $s->kode_supplier; ?>"><?php echo $s->nama_supplier; ?></option>
-                            <?php } ?>
-                        </select>
+                    <div class="col-md-4" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" value="<?php echo $getpemb['nama_supplier']; ?>" autofocus id="nama_supplier" name="nama_supplier" placeholder="Nama Supplier" tabindex="1">
                     </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Tgl Transaksi</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" value="<?php echo $getpemb['kode_supplier']; ?>" readonly id="kode_supplier" name="kode_supplier" placeholder="Kode Supplier">
+                    </div>
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
                         <input type="text" autocomplete="off" value="<?php echo $getpemb['tgl_transaksi']; ?>" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
+                    </div>
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" readonly autocomplete="off" value="<?php echo $getpemb['jatuh_tempo']; ?>" name="jatuh_tempo" id="jatuh_tempo" placeholder="Tanggal Jatuh Tempo" class="form-control form-control-sm" />
                     </div>
                 </div>
             </div>
@@ -53,34 +45,31 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <a class="btn btn-info btn-sm btn-block caribarang" href="#" tabindex="3">Cari</a>
+                        <input type="text" class="form-control form-control-sm" readonly autocomplete="off" id="kode_barang" name="kode_barang" placeholder="Kode" tabindex="4">
                     </div>
-                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="kode_barang" name="kode_barang" placeholder="Kode" tabindex="4">
-                    </div>
-                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" readonly id="nama_barang" name="nama_barang" placeholder="Nama Barang">
+                    <div class="col-md-3" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly id="nama_barang" name="nama_barang" placeholder="Nama Barang" tabindex="5">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" readonly id="satuan" name="satuan" placeholder="Satuan">
                     </div>
                     <div class="col-md-2" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="4">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="6">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm  datepicker-here" autocomplete="off" style="text-align:right" id="exp_date" name="exp_date" placeholder="Exp Date" data-language="en" tabindex="5">
+                        <input type="text" class="form-control form-control-sm  datepicker-here" autocomplete="off" style="text-align:right" id="exp_date" name="exp_date" placeholder="Exp Date" data-language="en" tabindex="7">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="5">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="8">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="6">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="9">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" readonly id="total" style="text-align:right" name="total" placeholder="Total">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px;color:white">
-                        <a class="btn btn-sm btn-info btn-block" id="inputbarang" href="#" tabindex="8"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-sm btn-info btn-block" id="inputbarang" href="#" tabindex="10"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="row">
@@ -121,28 +110,28 @@
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Subtotal</label>
                     <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" readonly value="<?php echo number_format($getpemb['total']);?>" id="subtotal" name="subtotal" style="text-align: right;" placeholder="Jumlah Bayar">
+                        <input type="text" class="form-control form-control-sm" readonly value="<?php echo number_format($getpemb['total']); ?>" id="subtotal" name="subtotal" style="text-align: right;" placeholder="Jumlah Bayar">
                     </div>
                 </div>
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Potongan</label>
                     <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" value="<?php echo number_format($getpemb['potongan']);?>" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan" tabindex="11">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" value="<?php echo number_format($getpemb['potongan']); ?>" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan" tabindex="11">
                     </div>
                 </div>
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Sisa Bayar</label>
                     <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" readonly value="<?php echo number_format($getpemb['total']-$getpemb['potongan']);?>" id="sisabayar" name="sisabayar" style="text-align: right;" placeholder="Sisa Bayar">
+                        <input type="text" class="form-control form-control-sm" readonly value="<?php echo number_format($getpemb['total'] - $getpemb['potongan']); ?>" id="sisabayar" name="sisabayar" style="text-align: right;" placeholder="Sisa Bayar">
                     </div>
                 </div>
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Keterangan</label>
                     <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" value="<?php echo $getpemb['keterangan'];?>" id="keterangan" name="keterangan" placeholder="Keterangan" tabindex="13">
+                        <input type="text" class="form-control form-control-sm" value="<?php echo $getpemb['keterangan']; ?>" id="keterangan" name="keterangan" placeholder="Keterangan" tabindex="13">
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" hidden>
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Jenis Transaksi</label>
                     <div class="col-md-8" style="padding-left:2px;padding-right:0px">
                         <select class="form-control form-control-sm" id="jenis_transaksi" name="jenis_transaksi" tabindex="14">
@@ -179,24 +168,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="viewbarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Data Barang</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="loadbarang">
-
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -227,27 +198,24 @@
 
         }
 
-        $('.caribarang').click(function(e) {
-            e.preventDefault();
-            var kode_supplier = $('#kode_supplier').val();
-            var tgl_transaksi = $('#tgl_transaksi').val();
-            if (kode_supplier == "") {
-                Swal.fire('Oppss..', 'Silahkan pilih Supplier terlebih dahulu', 'warning')
-                return false;
-            } else if (tgl_transaksi == "") {
-                Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
-                return false;
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo base_url(); ?>pembelian/view_barang',
-                    data: '',
-                    cache: false,
-                    success: function(respond) {
-                        $("#loadbarang").html(respond);
-                        $("#viewbarang").modal("show");
-                    }
-                });
+        $('#nama_supplier').autocomplete({
+            serviceUrl: "<?php echo base_url(); ?>pembelian/get_supplier/",
+            onSelect: function(suggestions) {
+                $('#nama_supplier').val(suggestions.nama_supplier);
+                $('#kode_supplier').val(suggestions.kode_supplier);
+            }
+        });
+
+        $('#nama_barang').autocomplete({
+            serviceUrl: "<?php echo base_url(); ?>pembelian/get_barang/",
+            onSelect: function(suggestions) {
+
+                $('#nama_barang').val(suggestions.nama_barang);
+                $('#kode_barang').val(suggestions.kode_barang);
+                $('#satuan').val(suggestions.satuan);
+                $('#harga_modal').val(formatAngka(suggestions.harga_modal));
+                // $('#stok').val(formatAngka(suggestions.stok));
+                view_pembeliantemp();
             }
         });
 
@@ -370,6 +338,7 @@
             var no_po = $('#no_po').val();
             var jenis_transaksi = $('#jenis_transaksi').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
+            var jatuh_tempo = $('#jatuh_tempo').val();
             var kode_supplier = $('#kode_supplier').val();
             var ppn = $('#ppn').val();
             if (subtotal == "0") {
@@ -389,6 +358,7 @@
                         no_po: no_po,
                         subtotal: subtotal,
                         tgl_transaksi: tgl_transaksi,
+                        jatuh_tempo: jatuh_tempo,
                         jenis_transaksi: jenis_transaksi,
                         kode_supplier: kode_supplier,
                         ppn: ppn
@@ -401,6 +371,39 @@
                 });
             }
         });
+
+        $(document).on('keyup', 'body', function(e) {
+            e.preventDefault();
+            var charCode = (e.which) ? e.which : event.keyCode;
+
+            if (charCode == 37) {
+                $('#kode_barang').focus();
+            }
+
+            if (charCode == 39) {
+                $('#potongan').focus();
+            }
+
+            if (charCode == 46) {
+                clear();
+            }
+
+            if (charCode == 16) {
+                // $('#kode_barang').focus();
+            }
+        });
+
+        document.onkeyup = function(e) {
+            var evt = window.event || e;
+
+            if (evt.keyCode == 13 && evt.ctrlKey) {
+
+                $('#simpan').click();
+
+            }
+
+        }
+
 
     });
 </script>

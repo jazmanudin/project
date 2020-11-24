@@ -59,7 +59,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LAPORAN REKAP PERSEDIAAN BARANG</title>
+    <title>LAPORAN KARTU GUDANG</title>
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/favicon.ico">
 </head>
 <?php if ($bulan == "01") {
     $bulan = "Januari";
@@ -95,7 +96,7 @@ error_reporting(0);
     <table class="judul">
         <thead>
             <tr>
-                <th colspan="9" style="text-align: center;">LAPORAN REKAP PERSEDIAAN BARANG</th>
+                <th colspan="9" style="text-align: center;">LAPORAN KARTU GUDANG</th>
             </tr>
             <tr>
                 <th colspan="9" style="text-align: center;">Periode <?php echo $bulan; ?> <?php echo $tahun; ?></th>

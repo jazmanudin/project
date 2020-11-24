@@ -6,8 +6,10 @@
                 <form class="form-horizontal" method="post" action="<?php echo base_url(); ?>pembelian/view_pembelian" autocomplete="off">
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <input class="form-control form-control-sm" value="<?php echo $no_fak_pemb; ?>" name="no_fak_pemb" placeholder="No Faktur">
+                            <div class="row">
+                                <div class="form-group">
+                                    <input class="form-control form-control-sm" value="<?php echo $no_fak_pemb; ?>" name="no_fak_pemb" placeholder="No Faktur">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <select class="selectize" id="kode_supplier" name="kode_supplier" tabindex="1">
@@ -82,9 +84,9 @@
                                         </td>
                                         <td>
                                             <a class="btn btn-info btn-sm detail" href="#" data-supp="<?php echo $d['kode_supplier']; ?>" data-kode="<?php echo $d['no_fak_pemb']; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>pembelian/hapus_pembelian/<?php echo $d['no_fak_pemb']; ?>"><i class="fa fa-trash"></i></a>
-                                            <?php if ($d['jenis_transaksi'] == "Tunai") { ?>
+                                            <?php if ($d['jumlahbayar'] > 0) { ?>
                                             <?php } else { ?>
+                                                <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>pembelian/hapus_pembelian/<?php echo $d['no_fak_pemb']; ?>/<?php echo $d['no_po']; ?>"><i class="fa fa-trash"></i></a>
                                                 <a class="btn btn-warning btn-sm" style="color:white;" href="<?php echo base_url(); ?>pembelian/edit_pembelian/<?php echo $d['no_fak_pemb']; ?>"><i class="mdi mdi-pencil"></i></a>
                                             <?php } ?>
                                         </td>
@@ -92,6 +94,9 @@
                                 <?php } ?>
                             </tbody>
                         </table>
+                    </div>
+                    <div style='margin-top: 10px;'>
+                        <?php echo $pagination; ?>
                     </div>
                 </div>
             </div>
@@ -118,25 +123,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="bayarhutang" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Input Pembayaran</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="loadbayarhutang">
-
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <script type="text/javascript">
     $(document).ready(function() {

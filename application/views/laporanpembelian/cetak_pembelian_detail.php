@@ -87,15 +87,16 @@
     <table class="datatable3">
         <thead>
             <tr>
-                <th style="width: 12%;background-color:#0085cd;color:white" rowspan="2">Tgl Transaksi</th>
-                <th style="width: 10%;background-color:#0085cd;color:white" rowspan="2">No Faktur</th>
+                <th style="width: 9%;background-color:#0085cd;color:white" rowspan="2">Tgl Transaksi</th>
+                <th style="width: 7%;background-color:#0085cd;color:white" rowspan="2">No Faktur</th>
                 <th style="width: 10%;background-color:#0085cd;color:white;text-align:center" colspan="8">Barang</th>
             </tr>
             <tr>
                 <th style="width: 8%;background-color:#024a75;color:white">Kode</th>
-                <th style="background-color:#024a75;color:white">Nama Barang</th>
+                <th style="width: 18%;background-color:#024a75;color:white">Nama Barang</th>
                 <th style="width: 5%;background-color:#024a75;color:white">Satuan</th>
                 <th style="background-color:#024a75;color:white">Keterangan</th>
+                <th style="width: 9%;background-color:#024a75;color:white">Exp Date</th>
                 <th style="width: 5%;background-color:#024a75;color:white;text-align:left">Qty</th>
                 <th style="width: 7%;background-color:#024a75;color:white;text-align:right">Harga</th>
                 <th style="width: 7%;background-color:#024a75;color:white;text-align:right">Subtotal</th>
@@ -118,13 +119,14 @@
                     <td><?php echo $d->nama_barang; ?></td>
                     <td><?php echo $d->satuan; ?></td>
                     <td><?php echo $d->keterangan; ?></td>
+                    <td><?php echo DateToIndo2($d->exp_date); ?></td>
                     <td align="left"><?php echo number_format($d->qty); ?></td>
                     <td align="right"><?php echo number_format($d->harga_modal); ?></td>
                     <td align="right"><?php echo number_format($subtotal); ?></td>
                 </tr>
                 <?php if ($brg != $d->kode_barang AND $kode_barang == "") { ?>
                     <tr bgcolor="#024a75" style="color:white; text-align: right">
-                        <td colspan="8"></td>
+                        <td colspan="9"></td>
                         <td align="right"><?php echo number_format($total); ?></td>
                     </tr>
             <?php
@@ -133,7 +135,7 @@
             }
             ?>
             <tr>
-                <th colspan="8" style="width: 7%;background-color:#0085cd;color:white;text-align:center">Total</th>
+                <th colspan="9" style="width: 7%;background-color:#0085cd;color:white;text-align:center">Total</th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right"><?php echo number_format($totals); ?></th>
             </tr>
         </tbody>

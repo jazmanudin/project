@@ -24,7 +24,6 @@
                         <td align="center"><?php echo number_format($d->qty); ?></td>
                         <td align="right"><?php echo number_format($d->harga_jual); ?></td>
                         <td align="right"><?php echo number_format($d->harga_jual * $d->qty); ?></td>
-                        <td></td>
                     </tr>
                 <?php } ?>
                 <thead style="background-color: #0085cd;color:white">

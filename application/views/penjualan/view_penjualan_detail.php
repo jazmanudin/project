@@ -13,8 +13,8 @@ foreach ($data->result() as $d) {
         <td align="center"><?php echo number_format($d->qty); ?></td>
         <td align="right"><?php echo number_format($subtotal); ?></td>
         <td align="center">
-            <a class="btn btn-sm btn-danger hapus" href="#" data-kode="<?php echo $d->kode_barang; ?>"><i class="fa fa-trash"></i></a>
-            <a class="btn btn-warning btn-sm edit" href="#" data-stok="<?php echo $d->stok; ?>" data-kode="<?php echo $d->kode_barang; ?>" data-nama="<?php echo $d->nama_barang; ?>" data-ket="<?php echo $d->keterangan; ?>" data-satuan="<?php echo $d->satuan; ?>" data-harga="<?php echo $d->harga_jual; ?>" data-qty="<?php echo $d->qty; ?>"><i class="mdi mdi-pencil"></i></a>
+            <!-- <a class="btn btn-sm btn-danger hapus" href="#" data-kode="<?php echo $d->kode_barang; ?>"><i class="fa fa-trash"></i></a> -->
+            <a class="btn btn-warning btn-sm edit" href="#" data-exp_date="<?php echo $d->exp_date; ?>" data-stok="<?php echo $d->stok; ?>" data-kode="<?php echo $d->kode_barang; ?>" data-nama="<?php echo $d->nama_barang; ?>" data-ket="<?php echo $d->keterangan; ?>" data-satuan="<?php echo $d->satuan; ?>" data-harga="<?php echo $d->harga_jual; ?>" data-qty="<?php echo $d->qty; ?>"><i class="mdi mdi-pencil"></i></a>
         </td>
     </tr>
 <?php } ?>
@@ -25,9 +25,10 @@ foreach ($data->result() as $d) {
 </tr>
 <script>
     $(document).ready(function() {
-        
+
         var totals = $('#totals').text();
         $('#subtotal').val(totals);
+        $('#totalkeranjang').html("Rp " + totals);
 
         function formatAngka(angka) {
             if (typeof(angka) != 'string') angka = angka.toString();
@@ -36,35 +37,35 @@ foreach ($data->result() as $d) {
             return angka;
         }
 
-        function view_salesorderdetail() {
-            var no_so = $('#no_so').val();
+        function view_penjualandetail() {
+            var no_fak_penj = $('#no_fak_penj').val();
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>salesorder/view_salesorder_detail',
+                url: '<?php echo base_url(); ?>penjualan/view_penjualan_detail',
                 data: {
-                    no_so: no_so
+                    no_fak_penj: no_fak_penj
                 },
                 cache: false,
                 success: function(respond) {
-                    $("#loadsalesorderdetail").html(respond);
+                    $("#loadpenjualandetail").html(respond);
                 }
             });
         }
 
         $('.hapus').click(function(e) {
             e.preventDefault();
-            var no_so = $('#no_so').val();
+            var no_fak_penj = $('#no_fak_penj').val();
             var kode_barang = $(this).attr('data-kode');
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>salesorder/hapus_salesorder_detail',
+                url: '<?php echo base_url(); ?>penjualan/hapus_penjualan_detail',
                 data: {
                     kode_barang: kode_barang,
-                    no_so: no_so
+                    no_fak_penj: no_fak_penj
                 },
                 cache: false,
                 success: function(respond) {
-                    view_salesorderdetail();
+                    view_penjualandetail();
                 }
             });
         });
@@ -74,6 +75,7 @@ foreach ($data->result() as $d) {
             var kode_barang = $(this).attr('data-kode');
             var nama_barang = $(this).attr('data-nama');
             var qty = $(this).attr('data-qty');
+            var exp_date = $(this).attr('data-exp_date');
             var satuan = $(this).attr('data-satuan');
             var harga_jual = $(this).attr('data-harga');
             var ket = $(this).attr('data-ket');
@@ -81,15 +83,16 @@ foreach ($data->result() as $d) {
             $('#ket').val(ket);
             $('#nama_barang').val(nama_barang);
             $('#kode_edit').val(1);
+            $('#exp_date').val(exp_date);
             $('#satuan').val(satuan);
             $('#stok').val(stok);
             $('#qty').val(formatAngka(qty));
             $('#harga_jual').val(formatAngka(harga_jual));
             $('#total').val(formatAngka(harga_jual * qty));
             $('#kode_barang').val(kode_barang);
+            $('#qty').focus();
 
         });
-
 
     });
 </script>

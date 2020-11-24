@@ -5,16 +5,29 @@ class Model_purchaseorder extends CI_Model
 
   function view_supplier()
   {
-    $id_member      = $this->session->userdata('id_member');
-    return $this->db->query("SELECT * FROM supplier WHERE id_member = '$id_member' ");
+    return $this->db->query("SELECT * FROM supplier ");
   }
 
-  function view_barang()
+  function get_barangbarcode()
   {
-    $id_member      = $this->session->userdata('id_member');
-    return $this->db->query("SELECT * FROM barang 
-    LEFT JOIN kategori ON kategori.kode_kategori=barang.kode_kategori
-    WHERE barang.id_member = '$id_member' ");
+
+    $year         = date('Y');
+    $month         = date('m');
+    $date         = date('d') + 01;
+    $tglnow       = $year . "-" . $month . "-" . $date;
+
+    $kode_barang     = $this->input->post('kode_barang');
+    $jenis_harga     = $this->input->post('jenis_harga');
+    $barang = $this->db->query("SELECT  *
+    FROM barang 
+    WHERE barang.kode_barang = '$kode_barang'
+    ");
+
+    if ($barang->num_rows() > 0) {
+
+      $barang = $barang->row_array();
+      echo $barang['nama_barang'] . "|" . $barang['satuan'] . "|" . $barang['harga_modal'] ;
+    }
   }
 
   function hapus_purchaseorder()
@@ -22,9 +35,9 @@ class Model_purchaseorder extends CI_Model
 
     $id_member      = $this->session->userdata('id_member');
     $no_po    = $this->uri->segment(3);
-    $this->db->query("DELETE FROM purchaseorder WHERE no_po = '$no_po' AND id_member = '$id_member' ");
-    $this->db->query("DELETE FROM purchaseorder_detail WHERE no_po = '$no_po' AND id_member = '$id_member' ");
-    $this->db->query("DELETE FROM pembelian_temp WHERE no_po = '$no_po' AND id_member = '$id_member' ");
+    $this->db->query("DELETE FROM purchaseorder WHERE no_po = '$no_po' ");
+    $this->db->query("DELETE FROM purchaseorder_detail WHERE no_po = '$no_po' ");
+    $this->db->query("DELETE FROM pembelian_temp WHERE no_po = '$no_po' ");
     redirect('purchaseorder/view_purchaseorder');
   }
 
@@ -40,8 +53,7 @@ class Model_purchaseorder extends CI_Model
   {
 
     $kode_barang      = $this->input->post('kode_barang');
-    $id_member        = $this->session->userdata('id_member');
-    return $this->db->query("DELETE FROM purchaseorder_detail WHERE kode_barang = '$kode_barang' AND id_member = '$id_member' ");
+    return $this->db->query("DELETE FROM purchaseorder_detail WHERE kode_barang = '$kode_barang'");
   }
 
   public function getPurchase()
@@ -112,12 +124,11 @@ class Model_purchaseorder extends CI_Model
   function detail_purchaseorder()
   {
     $no_po              = $this->input->post('no_po');
-    $id_member          = $this->session->userdata('id_member');
 
     $query = "SELECT barang.satuan,purchaseorder_detail.kode_barang,SUM(qty) AS qty,nama_barang,purchaseorder_detail.harga_modal,purchaseorder_detail.keterangan 
     FROM purchaseorder_detail 
     INNER JOIN barang ON purchaseorder_detail.kode_barang=barang.kode_barang 
-    WHERE purchaseorder_detail.id_member = '$id_member' AND purchaseorder_detail.no_po = '$no_po'
+    WHERE purchaseorder_detail.no_po = '$no_po'
     GROUP BY purchaseorder_detail.kode_barang,purchaseorder_detail.no_po";
     return $this->db->query($query);
   }
@@ -129,17 +140,6 @@ class Model_purchaseorder extends CI_Model
     INNER JOIN barang ON purchaseorder_temp.kode_barang=barang.kode_barang 
     GROUP BY purchaseorder_temp.kode_barang";
     return $this->db->query($query);
-  }
-
-  function cekbarang()
-  {
-    $kode_barang    = $this->input->post('kode_barang');
-    $query = "SELECT purchaseorder_temp.kode_barang
-    FROM purchaseorder_temp 
-    INNER JOIN barang ON purchaseorder_temp.kode_barang=barang.kode_barang 
-    WHERE purchaseorder_temp.kode_barang = '$kode_barang'
-    GROUP BY purchaseorder_temp.kode_barang";
-    echo $this->db->query($query)->num_rows();
   }
 
   function insert_purchaseorder_temp()
@@ -160,9 +160,8 @@ class Model_purchaseorder extends CI_Model
       'id_user'           => $id_user
     );
     if ($kode_edit == "1") {
-      $this->db->where('kode_barang', $kode_barang);
-      $this->db->where('id_user', $id_user);
-      $this->db->update('purchaseorder_temp', $data);
+      $this->db->query("DELETE FROM purchaseorder_temp WHERE kode_barang = '$kode_barang' AND id_user = '$id_user' ");
+      $this->db->insert('purchaseorder_temp', $data);
     } else {
       $this->db->insert('purchaseorder_temp', $data);
     }
@@ -177,22 +176,20 @@ class Model_purchaseorder extends CI_Model
     $harga_modal    = str_replace(",", "", $this->input->post('harga_modal'));
     $qty            = str_replace(",", "", $this->input->post('qty'));
     $keterangan     = $this->input->post('keterangan');
-    $id_member        = $this->session->userdata('id_member');
 
     $data = array(
       'no_po'             => $no_po,
       'kode_barang'       => $kode_barang,
       'qty'               => $qty,
       'harga_modal'       => $harga_modal,
-      'keterangan'        => $keterangan,
-      'id_member'         => $id_member
+      'keterangan'        => $keterangan
     );
     if ($kode_edit == "1") {
-      $this->db->where('no_po', $no_po);
-      $this->db->where('kode_barang', $kode_barang);
-      $this->db->where('id_member', $id_member);
-      $this->db->update('purchaseorder_detail', $data);
-      $this->db->update('pembelian_temp', $data);
+      $this->db->query("DELETE FROM purchaseorder_detail WHERE kode_barang = '$kode_barang' AND no_po = '$no_po' ");
+      $this->db->query("DELETE FROM pembelian_temp WHERE kode_barang = '$kode_barang' AND no_po = '$no_po' ");
+      $this->db->insert('purchaseorder_detail', $data);
+      $this->db->insert('pembelian_temp', $data);
+
     } else {
       $this->db->insert('purchaseorder_detail', $data);
       $this->db->insert('pembelian_temp', $data);
@@ -219,7 +216,6 @@ class Model_purchaseorder extends CI_Model
     $kodemax  = str_pad($kode, 3, "0", STR_PAD_LEFT);
     $no_po   = "PO-" . $bulan . "" . $tahun . "" . $kodemax;
 
-    $id_member          = $this->session->userdata('id_member');
     $id_user            = $this->session->userdata('id_user');
     $subtotal           = str_replace(",", "", $this->input->post('subtotal'));
     $tgl_transaksi      = $this->input->post('tgl_transaksi');
@@ -235,7 +231,7 @@ class Model_purchaseorder extends CI_Model
       'tgl_transaksi'   => $tgl_transaksi,
       'status'          => "0",
       'keterangan'      => $keterangan,
-      'id_member'       => $id_member
+      'id_user'         => $id_user
     );
     $this->db->insert('purchaseorder', $data);
 
@@ -247,8 +243,7 @@ class Model_purchaseorder extends CI_Model
         'kode_barang'     => $d->kode_barang,
         'qty'             => $d->qty,
         'harga_modal'     => $d->harga_modal,
-        'keterangan'      => $d->keterangan,
-        'id_member'       => $id_member
+        'keterangan'      => $d->keterangan
       );
       $this->db->insert('purchaseorder_detail', $data);
 
@@ -258,7 +253,6 @@ class Model_purchaseorder extends CI_Model
         'qty'             => $d->qty,
         'harga_modal'     => $d->harga_modal,
         'keterangan'      => $d->keterangan,
-        'id_member'       => $id_member,
         'id_user'         => $id_user
       );
       $this->db->insert('pembelian_temp', $datapemb);
@@ -269,7 +263,6 @@ class Model_purchaseorder extends CI_Model
   function update_purchaseorder()
   {
 
-    $id_member          = $this->session->userdata('id_member');
     $id_user            = $this->session->userdata('id_user');
     $subtotal           = str_replace(",", "", $this->input->post('subtotal'));
     $no_po              = $this->input->post('no_po');
@@ -285,11 +278,10 @@ class Model_purchaseorder extends CI_Model
       'ppn'             => $ppn,
       'tgl_transaksi'   => $tgl_transaksi,
       'keterangan'      => $keterangan,
-      'id_member'       => $id_member
+      'id_user'         => $id_user
     );
 
     $this->db->where('no_po', $no_po);
-    $this->db->where('id_member', $id_member);
     $this->db->update('purchaseorder', $data);
   }
 
@@ -311,5 +303,53 @@ class Model_purchaseorder extends CI_Model
     }
     $kodemax  = str_pad($kode, 3, "0", STR_PAD_LEFT);
     echo "PO-" . $bulan . "" . $tahun . "" . $kodemax;
+  }
+
+  function get_supplier()
+  {
+    $keyword      = $this->uri->segment(3);
+    $data         = $this->db->from('supplier')->like('nama_supplier', $keyword)->get();
+    foreach ($data->result() as $d) {
+
+      $supplier['query'] = $keyword;
+      $supplier['suggestions'][] = array(
+        'value'                   =>    $d->nama_supplier,
+        'kode_supplier'           =>    $d->kode_supplier,
+        'nama_supplier'           =>    $d->nama_supplier
+      );
+    }
+    echo json_encode($supplier);
+  }
+
+  function get_barang()
+  {
+    $keyword    = $this->uri->segment(3);
+
+    $year       = date('Y');
+    $month      = date('m');
+    $date       = date('d') + 01;
+    $tglnow     = $year . "-" . $month . "-" . $date;
+
+    $data = $this->db->query("SELECT 
+    barang.kode_barang,
+    barang.nama_barang,
+    barang.satuan,
+    barang.harga_modal
+
+    FROM barang 
+    
+    WHERE barang.nama_barang LIKE '%$keyword%' AND barang.kode_barang NOT IN (SELECT kode_barang FROM purchaseorder_temp)");
+    foreach ($data->result() as $d) {
+
+      $supplier['query'] = $keyword;
+      $supplier['suggestions'][] = array(
+        'value'                   =>    $d->nama_barang,
+        'kode_barang'             =>    $d->kode_barang,
+        'nama_barang'             =>    $d->nama_barang,
+        'satuan'                  =>    $d->satuan,
+        'harga_modal'             =>    $d->harga_modal
+      );
+    }
+    echo json_encode($supplier);
   }
 }

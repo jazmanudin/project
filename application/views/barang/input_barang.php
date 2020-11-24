@@ -105,10 +105,40 @@
             $('#harga_modal').val(formatAngka(harga_modal * 1));
         });
 
-        $('#harga').on("input", function() {
-            var harga = $('#harga').val();
-            var harga = harga.replace(/[^\d]/g, "");
-            $('#harga').val(formatAngka(harga * 1));
+        $('#pelanggan_tetap').on("input", function() {
+            var pelanggan_tetap = $('#pelanggan_tetap').val();
+            var pelanggan_tetap = pelanggan_tetap.replace(/[^\d]/g, "");
+            $('#pelanggan_tetap').val(formatAngka(pelanggan_tetap * 1));
+        });
+
+        $('#tidak_tetap').on("input", function() {
+            var tidak_tetap = $('#tidak_tetap').val();
+            var tidak_tetap = tidak_tetap.replace(/[^\d]/g, "");
+            $('#tidak_tetap').val(formatAngka(tidak_tetap * 1));
+        });
+
+        $('#grosir').on("input", function() {
+            var grosir = $('#grosir').val();
+            var grosir = grosir.replace(/[^\d]/g, "");
+            $('#grosir').val(formatAngka(grosir * 1));
+        });
+
+        $('#grosir').on("input", function() {
+            var grosir = $('#grosir').val();
+            var grosir = grosir.replace(/[^\d]/g, "");
+            $('#grosir').val(formatAngka(grosir * 1));
+        });
+
+        $('#eceran').on("input", function() {
+            var eceran = $('#eceran').val();
+            var eceran = eceran.replace(/[^\d]/g, "");
+            $('#eceran').val(formatAngka(eceran * 1));
+        });
+
+        $('#lainnya').on("input", function() {
+            var lainnya = $('#lainnya').val();
+            var lainnya = lainnya.replace(/[^\d]/g, "");
+            $('#lainnya').val(formatAngka(lainnya * 1));
         });
 
         $("#form").submit(function() {

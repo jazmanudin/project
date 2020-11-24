@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input class="form-control form-control-sm" value="<?php echo $no_fak_pemb; ?>" name="no_fak_pemb" placeholder="No Faktur">
+                                <input class="form-control form-control-sm" value="<?php echo $no_fak_pemb; ?>" name="no_fak_pemb" placeholder="No Bukti">
                             </div>
                             <div class="form-group">
                                 <select class="selectize" id="kode_supplier" name="kode_supplier" tabindex="1">

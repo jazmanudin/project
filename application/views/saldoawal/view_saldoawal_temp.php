@@ -10,7 +10,6 @@ foreach ($data->result() as $d) {
         <td hidden><input value="<?php echo $d->kode_barang; ?>" name="kode_barang[]"></td>
         <td><?php echo $d->kode_barang; ?></td>
         <td><?php echo $d->nama_barang; ?></td>
-        <td><?php echo $d->jenis_barang; ?></td>
         <td><?php echo $d->satuan; ?></td>
         <td><input class="form-control form-control-sm qty" value="<?php echo $qty;?>" placeholder="Qty" name="qty[]"></td>
     </tr>

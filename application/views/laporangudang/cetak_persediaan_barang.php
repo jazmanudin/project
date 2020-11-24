@@ -116,11 +116,12 @@
                 <th style="width: 8%;background-color:#0085cd;color:white" rowspan="2">Kode Barang</th>
                 <th style="width: 15%;background-color:#0085cd;color:white" rowspan="2">Nama Barang</th>
                 <th style="width: 5%;background-color:#0085cd;color:white" rowspan="2">Satuan</th>
-                <th style="width: 8%;background-color:#0085cd;color:white" rowspan="2">Jenis Barang</th>
                 <th style="background-color:#0085cd;color:white;text-align:center" rowspan="2">Saldo Awal</th>
                 <th style="background-color:#0085cd;color:white;text-align:center" colspan="3">Pemasukan</th>
                 <th style="background-color:#0085cd;color:white;text-align:center" colspan="4">Pengeluaran</th>
                 <th style="background-color:#0085cd;color:white;text-align:center" rowspan="2">Saldo Akhir</th>
+                <th style="background-color:#0085cd;color:white;text-align:center" rowspan="2">Opname Stok</th>
+                <th style="background-color:#0085cd;color:white;text-align:center" rowspan="2">Selisih</th>
             </tr>
             <tr>
                 <th style="width: 8%;background-color:#151f48;color:white;text-align:center">Pembelian</th>
@@ -144,6 +145,8 @@
             $qtybuang               = 0;
             $qtykeluarlainnya       = 0;
             $totsaldoakhir          = 0;
+            $totopname              = 0;
+            $totselisih             = 0;
             foreach ($data as $d) {
                 $saldoawal          += $d->qtysaldoawal;
                 $qtypembelian       += $d->qtypembelian;
@@ -154,14 +157,21 @@
                 $qtybuang           += $d->qtybuang;
                 $qtykeluarlainnya   += $d->qtykeluarlainnya;
                 $saldoakhir         = ($d->qtysaldoawal + $d->qtypembelian + $d->qtyreturkembali + $d->qtymasuklainnya) - ($d->qtypenjualan + $d->qtyretur + $d->qtybuang + $d->qtykeluarlainnya);
+                $selisih            = $saldoakhir - $d->qtyopname;
+
+                $pemasukan          = $d->qtypembelian + $d->qtyreturkembali + $d->qtymasuklainnya;
+                $pengeluaran        = $d->qtypenjualan + $d->qtyretur + $d->qtybuang + $d->qtykeluarlainnya;
+
                 $totsaldoakhir      += $saldoakhir;
-           ?>
+                $totselisih         += $selisih;
+                $totopname          += $d->qtyopname;
+
+            ?>
                 <tr>
                     <td><?php echo $no; ?></td>
                     <td><?php echo $d->kode_barang; ?></td>
                     <td><?php echo $d->nama_barang; ?></td>
                     <td><?php echo $d->satuan; ?></td>
-                    <td><?php echo $d->jenis_barang; ?></td>
                     <td align="center">
                         <?php if (!empty($d->qtysaldoawal)) {
                             echo number_format($d->qtysaldoawal);
@@ -207,12 +217,22 @@
                             echo number_format($saldoakhir);
                         } ?>
                     </td>
+                    <td align="center">
+                        <?php if (!empty($d->qtyopname)) {
+                            echo number_format($d->qtyopname);
+                        } ?>
+                    </td>
+                    <td align="center">
+                        <?php if (!empty($selisih)) {
+                            echo number_format($selisih);
+                        } ?>
+                    </td>
                 </tr>
             <?php
                 $no++;
             } ?>
             <tr>
-                <th colspan="5" style="width: 7%;background-color:#0085cd;color:white;text-align:center">Total</th>
+                <th colspan="4" style="width: 7%;background-color:#0085cd;color:white;text-align:center">Total</th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($saldoawal); ?></th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($qtypembelian); ?></th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($qtyreturkembali); ?></th>
@@ -222,6 +242,8 @@
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($qtybuang); ?></th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($qtykeluarlainnya); ?></th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($totsaldoakhir); ?></th>
+                <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($totopname); ?></th>
+                <th style="width: 7%;background-color:#0085cd;color:white;text-align:center"><?php echo number_format($totselisih); ?></th>
             </tr>
         </tbody>
     </table>

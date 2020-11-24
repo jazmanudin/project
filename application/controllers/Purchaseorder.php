@@ -109,12 +109,6 @@ class Purchaseorder extends CI_Controller
         $this->template->load('template/template', 'purchaseorder/edit_purchaseorder', $data);
     }
 
-    public function view_barang()
-    {
-        $data['barang'] = $this->Model_purchaseorder->view_barang();
-        $this->load->view('purchaseorder/view_barang', $data);
-    }
-
     public function view_purchaseorder_temp()
     {
         $data['data'] = $this->Model_purchaseorder->view_purchaseorder_temp();
@@ -167,8 +161,18 @@ class Purchaseorder extends CI_Controller
         $this->Model_purchaseorder->codeotomatis();
     }
 
-    public function cekbarang()
+    public function get_supplier()
     {
-        $this->Model_purchaseorder->cekbarang();
+        $this->Model_purchaseorder->get_supplier();
+    }
+
+    public function get_barang()
+    {
+        $this->Model_purchaseorder->get_barang();
+    }
+
+    public function get_barangbarcode()
+    {
+        $this->Model_purchaseorder->get_barangbarcode();
     }
 }

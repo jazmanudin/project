@@ -55,7 +55,7 @@
                                 <?php
 
                                 foreach ($data as $d) {
-                                    $bulan = $d->bulan;
+                                    $bulan = $d['bulan'];
                                     if ($bulan == "01") {
                                         $bulan = "Januari";
                                     } elseif ($bulan == "02") {
@@ -84,18 +84,22 @@
 
                                 ?>
                                     <tr>
-                                        <td><?php echo $d->kode_saldoawal; ?></td>
-                                        <td><?php echo DateToIndo2($d->tgl_transaksi); ?></td>
+                                        <td><?php echo $d['kode_saldoawal']; ?></td>
+                                        <td><?php echo DateToIndo2($d['tgl_transaksi']); ?></td>
                                         <td><?php echo $bulan; ?></td>
-                                        <td><?php echo $d->tahun; ?></td>
+                                        <td><?php echo $d['tahun']; ?></td>
                                         <td>
-                                            <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d->kode_saldoawal; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>saldoawal/hapus_saldoawal/<?php echo $d->kode_saldoawal; ?>"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d['kode_saldoawal']; ?>"><i class="mdi mdi-eye"></i></a>
+                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>saldoawal/hapus_saldoawal/<?php echo $d['kode_saldoawal']; ?>"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-warning btn-sm" style="color:white;" href="<?php echo base_url(); ?>saldoawal/edit_saldoawal/<?php echo $d['kode_saldoawal']; ?>"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
+                    </div>
+                    <div style='margin-top: 10px;'>
+                        <?php echo $pagination; ?>
                     </div>
                 </div>
             </div>

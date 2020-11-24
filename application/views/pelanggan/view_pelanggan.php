@@ -2,12 +2,12 @@
     <div class="col-lg-3 col-md-5">
         <div class="card">
             <div class="card-body">
-                <h2 class="header-title" align="center">FORM SUPPLIER</h2>
+                <h2 class="header-title" align="center">FORM PELANGGAN</h2>
                 <form autocomplete="off" id="form" method="POST" enctype="multipart/form-data" <div class="form-group">
                     <div class="form-group">
-                        <label>Nama supplier</label>
-                        <input type="hidden" name="kode_supplier" id="kode_supplier" class="form-control form-control-sm" placeholder="Kode supplier" />
-                        <input type="text" required name="nama_supplier" id="nama_supplier" class="form-control form-control-sm" placeholder="Nama Supplier" />
+                        <label>Nama Pelanggan</label>
+                        <input type="hidden" name="kode_pelanggan" id="kode_pelanggan" class="form-control form-control-sm" placeholder="Kode pelanggan" />
+                        <input type="text" required name="nama_pelanggan" id="nama_pelanggan" class="form-control form-control-sm" placeholder="Nama pelanggan" />
                     </div>
                     <div class="form-group">
                         <label>Alamat</label>
@@ -26,7 +26,7 @@
                         <input type="text" required name="keterangan" id="keterangan" class="form-control form-control-sm" placeholder="Keterangan" />
                     </div>
                     <div class="form-group mb-0">
-                        <a class="btn btn-info btn-sm btn-block" href="#" id="simpansupplier"><i class="fa fa-save"></i> Simpan</a>
+                        <a class="btn btn-info btn-sm btn-block" href="#" id="simpanpelanggan"><i class="fa fa-save"></i> Simpan</a>
                     </div>
 
                 </form>
@@ -37,14 +37,29 @@
     <div class="col-lg-9 col-md-7">
         <div class="card">
             <div class="card-body">
-                <h2 class="header-title" align="center">DATA SUPPLIER</h2>
+                <h2 class="header-title" align="center">DATA PELANGGAN</h2>
+                <form class="form-horizontal" method="post" action="<?php echo base_url(); ?>pelanggan/view_pelanggan" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" value="<?php echo $kode_pelanggan; ?>" name="kode_pelanggan" placeholder="Kode Pelanggan">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" value="<?php echo $nama_pelanggan; ?>" name="nama_pelanggan" placeholder="Nama Pelanggan">
+                            </div>
+                            <div class="form-group" align="right">
+                                <button type="submit" name="submit" class="btn btn-info btn-sm btn-block mr-2" value="1"><i class="fa fa-search mr-2"></i>CARI</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 <div class="table-rep-plugin">
                     <div class="table-responsive mb-0">
                         <table id="table" class="table table-striped table-bordered table-hover table-sm">
                             <thead style="background-color: #0085cd;color:white">
                                 <tr>
-                                    <th style="width: 15%;">Kode Supplier</th>
-                                    <th>Nama Supplier</th>
+                                    <th style="width: 15%;">Kode Pelanggan</th>
+                                    <th>Nama Pelanggan</th>
                                     <th>Alamat</th>
                                     <th>No HP</th>
                                     <th>Jatuh Tempo</th>
@@ -55,15 +70,15 @@
                             <tbody>
                                 <?php foreach ($data as $d) { ?>
                                     <tr>
-                                        <td><?php echo $d->kode_supplier; ?></td>
-                                        <td><?php echo $d->nama_supplier; ?></td>
+                                        <td><?php echo $d->kode_pelanggan; ?></td>
+                                        <td><?php echo $d->nama_pelanggan; ?></td>
                                         <td><?php echo $d->alamat; ?></td>
                                         <td><?php echo $d->no_hp; ?></td>
                                         <td><?php echo $d->jatuh_tempo; ?> Hari</td>
                                         <td><?php echo $d->keterangan; ?></td>
                                         <td>
-                                            <a class="btn btn-danger btn-sm delete" href="#" data-href="<?php echo base_url(); ?>supplier/hapus_supplier/<?php echo $d->kode_supplier; ?>"><i class="mdi mdi-trash-can"></i></a>
-                                            <a class="btn btn-warning btn-sm edit" href="#" data-tempo="<?php echo $d->jatuh_tempo;?>" data-kode="<?php echo $d->kode_supplier;?>" data-nama="<?php echo $d->nama_supplier;?>" data-ket="<?php echo $d->keterangan;?>"data-alamat="<?php echo $d->alamat;?>" data-nohp="<?php echo $d->no_hp;?>"><i class="mdi mdi-pencil"></i></a>
+                                            <a class="btn btn-danger btn-sm delete" href="#" data-href="<?php echo base_url(); ?>pelanggan/hapus_pelanggan/<?php echo $d->kode_pelanggan; ?>"><i class="mdi mdi-trash-can"></i></a>
+                                            <a class="btn btn-warning btn-sm edit" href="#" data-tempo="<?php echo $d->jatuh_tempo; ?>" data-kode="<?php echo $d->kode_pelanggan; ?>" data-nama="<?php echo $d->nama_pelanggan; ?>" data-ket="<?php echo $d->keterangan; ?>" data-alamat="<?php echo $d->alamat; ?>" data-nohp="<?php echo $d->no_hp; ?>"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -79,19 +94,19 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $('#simpansupplier').click(function(e) {
+        $('#simpanpelanggan').click(function(e) {
             e.preventDefault();
-            var kode_supplier = $('#kode_supplier').val();
-            var nama_supplier = $('#nama_supplier').val();
-            var alamat    = $('#alamat').val();
-            var no_hp    = $('#no_hp').val();
-            var keterangan    = $('#keterangan').val();
+            var kode_pelanggan = $('#kode_pelanggan').val();
+            var nama_pelanggan = $('#nama_pelanggan').val();
+            var alamat = $('#alamat').val();
+            var no_hp = $('#no_hp').val();
+            var keterangan = $('#keterangan').val();
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url(); ?>supplier/insert_supplier',
+                url: '<?php echo base_url(); ?>pelanggan/insert_pelanggan',
                 data: {
-                    kode_supplier: kode_supplier,
-                    nama_supplier: nama_supplier,
+                    kode_pelanggan: kode_pelanggan,
+                    nama_pelanggan: nama_pelanggan,
                     alamat: alamat,
                     no_hp: no_hp,
                     keterangan: keterangan
@@ -105,18 +120,18 @@
 
         $('.edit').click(function(e) {
             e.preventDefault();
-            var kode_supplier = $(this).attr('data-kode');
-            var nama_supplier = $(this).attr('data-nama');
+            var kode_pelanggan = $(this).attr('data-kode');
+            var nama_pelanggan = $(this).attr('data-nama');
             var alamat = $(this).attr('data-alamat');
             var no_hp = $(this).attr('data-nohp');
             var tempo = $(this).attr('data-tempo');
-            var keterangan    = $(this).attr('data-keterangan');
+            var keterangan = $(this).attr('data-keterangan');
             $('#keterangan').val(keterangan);
-            $('#nama_supplier').val(nama_supplier);
+            $('#nama_pelanggan').val(nama_pelanggan);
             $('#alamat').val(alamat);
             $('#jatuh_tempo').val(tempo);
-            $('#kode_supplier').val(kode_supplier);
-            
+            $('#kode_pelanggan').val(kode_pelanggan);
+
         });
 
         $('.delete').click(function(e) {

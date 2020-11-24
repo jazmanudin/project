@@ -86,6 +86,7 @@ foreach ($data->result() as $d) {
             $('#total').val(formatAngka(harga_modal * qty));
             $('#keterangan').val(keterangan);
             $('#kode_edit').val(1);
+            $('#qty').focus();
 
         });
 

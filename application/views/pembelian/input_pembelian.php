@@ -11,42 +11,45 @@
         <h5 style="text-align: center;color:white;"><b>INPUT PEMBELIAN</b></h5>
     </div>
 </div>
-
+<?php
+if ($this->uri->segment(3) != "") {
+    $no_po = $this->uri->segment(3);
+} else {
+    $no_po = "-";
+}
+if ($this->uri->segment(4) != "") {
+    $kode_supplier = $this->uri->segment(4);
+    $data = $supplier->row_array();
+    $sup = $data['nama_supplier'];
+    $jatuhtempo = $data['jatuh_tempo'];
+    $readonly = "readonly";
+} else {
+    $sup = "";
+    $readonly = "";
+    $kode_supplier = "";
+    $jatuhtempo = "";
+}
+?>
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">No Faktur</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" readonly id="no_fak_pemb" name="no_fak_pemb" placeholder="Faktur Pembelian">
-                        <input type="hidden" class="form-control form-control-sm" value="0" id="kode_edit" name="kode_edit" >
-                        <?php
-                        if ($this->uri->segment(3) != "") {
-                            $no_po = $this->uri->segment(3);
-                        } else {
-                            $no_po = "-";
-                        }
-                        ?>
-                        <input type="hidden" autocomplete="off" value="<?php echo $no_po; ?>" name="no_po" id="no_po" placeholder="No PO" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
+                        <input type="hidden" class="form-control form-control-sm" value="0" id="kode_edit" name="kode_edit">
+                        <input type="hidden" autocomplete="off" value="<?php echo $no_po; ?>" name="no_po" id="no_po" placeholder="No PO" class="form-control form-control-sm" />
                     </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Supplier</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <select class="selectize" id="kode_supplier" name="kode_supplier" tabindex="1">
-                            <option value="">-- Pilih Supplier --</option>
-                            <?php foreach ($supplier->result() as $s) { ?>
-                                <option <?php if ($this->uri->segment(4) == $s->kode_supplier) {
-                                            echo "selected";
-                                        } ?> value="<?php echo $s->kode_supplier; ?>"><?php echo $s->nama_supplier; ?></option>
-                            <?php } ?>
-                        </select>
+                    <div class="col-md-4" style="padding-left:2px;padding-right:0px">
+                        <input type="text" autocomplete="off" <?php echo $readonly; ?> value="<?php echo $sup; ?>" name="nama_supplier" autofocus id="nama_supplier" placeholder="Nama Supllier" class="form-control form-control-sm" tabindex="1" />
                     </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Tgl Transaksi</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" readonly autocomplete="off" value="<?php echo $kode_supplier; ?>" name="kode_supplier" id="kode_supplier" placeholder="Kode Supllier" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" autocomplete="off" value="<?php echo $jatuhtempo; ?>" name="jatuh_tempo" id="jatuh_tempo" placeholder="Jatuh Tempo" class="form-control form-control-sm"/>
+                    </div>
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
                         <input type="text" autocomplete="off" value="<?php echo date('Y-m-d'); ?>" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
                     </div>
                 </div>
@@ -60,35 +63,32 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <a class="btn btn-info btn-sm btn-block caribarang" href="#" tabindex="3">Cari</a>
+                    <div class="col-md-3" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="nama_barang" name="nama_barang" placeholder="Nama Barang" tabindex="3">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="kode_barang" name="kode_barang" placeholder="Kode" tabindex="4">
-                    </div>
-                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" readonly id="nama_barang" name="nama_barang" placeholder="Nama Barang">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="kode_barang" name="kode_barang" placeholder="Barcode" tabindex="4">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" readonly id="satuan" name="satuan" placeholder="Satuan">
                     </div>
                     <div class="col-md-2" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="4">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="5">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm  datepicker-here" autocomplete="off" style="text-align:right" id="exp_date" name="exp_date" placeholder="Exp Date" data-language="en" tabindex="5">
+                        <input type="text" class="form-control form-control-sm  datepicker-here" autocomplete="off" style="text-align:right" id="exp_date" name="exp_date" placeholder="Exp Date" data-language="en" tabindex="6">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="5">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_modal" name="harga_modal" placeholder="Harga Modal" tabindex="7">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="6">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="8">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" readonly id="total" style="text-align:right" name="total" placeholder="Total">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px;color:white">
-                        <a class="btn btn-sm btn-info btn-block" id="inputbarang" href="#" tabindex="8"><i class="fa fa-plus"></i></a>
+                        <a class="btn btn-sm btn-info btn-block" id="inputbarang" href="#" tabindex="9"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="row">
@@ -135,7 +135,7 @@
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Potongan</label>
                     <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan" tabindex="11">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="potongan" name="potongan" style="text-align: right;" placeholder="Potongan" tabindex="10">
                     </div>
                 </div>
                 <div class="row">
@@ -159,43 +159,25 @@
                         </select>
                     </div>
                 </div>
-                <?php if ($this->uri->segment(3) == "") { ?>
-                    <div class="row">
-                        <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">PPN</label>
-                        <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                            <select class="form-control form-control-sm" id="ppn" name="ppn" tabindex="15">
-                                <option value="No">No</option>
-                                <option value="Yes">Yes</option>
-                            </select>
-                        </div>
+                <div class="row">
+                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">PPN</label>
+                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                        <select class="form-control form-control-sm" id="ppn" name="ppn" tabindex="15">
+                            <option <?php if ($this->uri->segment(5) == "No") {
+                                        echo "selected";
+                                    } ?> value="No">No</option>
+                            <option <?php if ($this->uri->segment(5) == "Yes") {
+                                        echo "selected";
+                                    } ?> value="Yes">Yes</option>
+                        </select>
                     </div>
-                <?php } else { ?>
-                    <input type="hidden" class="form-control form-control-sm" id="ppn" name="ppn" placeholder="PPN" value="<?php echo $this->uri->segment(5);?>">
-                <?php } ?>
+                </div>
                 <div class="row">
                     <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Konfirmasi</label>
                     <div class="col-md-8" style="padding-left:2px;padding-right:0px">
                         <a class="btn btn-sm btn-primary btn-block" href="#" id="inputpembelian" tabindex="16"><i class="fa  fa-save"></i> Simpan</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="viewbarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Data Barang</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="loadbarang">
-
-            </div>
-            <div class="modal-footer">
             </div>
         </div>
     </div>
@@ -240,27 +222,25 @@
             });
         }
 
-        $('.caribarang').click(function(e) {
-            e.preventDefault();
-            var kode_supplier = $('#kode_supplier').val();
-            var tgl_transaksi = $('#tgl_transaksi').val();
-            if (kode_supplier == "") {
-                Swal.fire('Oppss..', 'Silahkan pilih Supplier terlebih dahulu', 'warning')
-                return false;
-            } else if (tgl_transaksi == "") {
-                Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
-                return false;
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo base_url(); ?>pembelian/view_barang',
-                    data: '',
-                    cache: false,
-                    success: function(respond) {
-                        $("#loadbarang").html(respond);
-                        $("#viewbarang").modal("show");
-                    }
-                });
+        $('#nama_supplier').autocomplete({
+            serviceUrl: "<?php echo base_url(); ?>pembelian/get_supplier/",
+            onSelect: function(suggestions) {
+                $('#nama_supplier').val(suggestions.nama_supplier);
+                $('#kode_supplier').val(suggestions.kode_supplier);
+                $('#jatuh_tempo').val(suggestions.jatuh_tempo);
+            }
+        });
+
+        $('#nama_barang').autocomplete({
+            serviceUrl: "<?php echo base_url(); ?>pembelian/get_barang/",
+            onSelect: function(suggestions) {
+
+                $('#nama_barang').val(suggestions.nama_barang);
+                $('#kode_barang').val(suggestions.kode_barang);
+                $('#satuan').val(suggestions.satuan);
+                $('#harga_modal').val(formatAngka(suggestions.harga_modal));
+                // $('#stok').val(formatAngka(suggestions.stok));
+                view_pembeliantemp();
             }
         });
 
@@ -321,6 +301,7 @@
 
         $('#inputbarang').click(function(e) {
             e.preventDefault();
+            var no_po = $('#no_po').val();
             var kode_barang = $('#kode_barang').val();
             var qty = $('#qty').val();
             var harga_modal = $('#harga_modal').val();
@@ -348,6 +329,7 @@
                     type: 'POST',
                     url: '<?php echo base_url(); ?>pembelian/insert_pembelian_temp',
                     data: {
+                        no_po: no_po,
                         kode_barang: kode_barang,
                         exp_date: exp_date,
                         qty: qty,
@@ -366,7 +348,9 @@
                         $('#kode_edit').val(0);
                         $('#qty').val("");
                         $('#harga_modal').val("");
+                        $('#satuan').val("");
                         $('#total').val("");
+                        $('#nama_barang').focus();
                     }
                 });
             }
@@ -381,6 +365,7 @@
             var jenis_transaksi = $('#jenis_transaksi').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
             var kode_supplier = $('#kode_supplier').val();
+            var jatuh_tempo = $('#jatuh_tempo').val();
             var ppn = $('#ppn').val();
             if (subtotal == "0") {
                 Swal.fire('Oppss..', 'Silahkan pilih Barang terlebih dahulu', 'warning')
@@ -395,6 +380,7 @@
                     data: {
                         keterangan: keterangan,
                         potongan: potongan,
+                        jatuh_tempo: jatuh_tempo,
                         no_po: no_po,
                         subtotal: subtotal,
                         tgl_transaksi: tgl_transaksi,
@@ -410,6 +396,69 @@
                 });
             }
         });
+
+        $("#kode_barang").on('input', function() {
+            var kode_barang = $('#kode_barang').val();
+            var kode_pelanggan = $('#kode_pelanggan').val();
+            if (kode_pelanggan == "") {
+                Swal.fire('Oppss..', 'Silahkan pilih Pelanggan terlebih dahulu', 'warning')
+                $('#kode_barang').val("");
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url(); ?>pembelian/get_barangbarcode',
+                    data: {
+                        kode_barang: kode_barang
+                    },
+                    cache: false,
+                    success: function(msg) {
+
+                        data = msg.split("|");
+                        if (data == 0) {
+                            $("#nama_barang").val('Data Tidak Ditemukan');
+                        } else {
+                            $("#nama_barang").val(data[0]);
+                            $("#satuan").val(data[1]);
+                            $("#harga_modal").val(formatAngka(data[2]));
+                            $("#ket").focus()
+                        }
+                    }
+
+                });
+            }
+        });
+
+        $(document).on('keyup', 'body', function(e) {
+            e.preventDefault();
+            var charCode = (e.which) ? e.which : event.keyCode;
+
+            if (charCode == 37) {
+                $('#kode_barang').focus();
+            }
+
+            if (charCode == 39) {
+                $('#potongan').focus();
+            }
+
+            if (charCode == 46) {
+                clear();
+            }
+
+            if (charCode == 16) {
+                // $('#kode_barang').focus();
+            }
+        });
+
+        document.onkeyup = function(e) {
+            var evt = window.event || e;
+
+            if (evt.keyCode == 13 && evt.ctrlKey) {
+
+                $('#simpan').click();
+
+            }
+
+        }
 
     });
 </script>

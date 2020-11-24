@@ -5,17 +5,15 @@ class Model_salesorder extends CI_Model
 
   function view_pelanggan()
   {
-    $id_member      = $this->session->userdata('id_member');
-    return $this->db->query("SELECT * FROM pelanggan WHERE id_member = '$id_member' ");
+    return $this->db->query("SELECT * FROM pelanggan");
   }
 
   function view_sales()
   {
-    $id_member          = $this->session->userdata('id_member');
     $kode_pelanggan     = $this->input->post('kode_pelanggan');
     return $this->db->query("SELECT kode_pelanggan,jenis_harga,id_sales,nama_karyawan,nama_pelanggan FROM pelanggan 
     INNER JOIN karyawan ON karyawan.nik AND pelanggan.id_sales 
-    WHERE pelanggan.id_member = '$id_member' AND kode_pelanggan = '$kode_pelanggan' ");
+    WHERE kode_pelanggan = '$kode_pelanggan' ");
   }
 
   function view_barang()
@@ -26,7 +24,6 @@ class Model_salesorder extends CI_Model
     $date         = date('d') + 01;
     $tglnow       = $year . "-" . $month . "-" . $date;
 
-    $id_member      = $this->session->userdata('id_member');
     return $this->db->query("SELECT 
     barang.kode_barang,
     barang.nama_barang,
@@ -41,28 +38,27 @@ class Model_salesorder extends CI_Model
     kategori.nama_kategori,
     db.stok,
     db.stoks,
+    db.barangke,
     db.exp_date
 
     FROM barang 
     INNER JOIN kategori ON kategori.kode_kategori=barang.kode_kategori
    
     LEFT JOIN (SELECT SUM( IF( exp_date >= '$tglnow' , stok ,0 )) AS stok, SUM(stok) AS stoks,
-    kode_barang,exp_date FROM barang_detail 
-    WHERE id_member = '$id_member'
+    kode_barang,exp_date,barangke FROM barang_detail 
+    WHERE stok != '0'
     GROUP BY kode_barang
     ORDER BY exp_date ASC) db ON (barang.kode_barang=db.kode_barang)
-
-    WHERE barang.id_member = '$id_member' ");
+   ");
   }
 
   function hapus_salesorder()
   {
 
-    $id_member      = $this->session->userdata('id_member');
     $no_so    = $this->uri->segment(3);
-    $this->db->query("DELETE FROM salesorder WHERE no_so = '$no_so' AND id_member = '$id_member' ");
-    $this->db->query("DELETE FROM salesorder_detail WHERE no_so = '$no_so' AND id_member = '$id_member' ");
-    $this->db->query("DELETE FROM penjualan_temp WHERE no_so = '$no_so' AND id_member = '$id_member' ");
+    $this->db->query("DELETE FROM salesorder WHERE no_so = '$no_so' ");
+    $this->db->query("DELETE FROM salesorder_detail WHERE no_so = '$no_so' ");
+    $this->db->query("DELETE FROM penjualan_temp WHERE no_so = '$no_so' ");
     redirect('salesorder/view_salesorder');
   }
 
@@ -78,8 +74,7 @@ class Model_salesorder extends CI_Model
   {
 
     $kode_barang      = $this->input->post('kode_barang');
-    $id_member        = $this->session->userdata('id_member');
-    return $this->db->query("DELETE FROM salesorder_detail WHERE kode_barang = '$kode_barang' AND id_member = '$id_member' ");
+    return $this->db->query("DELETE FROM salesorder_detail WHERE kode_barang = '$kode_barang' ");
   }
 
   public function getSalesOrder()
@@ -90,7 +85,7 @@ class Model_salesorder extends CI_Model
     $this->db->select('salesorder.ppn,jenis_harga,karyawan.nama_karyawan,salesorder.id_sales,salesorder.no_so,tgl_transaksi,nama_pelanggan,salesorder.kode_pelanggan,salesorder.total,salesorder.keterangan');
     $this->db->from('salesorder');
     $this->db->join('pelanggan', 'salesorder.kode_pelanggan = pelanggan.kode_pelanggan');
-    $this->db->join('karyawan', 'salesorder.id_sales = karyawan.nik','left');
+    $this->db->join('karyawan', 'pelanggan.id_sales = karyawan.nik', 'left');
     $this->db->where('salesorder.no_so', $no_so);
     $this->db->order_by('tgl_transaksi,no_so', 'DESC');
 
@@ -101,9 +96,10 @@ class Model_salesorder extends CI_Model
   public function getDataSalesOrder($rowno, $rowperpage, $no_so = "", $kode_pelanggan = "", $dari = "", $sampai = "")
   {
 
-    $this->db->select('salesorder.no_so,tgl_transaksi,status,ppn,nama_pelanggan,salesorder.kode_pelanggan,salesorder.total,salesorder.keterangan');
+    $this->db->select('karyawan.nama_karyawan,salesorder.no_so,tgl_transaksi,status,ppn,nama_pelanggan,salesorder.kode_pelanggan,salesorder.total,salesorder.keterangan');
     $this->db->from('salesorder');
     $this->db->join('pelanggan', 'salesorder.kode_pelanggan = pelanggan.kode_pelanggan');
+    $this->db->join('karyawan', 'pelanggan.id_sales = karyawan.nik', 'left');
     $this->db->order_by('tgl_transaksi,no_so', 'DESC');
 
     if ($no_so != '') {
@@ -129,6 +125,7 @@ class Model_salesorder extends CI_Model
     $this->db->select('count(*) as allcount');
     $this->db->from('salesorder');
     $this->db->join('pelanggan', 'salesorder.kode_pelanggan = pelanggan.kode_pelanggan');
+    $this->db->join('karyawan', 'pelanggan.id_sales = karyawan.nik', 'left');
     $this->db->order_by('tgl_transaksi,salesorder.no_so', 'DESC');
 
     if ($no_so != '') {
@@ -151,7 +148,6 @@ class Model_salesorder extends CI_Model
   function detail_salesorder()
   {
     $no_so              = $this->input->post('no_so');
-    $id_member          = $this->session->userdata('id_member');
 
     $year         = date('Y');
     $month         = date('m');
@@ -164,11 +160,10 @@ class Model_salesorder extends CI_Model
 
     LEFT JOIN (SELECT SUM( IF( exp_date >= '$tglnow' , stok ,0 )) AS stok,
     kode_barang,exp_date FROM barang_detail 
-    WHERE id_member = '$id_member'
     GROUP BY kode_barang
     ORDER BY exp_date ASC) db ON (salesorder_detail.kode_barang=db.kode_barang)
 
-    WHERE salesorder_detail.id_member = '$id_member' AND salesorder_detail.no_so = '$no_so'
+    WHERE salesorder_detail.no_so = '$no_so'
     GROUP BY salesorder_detail.kode_barang,salesorder_detail.no_so";
     return $this->db->query($query);
   }
@@ -180,14 +175,13 @@ class Model_salesorder extends CI_Model
     $date               = date('d') + 01;
     $tglnow             = $year . "-" . $month . "-" . $date;
     $id_user            = $this->session->userdata('id_user');
-    $id_member          = $this->session->userdata('id_member');
+    // $kode_pelanggan     = $this->input->post('kode_pelanggan');
     $query = "SELECT salesorder_temp.kode_barang,satuan,db.stok,salesorder_temp.keterangan,SUM(qty) AS qty,nama_barang,salesorder_temp.harga_jual
     FROM salesorder_temp 
     INNER JOIN barang ON salesorder_temp.kode_barang=barang.kode_barang 
 
     LEFT JOIN (SELECT SUM( IF( exp_date >= '$tglnow' , stok ,0 )) AS stok,
     kode_barang,exp_date FROM barang_detail 
-    WHERE id_member = '$id_member'
     GROUP BY kode_barang
     ORDER BY exp_date ASC) db ON (salesorder_temp.kode_barang=db.kode_barang)
 
@@ -196,25 +190,16 @@ class Model_salesorder extends CI_Model
     return $this->db->query($query);
   }
 
-  function cekbarang()
-  {
-    $kode_barang    = $this->input->post('kode_barang');
-    $query = "SELECT salesorder_temp.kode_barang
-    FROM salesorder_temp 
-    INNER JOIN barang ON salesorder_temp.kode_barang=barang.kode_barang 
-    WHERE salesorder_temp.kode_barang = '$kode_barang'
-    GROUP BY salesorder_temp.kode_barang";
-    echo $this->db->query($query)->num_rows();
-  }
-
   function insert_salesorder_temp()
   {
 
     $kode_barang    = $this->input->post('kode_barang');
-    $kode_edit      = $this->input->post('kode_edit');
+    $barangke       = $this->input->post('barangke');
+    $exp_date       = $this->input->post('exp_date');
     $harga_jual     = str_replace(",", "", $this->input->post('harga_jual'));
     $qty            = str_replace(",", "", $this->input->post('qty'));
     $keterangan     = $this->input->post('keterangan');
+    $kode_pelanggan = $this->input->post('kode_pelanggan');
     $id_user        = $this->session->userdata('id_user');
 
     $data = array(
@@ -222,15 +207,13 @@ class Model_salesorder extends CI_Model
       'qty'               => $qty,
       'harga_jual'        => $harga_jual,
       'keterangan'        => $keterangan,
+      'exp_date'          => $exp_date,
+      'barangke'          => $barangke,
+      'kode_pelanggan'    => $kode_pelanggan,
       'id_user'           => $id_user
     );
-    if ($kode_edit == "1") {
-      $this->db->where('kode_barang', $kode_barang);
-      $this->db->where('id_user', $id_user);
-      $this->db->update('salesorder_temp', $data);
-    } else {
-      $this->db->insert('salesorder_temp', $data);
-    }
+    $this->db->query("DELETE FROM salesorder_temp WHERE kode_barang = '$kode_barang' AND id_user = '$id_user' ");
+    $this->db->insert('salesorder_temp', $data);
   }
 
   function insert_salesorder_detail()
@@ -238,30 +221,25 @@ class Model_salesorder extends CI_Model
 
     $no_so          = $this->input->post('no_so');
     $kode_barang    = $this->input->post('kode_barang');
-    $kode_edit      = $this->input->post('kode_edit');
-    $harga_jual    = str_replace(",", "", $this->input->post('harga_jual'));
+    $barangke       = $this->input->post('barangke');
+    $exp_date       = $this->input->post('exp_date');
+    $harga_jual     = str_replace(",", "", $this->input->post('harga_jual'));
     $qty            = str_replace(",", "", $this->input->post('qty'));
     $keterangan     = $this->input->post('keterangan');
-    $id_member        = $this->session->userdata('id_member');
 
     $data = array(
-      'no_so'             => $no_so,
       'kode_barang'       => $kode_barang,
+      'no_so'             => $no_so,
       'qty'               => $qty,
-      'harga_jual'       => $harga_jual,
+      'harga_jual'        => $harga_jual,
       'keterangan'        => $keterangan,
-      'id_member'         => $id_member
+      'exp_date'          => $exp_date,
+      'barangke'          => $barangke
     );
-    if ($kode_edit == "1") {
-      $this->db->where('no_so', $no_so);
-      $this->db->where('kode_barang', $kode_barang);
-      $this->db->where('id_member', $id_member);
-      $this->db->update('salesorder_detail', $data);
-      $this->db->update('penjualan_temp', $data);
-    } else {
-      $this->db->insert('salesorder_detail', $data);
-      $this->db->insert('penjualan_temp', $data);
-    }
+    $this->db->query("DELETE FROM salesorder_detail WHERE kode_barang = '$kode_barang' AND no_so = '$no_so' ");
+    $this->db->query("DELETE FROM penjualan_temp WHERE kode_barang = '$kode_barang' AND no_so = '$no_so' ");
+    $this->db->insert('salesorder_detail', $data);
+    $this->db->insert('penjualan_temp', $data);
   }
 
   function insert_salesorder()
@@ -284,7 +262,6 @@ class Model_salesorder extends CI_Model
     $kodemax  = str_pad($kode, 3, "0", STR_PAD_LEFT);
     $no_so   = "SO-" . $bulan . "" . $tahun . "" . $kodemax;
 
-    $id_member          = $this->session->userdata('id_member');
     $id_user            = $this->session->userdata('id_user');
     $subtotal           = str_replace(",", "", $this->input->post('subtotal'));
     $tgl_transaksi      = $this->input->post('tgl_transaksi');
@@ -302,22 +279,11 @@ class Model_salesorder extends CI_Model
       'tgl_transaksi'   => $tgl_transaksi,
       'status'          => "0",
       'keterangan'      => $keterangan,
-      'id_member'       => $id_member
+      'id_user'         => $id_user
     );
     $this->db->insert('salesorder', $data);
 
-    $datapenj = $this->db->query("SELECT salesorder_temp.kode_barang,satuan,db.exp_date,salesorder_temp.keterangan,SUM(qty) AS qty,nama_barang,salesorder_temp.harga_jual
-    FROM salesorder_temp 
-    INNER JOIN barang ON salesorder_temp.kode_barang=barang.kode_barang 
-
-    LEFT JOIN (SELECT 
-    kode_barang,exp_date FROM barang_detail 
-    WHERE id_member = '$id_member'
-    GROUP BY kode_barang
-    ORDER BY exp_date ASC) db ON (salesorder_temp.kode_barang=db.kode_barang)
-
-    WHERE salesorder_temp.id_user = '$id_user'
-    GROUP BY salesorder_temp.kode_barang");
+    $datapenj = $this->db->query("SELECT * FROM salesorder_temp");
     foreach ($datapenj->result() as $d) {
 
       $data = array(
@@ -325,8 +291,7 @@ class Model_salesorder extends CI_Model
         'kode_barang'     => $d->kode_barang,
         'qty'             => $d->qty,
         'harga_jual'      => $d->harga_jual,
-        'keterangan'      => $d->keterangan,
-        'id_member'       => $id_member
+        'keterangan'      => $d->keterangan
       );
       $this->db->insert('salesorder_detail', $data);
 
@@ -335,20 +300,20 @@ class Model_salesorder extends CI_Model
         'kode_barang'     => $d->kode_barang,
         'qty'             => $d->qty,
         'harga_jual'      => $d->harga_jual,
+        'exp_date'        => $d->exp_date,
+        'barangke'        => $d->barangke,
         'keterangan'      => $d->keterangan,
-        'id_member'       => $id_member,
         'id_user'         => $id_user
       );
       $this->db->insert('penjualan_temp', $datapemb);
-      $this->db->query("UPDATE barang_detail SET stok = stok-'$d->qty' WHERE kode_barang = '$d->kode_barang' AND id_member = '$id_member' ORDER BY id DESC LIMIT 1");
     }
+
     $datapenj = $this->db->query("DELETE FROM salesorder_temp WHERE id_user = '$id_user'");
   }
 
   function update_salesorder()
   {
 
-    $id_member          = $this->session->userdata('id_member');
     $id_user            = $this->session->userdata('id_user');
     $subtotal           = str_replace(",", "", $this->input->post('subtotal'));
     $no_so              = $this->input->post('no_so');
@@ -365,12 +330,10 @@ class Model_salesorder extends CI_Model
       'ppn'             => $ppn,
       'id_sales'        => $id_sales,
       'tgl_transaksi'   => $tgl_transaksi,
-      'keterangan'      => $keterangan,
-      'id_member'       => $id_member
+      'keterangan'      => $keterangan
     );
 
     $this->db->where('no_so', $no_so);
-    $this->db->where('id_member', $id_member);
     $this->db->update('salesorder', $data);
   }
 
@@ -392,5 +355,93 @@ class Model_salesorder extends CI_Model
     }
     $kodemax  = str_pad($kode, 3, "0", STR_PAD_LEFT);
     echo "SO-" . $bulan . "" . $tahun . "" . $kodemax;
+  }
+
+  function get_pelanggan()
+  {
+    $keyword      = $this->uri->segment(3);
+    $data         = $this->db->from('pelanggan')
+      ->join('karyawan', 'karyawan.nik=pelanggan.id_sales')
+      ->like('nama_pelanggan', $keyword)
+      ->get();
+    foreach ($data->result() as $d) {
+
+      $tanggal        = Date('Y-m-d');
+      $jatuhtempo     = Date('Y-m-d', strtotime('+' . $d->jatuh_tempo . ' days', strtotime($tanggal)));
+
+      $pelanggan['query'] = $keyword;
+      $pelanggan['suggestions'][] = array(
+        'value'                   =>    $d->nama_pelanggan,
+        'id_sales'                =>    $d->id_sales,
+        'nama_karyawan'           =>    $d->nama_karyawan,
+        'jatuh_tempo'             =>    $jatuhtempo,
+        'kode_pelanggan'          =>    $d->kode_pelanggan,
+        'jenis_harga'             =>    $d->jenis_harga,
+        'nama_pelanggan'          =>    $d->nama_pelanggan
+      );
+    }
+    echo json_encode($pelanggan);
+  }
+
+  function get_barang()
+  {
+    $keyword    = $this->uri->segment(3);
+
+    $year       = date('Y');
+    $month      = date('m');
+    $date       = date('d') + 01;
+    $tglnow     = $year . "-" . $month . "-" . $date;
+
+    $data = $this->db->query("SELECT 
+    barang.kode_barang,
+    barang.nama_barang,
+    barang.satuan,
+    barang.keterangan,
+    barang.pelanggan_tetap,
+    barang.tidak_tetap,
+    barang.eceran,
+    barang.grosir,
+    barang.harga_modal,
+    barang.lainnya,
+    barang.kode_kategori,
+    kategori.nama_kategori,
+    db.stok,
+    db.stoks,
+    db.barangke,
+    db.exp_date
+
+    FROM barang 
+    INNER JOIN kategori ON kategori.kode_kategori=barang.kode_kategori
+   
+    LEFT JOIN (SELECT SUM( IF( exp_date >= '$tglnow' , stok ,0 )) AS stok, SUM(stok) AS stoks,
+    kode_barang,exp_date,barangke FROM barang_detail 
+    WHERE stok != '0'
+    GROUP BY kode_barang
+    ORDER BY exp_date ASC) db ON (barang.kode_barang=db.kode_barang)
+    
+    WHERE barang.nama_barang LIKE '%$keyword%' AND barang.kode_barang NOT IN (SELECT kode_barang FROM salesorder_temp) ");
+    foreach ($data->result() as $d) {
+
+      if ($d->stok > 0) {
+        $pelanggan['query'] = $keyword;
+        $pelanggan['suggestions'][] = array(
+          'value'                   =>    $d->nama_barang,
+          'kode_barang'             =>    $d->kode_barang,
+          'nama_barang'             =>    $d->nama_barang,
+          'satuan'                  =>    $d->satuan,
+          'stok'                    =>    $d->stok,
+          'stoks'                   =>    $d->stoks,
+          'grosir'                  =>    $d->grosir,
+          'eceran'                  =>    $d->eceran,
+          'harga_modal'             =>    $d->harga_modal,
+          'lainnya'                 =>    $d->lainnya,
+          'exp_date'                =>    $d->exp_date,
+          'pelanggan_tetap'         =>    $d->pelanggan_tetap,
+          'barangke'                =>    $d->barangke,
+          'tidak_tetap'             =>    $d->tidak_tetap
+        );
+      }
+    }
+    echo json_encode($pelanggan);
   }
 }

@@ -1,11 +1,3 @@
-<style>
-    div.scrolled {
-        width: 100%;
-        height: 450px;
-        overflow: auto;
-    }
-</style>
-
 <div class="row">
     <div class="col-sm-12">
         <h5 style="text-align: center;color:white;"><b>INPUT SALDO AWAL</b></h5>
@@ -74,7 +66,6 @@
                                         <tr>
                                             <th style="width: 10%;">Kode Barang</th>
                                             <th>Nama Barang</th>
-                                            <th style="width: 10%;">Jenis Barang</th>
                                             <th style="width: 10%;">Satuan</th>
                                             <th style="width: 10%;">Qty</th>
                                         </tr>

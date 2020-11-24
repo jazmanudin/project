@@ -13,44 +13,28 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">No PO</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" readonly id="no_so" name="no_so" placeholder="No PO">
-                        <input type="hidden" autocomplete="off" name="kode_edit" id="kode_edit" value="0" class="form-control form-control-sm" />
                     </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Pelanggan</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <select class="selectize" id="kode_pelanggan" name="kode_pelanggan" tabindex="1">
-                            <option value="">-- Pilih Pelanggan --</option>
-                            <?php foreach ($pelanggan->result() as $s) { ?>
-                                <option value="<?php echo $s->kode_pelanggan; ?>"><?php echo $s->nama_pelanggan; ?></option>
-                            <?php } ?>
-                        </select>
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" autocomplete="off" autofocus name="nama_pelanggan" id="nama_pelanggan" class="form-control form-control-sm" placeholder="Nama Pelanggan" tabindex="1" />
                     </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Sales</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" readonly autocomplete="off" name="kode_pelanggan" id="kode_pelanggan" class="form-control form-control-sm" placeholder="Kode Pelanggan" />
+                    </div>
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
                         <input type="hidden" autocomplete="off" name="id_sales" id="id_sales" class="form-control form-control-sm" />
-                        <input type="text" readonly autocomplete="off" name="nama_sales" id="nama_sales" class="form-control form-control-sm" placeholder="Nama Sales"/>
+                        <input type="text" readonly autocomplete="off" name="nama_sales" id="nama_sales" class="form-control form-control-sm" placeholder="Nama Sales" />
                     </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Jenis Harga</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
-                        <input type="text" autocomplete="off" name="jenis_harga" id="jenis_harga" class="form-control form-control-sm" placeholder="Jenis Harga"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="example-text-input" class="col-md-4 col-form-label" style="padding-left:2px;padding-right:0px">Tgl Transaksi</label>
-                    <div class="col-md-8" style="padding-left:2px;padding-right:0px">
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
                         <input type="text" autocomplete="off" value="<?php echo date('Y-m-d'); ?>" name="tgl_transaksi" id="tgl_transaksi" placeholder="Tanggal Transaksi" class="form-control form-control-sm datepicker-here" data-language="en" tabindex="2" />
+                    </div>
+                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
+                        <input type="text" autocomplete="off" name="jenis_harga" id="jenis_harga" class="form-control form-control-sm" placeholder="Jenis Harga" />
                     </div>
                 </div>
             </div>
@@ -63,29 +47,32 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <a class="btn btn-info btn-sm btn-block caribarang" href="#" tabindex="3"><i class="fa fa-search"></i> Cari</a>
+                    <div class="col-md-3" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" id="nama_barang" name="nama_barang" placeholder="Nama Barang" tabindex="3">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" autocomplete="off" id="kode_barang" name="kode_barang" placeholder="Kode" tabindex="4">
                     </div>
-                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" readonly id="nama_barang" name="nama_barang" placeholder="Nama Barang">
-                    </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" readonly id="satuan" name="satuan" placeholder="Satuan">
                     </div>
-                    <div class="col-md-2" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" id="ket" name="ket" placeholder="Keterangan" tabindex="4">
+                    <div class="col-md-2" hidden style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" value="-" id="ket" name="ket" placeholder="Keterangan">
+                    </div>
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" readonly class="form-control form-control-sm datepicker-here" autocomplete="off" name="exp_date" id="exp_date" placeholder="Exp Date" data-language="en" />
                     </div>
                     <div class="col-md-1" hidden style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm datepicker-here" autocomplete="off" name="exp_date" id="exp_date" placeholder="Exp Date" data-language="en" tabindex="2" />
+                        <input type="text" class="form-control form-control-sm" autocomplete="off" name="barangke" id="barangke" placeholder="Barang Ke" />
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" autocomplete="off" style="text-align:right" id="harga_jual" name="harga_jual" placeholder="Harga" tabindex="5">
+                        <input type="text" class="form-control form-control-sm" readonly id="harga_modal" name="harga_modal" placeholder="Harga Modal">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
-                        <input type="text" class="form-control form-control-sm" readonly autocomplete="off" id="stok" name="stok" placeholder="Stok" tabindex="6">
+                        <input type="text" class="form-control form-control-sm" readonly autocomplete="off" style="text-align:right" id="harga_jual" name="harga_jual" placeholder="Harga Jual">
+                    </div>
+                    <div class="col-md-1" style="padding-left:2px;padding-right:0px">
+                        <input type="text" class="form-control form-control-sm" readonly autocomplete="off" id="stok" name="stok" placeholder="Stok">
                     </div>
                     <div class="col-md-1" style="padding-left:2px;padding-right:0px">
                         <input type="text" class="form-control form-control-sm" autocomplete="off" id="qty" name="qty" placeholder="Jumlah" tabindex="6">
@@ -125,9 +112,9 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-8">
+    <div class="col-lg-8 col-md-6 col-sm-12">
     </div>
-    <div class="col-sm-4" id="pembayaran">
+    <div class="col-lg-4 col-md-6 col-sm-12" id="pembayaran">
         <div class="card">
             <div class="card-body">
                 <!-- <h5 style="text-align: center;" colspan="4">PEMBAYARAN</h5> -->
@@ -163,24 +150,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="viewbarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Data Barang</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="loadbarang">
-
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -195,13 +164,11 @@
 
         function view_salesordertemp() {
 
-            var no_so = $('#no_so').val();
+            var kode_pelanggan = $('#kode_pelanggan').val();
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url(); ?>salesorder/view_salesorder_temp',
-                data: {
-                    no_so: no_so
-                },
+                data: '',
                 cache: false,
                 success: function(respond) {
                     $("#loadsalesordertemp").html(respond);
@@ -217,33 +184,55 @@
                     $("#no_so").val(respond);
                 }
             });
+
         }
 
-        $('.caribarang').click(function(e) {
-            e.preventDefault();
-            var kode_pelanggan = $('#kode_pelanggan').val();
-            var tgl_transaksi = $('#tgl_transaksi').val();
-            var jatuh_tempo = $('#jatuh_tempo').val();
-            if (kode_pelanggan == "") {
-                Swal.fire('Oppss..', 'Silahkan pilih pelanggan terlebih dahulu', 'warning')
-                return false;
-            } else if (tgl_transaksi == "") {
-                Swal.fire('Oppss..', 'Tanggal transaksi tidak boleh kosong', 'warning')
-                return false;
-            } else if (jatuh_tempo == "") {
-                Swal.fire('Oppss..', 'Tanggal jatuh tempo tidak boleh kosong', 'warning')
-                return false;
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo base_url(); ?>salesorder/view_barang',
-                    data: '',
-                    cache: false,
-                    success: function(respond) {
-                        $("#loadbarang").html(respond);
-                        $("#viewbarang").modal("show");
+        $('#nama_pelanggan').autocomplete({
+            serviceUrl: "<?php echo base_url(); ?>salesorder/get_pelanggan/",
+            onSelect: function(suggestions) {
+                $('#nama_pelanggan').val(suggestions.nama_pelanggan);
+                $('#kode_pelanggan').val(suggestions.kode_pelanggan);
+                $('#id_sales').val(suggestions.id_sales);
+                $('#nama_sales').val(suggestions.nama_karyawan);
+                $('#jatuh_tempo').val(suggestions.jatuh_tempo);
+                $('#jenis_harga').val(suggestions.jenis_harga);
+                var jenis_harga = suggestions.jenis_harga;
+                var kode_pelanggan = suggestions.kode_pelanggan;
+                view_salesordertemp();
+
+                $('#nama_barang').autocomplete({
+                    serviceUrl: "<?php echo base_url(); ?>salesorder/get_barang/",
+                    onSelect: function(suggestions) {
+                        stokakhir = suggestions.stoks - suggestions.stok;
+                        var kode_barang = suggestions.kode_barang;
+                        if (stokakhir > 0) {
+                            Swal.fire('Oppss..', 'Barang ada yang Exp, silahkan untuk buang terlebih dahulu..!!', 'warning')
+                        } else {
+                            $('#nama_barang').val(suggestions.nama_barang);
+                            $('#kode_barang').val(suggestions.kode_barang);
+                            $('#satuan').val(suggestions.satuan);
+                            $('#exp_date').val(suggestions.exp_date);
+                            $('#barangke').val(suggestions.barangke);
+                            $("#stok").val(formatAngka(suggestions.stok));
+                            $("#harga_modal").val(formatAngka(suggestions.harga_modal));
+
+                            if (jenis_harga == "Pelanggan Tetap") {
+                                $("#harga_jual").val(formatAngka(suggestions.pelanggan_tetap));
+                            } else if (jenis_harga == "Tidak Tetap") {
+                                $("#harga_jual").val(formatAngka(suggestions.tidak_tetap));
+                            } else if (jenis_harga == "Grosir") {
+                                $("#harga_jual").val(formatAngka(suggestions.grosir));
+                            } else if (jenis_harga == "Eceran") {
+                                $("#harga_jual").val(formatAngka(suggestions.eceran));
+                            } else if (jenis_harga == "Lainnya") {
+                                $("#harga_jual").val(formatAngka(suggestions.lainnya));
+                            }
+
+                            view_salesordertemp();
+                        }
                     }
                 });
+
             }
         });
 
@@ -251,43 +240,6 @@
             var harga_jual = $('#harga_jual').val();
             var harga_jual = harga_jual.replace(/[^\d]/g, "");
             $('#harga_jual').val(formatAngka(harga_jual * 1));
-        });
-
-        $('#kode_pelanggan').change(function(e) {
-            var kode_pelanggan = $('#kode_pelanggan').val();
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url(); ?>salesorder/view_idsales',
-                data: {
-                    kode_pelanggan: kode_pelanggan
-                },
-                cache: false,
-                success: function(respond) {
-                    $("#id_sales").val(respond);
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url(); ?>salesorder/view_namasales',
-                data: {
-                    kode_pelanggan: kode_pelanggan
-                },
-                cache: false,
-                success: function(respond) {
-                    $("#nama_sales").val(respond);
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url(); ?>salesorder/view_jenisharga',
-                data: {
-                    kode_pelanggan: kode_pelanggan
-                },
-                cache: false,
-                success: function(respond) {
-                    $("#jenis_harga").val(respond);
-                }
-            });
         });
 
         $('#qty').on("input", function() {
@@ -322,8 +274,8 @@
             var kode_barang = $('#kode_barang').val();
             var qty = $('#qty').val();
             var harga_jual = $('#harga_jual').val();
-            var kode_edit = $('#kode_edit').val();
-            var diskon = $('#diskon').val();
+            var exp_date = $('#exp_date').val();
+            var barangke = $('#barangke').val();
             var keterangan = $('#ket').val();
             var tgl_transaksi = $('#tgl_transaksi').val();
             var id_sales = $('#id_sales').val();
@@ -347,8 +299,10 @@
                     url: '<?php echo base_url(); ?>salesorder/insert_salesorder_temp',
                     data: {
                         kode_barang: kode_barang,
-                        kode_edit: kode_edit,
+                        exp_date: exp_date,
+                        barangke: barangke,
                         qty: qty,
+                        kode_pelanggan: kode_pelanggan,
                         harga_jual: harga_jual,
                         keterangan: keterangan
                     },
@@ -357,13 +311,16 @@
                         view_salesordertemp();
                         $('#ket').val("");
                         $('#kode_barang').val("");
-                        $('#kode_edit').val(0);
+                        $('#exp_date').val("");
+                        $('#barangke').val("");
                         $('#stok').val("");
                         $('#satuan').val("");
                         $('#nama_barang').val("");
                         $('#qty').val("");
                         $('#harga_jual').val("");
+                        $('#harga_modal').val("");
                         $('#total').val("");
+                        $('#nama_barang').focus();
                     }
                 });
             }
@@ -412,6 +369,38 @@
                 });
             }
         });
+
+        $(document).on('keyup', 'body', function(e) {
+            e.preventDefault();
+            var charCode = (e.which) ? e.which : event.keyCode;
+
+            if (charCode == 37) {
+                $('#nama_barang').focus();
+            }
+
+            if (charCode == 39) {
+                $('#keterangan').focus();
+            }
+
+            if (charCode == 46) {
+                // clear();
+            }
+
+            if (charCode == 16) {
+                // $('#kode_barang').focus();
+            }
+        });
+
+        document.onkeyup = function(e) {
+            var evt = window.event || e;
+
+            if (evt.keyCode == 13 && evt.ctrlKey) {
+
+                $('#simpan').click();
+
+            }
+
+        }
 
     });
 </script>

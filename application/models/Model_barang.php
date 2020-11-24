@@ -2,20 +2,51 @@
 class Model_barang extends CI_Model
 {
 
-    function view_barang()
-    {
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->query("SELECT *,db.stok FROM barang 
-        INNER JOIN kategori ON kategori.kode_kategori=barang.kode_kategori
-        
-        LEFT JOIN (SELECT SUM(stok) AS stok,kode_barang FROM barang_detail 
-        WHERE id_member = '$id_member' 
-        GROUP BY kode_barang) db 
-        ON (barang.kode_barang=db.kode_barang)
 
-        WHERE barang.id_member = '$id_member'
-        ORDER BY nama_barang
-        ");
+    public function getDataBarang($rowno, $rowperpage, $kode_barang = "", $nama_barang = "")
+    {
+
+        $this->db->select('barang.kode_barang,SUM(stok) AS stok,satuan,nama_barang,nama_kategori,harga_modal,pelanggan_tetap,tidak_tetap,grosir,eceran,lainnya,diskon,keterangan');
+        $this->db->from('barang');
+        $this->db->join('kategori', 'kategori.kode_kategori=barang.kode_barang', 'left');
+        $this->db->join('barang_detail', 'barang_detail.kode_barang=barang.kode_barang', 'left');
+        $this->db->group_by('barang.kode_barang,satuan,nama_barang,nama_kategori,harga_modal,pelanggan_tetap,tidak_tetap,grosir,eceran,lainnya,diskon,keterangan');
+        $this->db->order_by('nama_barang', 'DESC');
+
+        if ($kode_barang != '') {
+            $this->db->like('barang.kode_barang', $kode_barang);
+        }
+
+        if ($nama_barang != '') {
+            $this->db->like('barang.nama_barang', $nama_barang);
+        }
+
+        $this->db->limit($rowperpage, $rowno);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getRecordBarangCount($kode_barang = "", $nama_barang = "")
+    {
+
+        $this->db->select('count(*) as allcount');
+        $this->db->from('barang');
+        $this->db->join('kategori', 'kategori.kode_kategori=barang.kode_barang', 'left');
+        $this->db->join('barang_detail', 'barang_detail.kode_barang=barang.kode_barang', 'left');
+        $this->db->group_by('barang.kode_barang,satuan,nama_barang,nama_kategori,harga_modal,pelanggan_tetap,tidak_tetap,grosir,eceran,lainnya,diskon,keterangan');
+        $this->db->order_by('barang.nama_barang', 'DESC');
+
+        if ($kode_barang != '') {
+            $this->db->like('barang.kode_barang', $kode_barang);
+        }
+
+        if ($nama_barang != '') {
+            $this->db->like('barang.nama_barang', $nama_barang);
+        }
+
+        $query  = $this->db->get();
+        $result = $query->result_array();
+        return $result[0]['allcount'];
     }
 
     function get_barang()
@@ -28,8 +59,7 @@ class Model_barang extends CI_Model
     function get_kategori()
     {
 
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->get_where('kategori', array('id_member' => $id_member));
+        return $this->db->get('kategori');
     }
 
     function detail_barang()
@@ -67,7 +97,6 @@ class Model_barang extends CI_Model
         $kode_kategori      = $this->input->post('kode_kategori');
         $jenis_barang       = $this->input->post('jenis_barang');
         $keterangan         = $this->input->post('keterangan');
-        $id_member          = $this->session->userdata('id_member');
         $id_user            = $this->session->userdata('id_user');
 
         $data                   = array(
@@ -83,8 +112,8 @@ class Model_barang extends CI_Model
             'kode_kategori'     => $kode_kategori,
             'keterangan'        => $keterangan,
             'jenis_barang'      => $jenis_barang,
+            'barangke'          => "1",
             'diskon'            => $diskon,
-            'id_member'         => $id_member,
             'id_user'           => $id_user,
             'stok'              => 0,
             'foto'              => $foto
@@ -109,7 +138,6 @@ class Model_barang extends CI_Model
         $kode_kategori      = $this->input->post('kode_kategori');
         $keterangan         = $this->input->post('keterangan');
         $jenis_barang       = $this->input->post('jenis_barang');
-        $id_member          = $this->session->userdata('id_member');
         $id_user            = $this->session->userdata('id_user');
 
         $data                   = array(
@@ -125,7 +153,6 @@ class Model_barang extends CI_Model
             'keterangan'               => $keterangan,
             'jenis_barang'             => $jenis_barang,
             'diskon'                   => $diskon,
-            'id_member'                => $id_member,
             'id_user'                  => $id_user,
             'foto'                     => $foto
         );

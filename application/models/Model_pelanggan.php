@@ -2,20 +2,50 @@
 class Model_pelanggan extends CI_Model
 {
 
-    function view_pelanggan()
+    public function getDataPelanggan($rowno, $rowperpage, $kode_pelanggan = "", $nama_pelanggan = "")
     {
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->query("SELECT * FROM pelanggan 
-        WHERE pelanggan.id_member = '$id_member'
-        ORDER BY nama_pelanggan
-        ");
+
+        $this->db->select('*');
+        $this->db->from('pelanggan');
+        $this->db->order_by('nama_pelanggan', 'DESC');
+
+        if ($kode_pelanggan != '') {
+            $this->db->like('pelanggan.kode_pelanggan', $kode_pelanggan);
+        }
+
+        if ($nama_pelanggan != '') {
+            $this->db->like('pelanggan.nama_pelanggan', $nama_pelanggan);
+        }
+
+        $this->db->limit($rowperpage, $rowno);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getRecordPelangganCount($kode_pelanggan = "", $nama_pelanggan = "")
+    {
+
+        $this->db->select('count(*) as allcount');
+        $this->db->from('pelanggan');
+        $this->db->order_by('pelanggan.nama_pelanggan', 'DESC');
+
+        if ($kode_pelanggan != '') {
+            $this->db->like('pelanggan.kode_pelanggan', $kode_pelanggan);
+        }
+
+        if ($nama_pelanggan != '') {
+            $this->db->like('pelanggan.nama_pelanggan', $nama_pelanggan);
+        }
+
+        $query  = $this->db->get();
+        $result = $query->result_array();
+        return $result[0]['allcount'];
     }
 
     function get_pelanggan()
     {
 
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->get_where('pelanggan', array('id_member' => $id_member));
+        return $this->db->get('pelanggan');
     }
 
     function insert_pelanggan()
@@ -39,7 +69,6 @@ class Model_pelanggan extends CI_Model
         $no_hp          = $this->input->post('no_hp');
         $jatuh_tempo    = $this->input->post('jatuh_tempo');
         $keterangan     = $this->input->post('keterangan');
-        $id_member      = $this->session->userdata('id_member');
         $id_user        = $this->session->userdata('id_user');
 
         if ($kodepelanggan != "") {
@@ -49,7 +78,6 @@ class Model_pelanggan extends CI_Model
                 'no_hp'                             => $no_hp,
                 'jatuh_tempo'                       => $jatuh_tempo,
                 'keterangan'                        => $keterangan,
-                'id_member'                         => $id_member,
                 'id_user'                           => $id_user,
             );
 
@@ -64,7 +92,6 @@ class Model_pelanggan extends CI_Model
                 'no_hp'                             => $no_hp,
                 'jatuh_tempo'                       => $jatuh_tempo,
                 'keterangan'                        => $keterangan,
-                'id_member'                         => $id_member,
                 'id_user'                           => $id_user,
             );
 

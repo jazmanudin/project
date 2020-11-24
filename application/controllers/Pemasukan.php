@@ -11,14 +11,83 @@ class Pemasukan extends CI_Controller
         $this->load->Model('Model_pemasukan');
     }
 
-    public function view_pemasukan()
+    function view_pemasukan($rowno = 0)
     {
-        $data['no_pemasukan']   = $this->input->post('no_pemasukan');
-        $data['dari']           = $this->input->post('dari');
-        $data['sampai']         = $this->input->post('sampai');
-        $data['data']           = $this->Model_pemasukan->view_pemasukan()->result();
+
+        $no_pemasukan                = "";
+        $jenis_pemasukan                = "";
+        $dari                 = "";
+        $sampai               = "";
+
+        if ($this->input->post('submit') != NULL) {
+            $no_pemasukan            = $this->input->post('no_pemasukan');
+            $jenis_pemasukan            = $this->input->post('jenis_pemasukan');
+            $dari             = $this->input->post('dari');
+            $sampai           = $this->input->post('sampai');
+            $data             = array(
+                'no_pemasukan'              => $no_pemasukan,
+                'jenis_pemasukan'              => $jenis_pemasukan,
+                'dari'               => $dari,
+                'sampai'             => $sampai,
+            );
+            $this->session->set_userdata($data);
+        } else {
+
+            if ($this->session->userdata('no_pemasukan') != NULL) {
+                $no_pemasukan                    = $this->session->userdata('no_pemasukan');
+            }
+
+            if ($this->session->userdata('jenis_pemasukan') != NULL) {
+                $jenis_pemasukan                    = $this->session->userdata('jenis_pemasukan');
+            }
+
+            if ($this->session->userdata('dari') != NULL) {
+                $data['dari']             = $this->input->post('dari');
+            }
+
+            if ($this->session->userdata('sampai') != NULL) {
+                $data['sampai']           = $this->input->post('sampai');
+            }
+        }
+        $rowperpage = 10;
+        if ($rowno != 0) {
+            $rowno = ($rowno - 1) * $rowperpage;
+        }
+        $allcount                     = $this->Model_pemasukan->getRecordPemasukanCount($no_pemasukan, $jenis_pemasukan, $dari, $sampai);
+        $users_record                 = $this->Model_pemasukan->getDataPemasukan($rowno, $rowperpage, $no_pemasukan, $jenis_pemasukan, $dari, $sampai);
+        $config['base_url']           = base_url() . 'pemasukan/view_pemasukan';
+        $config['use_page_numbers']   = TRUE;
+        $config['total_rows']         = $allcount;
+        $config['per_page']           = $rowperpage;
+        $config['first_link']         = 'First';
+        $config['last_link']          = 'Last';
+        $config['next_link']          = 'Next';
+        $config['prev_link']          = 'Prev';
+        $config['full_tag_open']      = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']     = '</ul></nav></div>';
+        $config['num_tag_open']       = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']      = '</span></li>';
+        $config['cur_tag_open']       = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']      = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']      = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']    = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']      = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']    = '</span>Next</li>';
+        $config['first_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close']   = '</span></li>';
+        $config['last_tag_open']      = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']    = '</span></li>';
+        $this->pagination->initialize($config);
+        $data['pagination']           = $this->pagination->create_links();
+        $data['data']                 = $users_record;
+        $data['row']                  = $rowno;
+        $data['no_pemasukan']         = $no_pemasukan;
+        $data['jenis_pemasukan']      = $jenis_pemasukan;
+        $data['dari']                 = $dari;
+        $data['sampai']               = $sampai;
         $this->template->load('template/template', 'pemasukan/view_pemasukan', $data);
     }
+
 
     public function detail_pemasukan()
     {
@@ -34,24 +103,25 @@ class Pemasukan extends CI_Controller
 
     public function input_pemasukan()
     {
-        $kode_kategori = $this->input->post('kode_kategori');
-        $data['kategori'] = $this->Model_pemasukan->kategori_barang();
-        $data['supplier'] = $this->Model_pemasukan->view_supplier();
-        $data['barang'] = $this->Model_pemasukan->view_barang($kode_kategori);
-        $this->template->load('template/template', 'pemasukan/input_pemasukan', $data);
+        $this->template->load('template/template', 'pemasukan/input_pemasukan');
     }
 
-
-    public function view_barang()
+    public function edit_pemasukan()
     {
-        $data['barang'] = $this->Model_pemasukan->view_barang()->result();
-        $this->load->view('pemasukan/view_barang', $data);
+        $data['getdata'] = $this->Model_pemasukan->getPemasukan()->row_array();
+        $this->template->load('template/template', 'pemasukan/edit_pemasukan', $data);
     }
 
     public function view_pemasukan_temp()
     {
         $data['data'] = $this->Model_pemasukan->view_pemasukan_temp();
         $this->load->view('pemasukan/view_pemasukan_temp', $data);
+    }
+
+    public function view_pemasukan_detail()
+    {
+        $data['data'] = $this->Model_pemasukan->view_pemasukan_detail();
+        $this->load->view('pemasukan/view_pemasukan_detail', $data);
     }
 
     public function insert_hutang()
@@ -64,9 +134,9 @@ class Pemasukan extends CI_Controller
         $this->Model_pemasukan->insert_pemasukan();
     }
 
-    public function insert_bayar_hutang()
+    public function update_pemasukan()
     {
-        $this->Model_pemasukan->insert_bayar_hutang();
+        $this->Model_pemasukan->update_pemasukan();
     }
 
     public function insert_pemasukan_temp()
@@ -74,9 +144,19 @@ class Pemasukan extends CI_Controller
         $this->Model_pemasukan->insert_pemasukan_temp();
     }
 
+    public function insert_pemasukan_detail()
+    {
+        $this->Model_pemasukan->insert_pemasukan_detail();
+    }
+
     public function hapus_pemasukan_temp()
     {
         $this->Model_pemasukan->hapus_pemasukan_temp();
+    }
+
+    public function hapus_pemasukan_detail()
+    {
+        $this->Model_pemasukan->hapus_pemasukan_detail();
     }
 
     public function hapus_pemasukan()
@@ -92,5 +172,15 @@ class Pemasukan extends CI_Controller
     public function cekbarang()
     {
         $this->Model_pemasukan->cekbarang();
+    }
+
+    public function get_barang()
+    {
+        $this->Model_pemasukan->get_barang();
+    }
+
+    public function get_barangbarcode()
+    {
+        $this->Model_pemasukan->get_barangbarcode();
     }
 }

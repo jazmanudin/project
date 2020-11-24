@@ -16,18 +16,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="form-group">
+                            <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <select class="selectize" id="kode_pelanggan" name="kode_pelanggan" tabindex="1">
                                             <option value="">-- Semua Pelanggan --</option>
                                             <?php foreach ($pelanggan->result() as $s) { ?>
-                                                <option value="<?php echo $s->kode_pelanggan; ?>"><?php echo $s->kode_pelanggan; ?></option>
+                                                <option value="<?php echo $s->kode_pelanggan; ?>"><?php echo $s->nama_pelanggan; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="form-group" align="right">
                                 <button type="submit" name="submit" id="submit" class="btn btn-info btn-sm mr-2">CETAK</button>
                                 <button type="submit" name="export" id="export" class="btn btn-primary btn-sm mr-2">EXPORT</button>

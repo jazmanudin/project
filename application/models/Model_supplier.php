@@ -2,20 +2,50 @@
 class Model_supplier extends CI_Model
 {
 
-    function view_supplier()
+    public function getDatasupplier($rowno, $rowperpage, $kode_supplier = "", $nama_supplier = "")
     {
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->query("SELECT * FROM supplier 
-        WHERE supplier.id_member = '$id_member'
-        ORDER BY nama_supplier
-        ");
+
+        $this->db->select('*');
+        $this->db->from('supplier');
+        $this->db->order_by('nama_supplier', 'DESC');
+
+        if ($kode_supplier != '') {
+            $this->db->like('supplier.kode_supplier', $kode_supplier);
+        }
+
+        if ($nama_supplier != '') {
+            $this->db->like('supplier.nama_supplier', $nama_supplier);
+        }
+
+        $this->db->limit($rowperpage, $rowno);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getRecordsupplierCount($kode_supplier = "", $nama_supplier = "")
+    {
+
+        $this->db->select('count(*) as allcount');
+        $this->db->from('supplier');
+        $this->db->order_by('supplier.nama_supplier', 'DESC');
+
+        if ($kode_supplier != '') {
+            $this->db->like('supplier.kode_supplier', $kode_supplier);
+        }
+
+        if ($nama_supplier != '') {
+            $this->db->like('supplier.nama_supplier', $nama_supplier);
+        }
+
+        $query  = $this->db->get();
+        $result = $query->result_array();
+        return $result[0]['allcount'];
     }
 
     function get_supplier()
     {
 
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->get_where('supplier', array('id_member' => $id_member));
+        return $this->db->get('supplier');
     }
 
     function insert_supplier()
@@ -39,7 +69,6 @@ class Model_supplier extends CI_Model
         $no_hp          = $this->input->post('no_hp');
         $jatuh_tempo    = $this->input->post('jatuh_tempo');
         $keterangan     = $this->input->post('keterangan');
-        $id_member      = $this->session->userdata('id_member');
         $id_user        = $this->session->userdata('id_user');
 
         if ($kodesupplier != "") {
@@ -49,7 +78,6 @@ class Model_supplier extends CI_Model
                 'no_hp'                             => $no_hp,
                 'jatuh_tempo'                       => $jatuh_tempo,
                 'keterangan'                        => $keterangan,
-                'id_member'                         => $id_member,
                 'id_user'                           => $id_user,
             );
 
@@ -64,7 +92,6 @@ class Model_supplier extends CI_Model
                 'no_hp'                             => $no_hp,
                 'jatuh_tempo'                       => $jatuh_tempo,
                 'keterangan'                        => $keterangan,
-                'id_member'                         => $id_member,
                 'id_user'                           => $id_user,
             );
 

@@ -45,6 +45,7 @@
                                     <th style="width: 8%;">No SO</th>
                                     <th style="width: 7%;">Tanggal</th>
                                     <th style="width: 15%;">Pelanggan</th>
+                                    <th style="width: 15%;">Sales</th>
                                     <th style="width: 8%;">Total</th>
                                     <th>Keterangan</th>
                                     <th style="width: 5%;">PPN</th>
@@ -61,15 +62,16 @@
                                         <td><?php echo $d['no_so']; ?></td>
                                         <td><?php echo $d['tgl_transaksi']; ?></td>
                                         <td><?php echo $d['nama_pelanggan']; ?></td>
+                                        <td><?php echo $d['nama_karyawan']; ?></td>
                                         <td align="right"><?php echo number_format($d['total']); ?></td>
                                         <td><?php echo $d['keterangan']; ?></td>
                                         <td><?php echo $d['ppn']; ?></td>
                                         <td>
                                             <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d['no_so']; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>salesorder/hapus_salesorder/<?php echo $d['no_so']; ?>"><i class="fa fa-trash"></i></a>
-                                            <a class="btn btn-warning btn-sm" style="color:white;" href="<?php echo base_url(); ?>salesorder/edit_salesorder/<?php echo $d['no_so']; ?>"><i class="mdi mdi-pencil"></i></a>
                                             <?php if ($d['status'] == "0") { ?>
-                                                <a class="btn btn-primary btn-sm" style="color:white;" href="<?php echo base_url(); ?>penjualan/input_penjualan/<?php echo $d['no_so']; ?>/<?php echo $d['kode_pelanggan']; ?>/<?php echo $d['ppn']; ?>">Proses</a>
+                                                <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>salesorder/hapus_salesorder/<?php echo $d['no_so']; ?>"><i class="fa fa-trash"></i></a>
+                                                <a class="btn btn-warning btn-sm" style="color:white;" href="<?php echo base_url(); ?>salesorder/edit_salesorder/<?php echo $d['no_so']; ?>"><i class="mdi mdi-pencil"></i></a>
+                                                <a class="btn btn-primary btn-sm" style="color:white;" href="<?php echo base_url(); ?>penjualan/input_penjualan/<?php echo $d['no_so']; ?>/<?php echo $d['kode_pelanggan']; ?>/<?php echo $d['ppn']; ?>">Approve</a>
                                             <?php } ?>
                                         </td>
                                     </tr>

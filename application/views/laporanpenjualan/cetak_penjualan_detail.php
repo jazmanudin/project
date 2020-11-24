@@ -108,7 +108,7 @@
             $totqty         = 0;
             foreach ($data as $key => $d) {
                 $brg        = @$data[$key + 1]->kode_barang;
-                $subtotal   = ($d->qty * $d->harga);
+                $subtotal   = ($d->qty * $d->harga_jual);
 
                 $total      += $subtotal;
                 $qty        += $d->qty;
@@ -122,7 +122,7 @@
                     <td><?php echo $d->kode_barang; ?></td>
                     <td><?php echo $d->nama_barang; ?></td>
                     <td><?php echo $d->satuan; ?></td>
-                    <td align="right"><?php echo number_format($d->harga); ?></td>
+                    <td align="right"><?php echo number_format($d->harga_jual); ?></td>
                     <td align="center"><?php echo number_format($d->qty); ?></td>
                     <td align="right"><?php echo number_format($subtotal); ?></td>
                 </tr>

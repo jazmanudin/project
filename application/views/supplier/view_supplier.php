@@ -38,6 +38,21 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="header-title" align="center">DATA SUPPLIER</h2>
+                <form class="form-horizontal" method="post" action="<?php echo base_url(); ?>supplier/view_supplier" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" value="<?php echo $kode_supplier; ?>" name="kode_supplier" placeholder="Kode supplier">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" value="<?php echo $nama_supplier; ?>" name="nama_supplier" placeholder="Nama supplier">
+                            </div>
+                            <div class="form-group" align="right">
+                                <button type="submit" name="submit" class="btn btn-info btn-sm btn-block mr-2" value="1"><i class="fa fa-search mr-2"></i>CARI</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 <div class="table-rep-plugin">
                     <div class="table-responsive mb-0">
                         <table id="table" class="table table-striped table-bordered table-hover table-sm">
@@ -63,7 +78,7 @@
                                         <td><?php echo $d->keterangan; ?></td>
                                         <td>
                                             <a class="btn btn-danger btn-sm delete" href="#" data-href="<?php echo base_url(); ?>supplier/hapus_supplier/<?php echo $d->kode_supplier; ?>"><i class="mdi mdi-trash-can"></i></a>
-                                            <a class="btn btn-warning btn-sm edit" href="#" data-tempo="<?php echo $d->jatuh_tempo;?>" data-kode="<?php echo $d->kode_supplier;?>" data-nama="<?php echo $d->nama_supplier;?>" data-ket="<?php echo $d->keterangan;?>"data-alamat="<?php echo $d->alamat;?>" data-nohp="<?php echo $d->no_hp;?>"><i class="mdi mdi-pencil"></i></a>
+                                            <a class="btn btn-warning btn-sm edit" href="#" data-tempo="<?php echo $d->jatuh_tempo; ?>" data-kode="<?php echo $d->kode_supplier; ?>" data-nama="<?php echo $d->nama_supplier; ?>" data-ket="<?php echo $d->keterangan; ?>" data-alamat="<?php echo $d->alamat; ?>" data-nohp="<?php echo $d->no_hp; ?>"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -83,9 +98,9 @@
             e.preventDefault();
             var kode_supplier = $('#kode_supplier').val();
             var nama_supplier = $('#nama_supplier').val();
-            var alamat    = $('#alamat').val();
-            var no_hp    = $('#no_hp').val();
-            var keterangan    = $('#keterangan').val();
+            var alamat = $('#alamat').val();
+            var no_hp = $('#no_hp').val();
+            var keterangan = $('#keterangan').val();
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url(); ?>supplier/insert_supplier',
@@ -110,13 +125,13 @@
             var alamat = $(this).attr('data-alamat');
             var no_hp = $(this).attr('data-nohp');
             var tempo = $(this).attr('data-tempo');
-            var keterangan    = $(this).attr('data-keterangan');
+            var keterangan = $(this).attr('data-keterangan');
             $('#keterangan').val(keterangan);
             $('#nama_supplier').val(nama_supplier);
             $('#alamat').val(alamat);
             $('#jatuh_tempo').val(tempo);
             $('#kode_supplier').val(kode_supplier);
-            
+
         });
 
         $('.delete').click(function(e) {

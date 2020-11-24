@@ -87,12 +87,14 @@
     <table class="datatable3">
         <thead>
             <tr>
-                <th style="width: 8%;background-color:#0085cd;color:white">Tgl Transaksi</th>
-                <th style="width: 8%;background-color:#0085cd;color:white">No Faktur</th>
-                <th style="width: 8%;background-color:#0085cd;color:white">Kode Pelanggan</th>
-                <th style="width: 20%;background-color:#0085cd;color:white">Nama Pelanggan</th>
-                <th style="width: 8%;background-color:#0085cd;color:white">Jatuh Tempo</th>
+                <th style="width: 9%;background-color:#0085cd;color:white">Tgl Transaksi</th>
+                <th style="width: 7%;background-color:#0085cd;color:white">No Faktur</th>
+                <th style="width: 5%;background-color:#0085cd;color:white">Kode</th>
+                <th style="width: 15%;background-color:#0085cd;color:white">Nama Pelanggan</th>
+                <th style="width: 9%;background-color:#0085cd;color:white">Jatuh Tempo</th>
                 <th style="background-color:#0085cd;color:white">Keterangan</th>
+                <th style="width: 7%;background-color:#0085cd;color:white">Transaksi</th>
+                <th style="width: 3%;background-color:#0085cd;color:white">PPN</th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right">Total</th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right">Potongan</th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right">Subtotal</th>
@@ -117,30 +119,36 @@
                 $totals      += $d->total;
                 $potongan   += $d->potongan;
                 $jumlahbayar   += $d->jumlahbayar;
-                $totjumlahbayar   += $jumlahbayar;
+                $totjumlahbayar   += $d->jumlahbayar;
                 $totpotongan   += $d->potongan;
+
+
+                $tanggal        = $d->tgl_transaksi;
+                $jatuhtempo     = Date('Y-m-d', strtotime('+' . $d->jatuh_tempo . ' days', strtotime($tanggal)));
             ?>
                 <tr>
                     <td><?php echo DateToIndo2($d->tgl_transaksi); ?></td>
                     <td><?php echo $d->no_fak_penj; ?></td>
                     <td><?php echo $d->kode_pelanggan; ?></td>
                     <td><?php echo $d->nama_pelanggan; ?></td>
-                    <td><?php echo DateToIndo2($d->jatuh_tempo); ?></td>
+                    <td><?php echo DateToIndo2($jatuhtempo); ?></td>
                     <td><?php echo $d->keterangan; ?></td>
+                    <td><?php echo $d->jenis_transaksi; ?></td>
+                    <td><?php echo $d->ppn; ?></td>
                     <td align="right"><?php echo number_format($d->total); ?></td>
                     <td align="right"><?php echo number_format($d->potongan); ?></td>
                     <td align="right"><?php echo number_format($subtotal); ?></td>
                     <td align="right"><?php echo number_format($d->jumlahbayar); ?></td>
                     <td align="right"><?php echo number_format($sisabayar); ?></td>
                 </tr>
-                <?php if ($spl != $d->kode_pelanggan) { ?>
+                <?php if ($spl != $d->kode_pelanggan AND $kode_pelanggan == "") { ?>
                     <tr bgcolor="#024a75" style="color:white; text-align: right">
-                        <td colspan="6"></td>
+                        <td colspan="8"></td>
                         <td align="right"><?php echo number_format($total); ?></td>
                         <td align="right"><?php echo number_format($potongan); ?></td>
                         <td align="right"><?php echo number_format($total - $potongan); ?></td>
                         <td align="right"><?php echo number_format($jumlahbayar); ?></td>
-                        <td align="right"><?php echo number_format($total - $potongan-$jumlahbayar); ?></td>
+                        <td align="right"><?php echo number_format($total - $potongan - $jumlahbayar); ?></td>
                     </tr>
             <?php
                     $total   = 0;
@@ -150,12 +158,12 @@
             }
             ?>
             <tr>
-                <th colspan="6" style="width: 7%;background-color:#0085cd;color:white;text-align:center">Total</th>
+                <th colspan="8" style="width: 7%;background-color:#0085cd;color:white;text-align:center">Total</th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right"><?php echo number_format($totals); ?></th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right"><?php echo number_format($totpotongan); ?></th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right"><?php echo number_format($totals - $totpotongan); ?></th>
                 <th style="width: 7%;background-color:#0085cd;color:white;text-align:right"><?php echo number_format($totjumlahbayar); ?></th>
-                <th style="width: 7%;background-color:#0085cd;color:white;text-align:right"><?php echo number_format($totals - $totpotongan-$totjumlahbayar); ?></th>
+                <th style="width: 7%;background-color:#0085cd;color:white;text-align:right"><?php echo number_format($totals - $totpotongan - $totjumlahbayar); ?></th>
             </tr>
         </tbody>
     </table>

@@ -10,6 +10,20 @@
                                 <input class="form-control form-control-sm" value="<?php echo $no_pengeluaran; ?>" name="no_pengeluaran" placeholder="No Pengeluaran">
                             </div>
                             <div class="form-group">
+                                <select class="selectize" name="jenis_pengeluaran" id="jenis_pengeluaran" tabindex="2">
+                                    <option value="">-- Pilih Jenis Pengeluaran--</option>
+                                    <option <?php if ($jenis_pengeluaran == "Retur") {
+                                                echo "selected";
+                                            } ?> value="Retur">Retur</option>
+                                    <option <?php if ($jenis_pengeluaran == "Buang") {
+                                                echo "selected";
+                                            } ?> value="Buang">Buang</option>
+                                    <option <?php if ($jenis_pengeluaran == "Lainnya") {
+                                                echo "selected";
+                                            } ?> value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-12">
                                         <input type="text" value="<?php echo $dari; ?>" name="dari" id="dari" placeholder="Dari" class="form-control form-control-sm datepicker-here" data-language="en" />
@@ -42,18 +56,22 @@
                                 <?php foreach ($data as $d) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $d->no_pengeluaran; ?></td>
-                                        <td><?php echo $d->tgl_transaksi; ?></td>
-                                        <td><?php echo $d->jenis_pengeluaran; ?></td>
-                                        <td><?php echo $d->keterangan; ?></td>
+                                        <td><?php echo $d['no_pengeluaran']; ?></td>
+                                        <td><?php echo $d['tgl_transaksi']; ?></td>
+                                        <td><?php echo $d['jenis_pengeluaran']; ?></td>
+                                        <td><?php echo $d['keterangan']; ?></td>
                                         <td>
-                                            <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d->no_pengeluaran; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>pengeluaran/hapus_pengeluaran/<?php echo $d->no_pengeluaran; ?>"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d['no_pengeluaran']; ?>"><i class="mdi mdi-eye"></i></a>
+                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>pengeluaran/hapus_pengeluaran/<?php echo $d['no_pengeluaran']; ?>"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-warning btn-sm" style="color:white;" href="<?php echo base_url(); ?>pengeluaran/edit_pengeluaran/<?php echo $d['no_pengeluaran']; ?>"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
+                    </div>
+                    <div style='margin-top: 10px;'>
+                        <?php echo $pagination; ?>
                     </div>
                 </div>
             </div>

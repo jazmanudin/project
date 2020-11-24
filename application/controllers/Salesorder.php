@@ -25,30 +25,6 @@ class Salesorder extends CI_Controller
             $kode_pelanggan    = $this->input->post('kode_pelanggan');
             $dari             = $this->input->post('dari');
             $sampai           = $this->input->post('sampai');
-            $data             = array(
-                'no_so'              => $no_so,
-                'kode_pelanggan'     => $kode_pelanggan,
-                'dari'               => $dari,
-                'sampai'             => $sampai,
-            );
-            $this->session->set_userdata($data);
-        } else {
-
-            if ($this->session->userdata('no_so') != NULL) {
-                $no_so                    = $this->session->userdata('no_so');
-            }
-
-            if ($this->session->userdata('kode_pelanggan') != NULL) {
-                $data['kode_pelanggan']   = $this->input->post('kode_pelanggan');
-            }
-
-            if ($this->session->userdata('dari') != NULL) {
-                $data['dari']             = $this->input->post('dari');
-            }
-
-            if ($this->session->userdata('sampai') != NULL) {
-                $data['sampai']           = $this->input->post('sampai');
-            }
         }
         $rowperpage = 10;
         if ($rowno != 0) {
@@ -127,24 +103,6 @@ class Salesorder extends CI_Controller
         $this->load->view('salesorder/view_salesorder_detail', $data);
     }
 
-    public function view_idsales()
-    {
-        $data = $this->Model_salesorder->view_sales()->row_array();
-        echo $data['id_sales'];
-    }
-
-    public function view_namasales()
-    {
-        $data = $this->Model_salesorder->view_sales()->row_array();
-        echo $data['nama_karyawan'];
-    }
-
-    public function view_jenisharga()
-    {
-        $data = $this->Model_salesorder->view_sales()->row_array();
-        echo $data['jenis_harga'];
-    }
-
     public function insert_salesorder()
     {
         $this->Model_salesorder->insert_salesorder();
@@ -185,8 +143,13 @@ class Salesorder extends CI_Controller
         $this->Model_salesorder->codeotomatis();
     }
 
-    public function cekbarang()
+    public function get_barang()
     {
-        $this->Model_salesorder->cekbarang();
+        $this->Model_salesorder->get_barang();
+    }
+
+    public function get_pelanggan()
+    {
+        $this->Model_salesorder->get_pelanggan();
     }
 }

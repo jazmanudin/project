@@ -31,7 +31,7 @@
                     <th style="width: 40%;">Nama Barang</th>
                     <th style="width: 5%;">Satuan</th>
                     <th>Keterangan</th>
-                    <th style="width: 13%;">Exp Date</th>
+                    <th style="width: 15%;">Exp Date</th>
                     <th style="width: 8%;">Jumlah</th>
                     <th style="width: 8%;">Harga</th>
                     <th style="width: 8%;">Total</th>

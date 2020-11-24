@@ -4,17 +4,7 @@ class Model_kategori extends CI_Model
 
     function view_kategori()
     {
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->query("SELECT * FROM kategori 
-        WHERE kategori.id_member = '$id_member'
-        ");
-    }
-
-    function get_kategori()
-    {
-
-        $id_member = $this->session->userdata('id_member');
-        return $this->db->get_where('kategori', array('id_member' => $id_member));
+        return $this->db->query("SELECT * FROM kategori ");
     }
 
     function insert_kategori()
@@ -35,14 +25,12 @@ class Model_kategori extends CI_Model
         $nama_kategori    = $this->input->post('nama_kategori');
         $kodekategori     = $this->input->post('kode_kategori');
         $ket              = $this->input->post('ket');
-        $id_member        = $this->session->userdata('id_member');
         $id_user          = $this->session->userdata('id_user');
 
         if ($kodekategori != "") {
             $data             = array(
                 'nama_kategori'              => $nama_kategori,
                 'ket'                        => $ket,
-                'id_member'                  => $id_member,
                 'id_user'                    => $id_user,
             );
 
@@ -54,7 +42,6 @@ class Model_kategori extends CI_Model
                 'kode_kategori'              => $kode_kategori,
                 'nama_kategori'              => $nama_kategori,
                 'ket'                        => $ket,
-                'id_member'                  => $id_member,
                 'id_user'                    => $id_user,
             );
 

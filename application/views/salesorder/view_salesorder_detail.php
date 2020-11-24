@@ -25,7 +25,7 @@ foreach ($data->result() as $d) {
 </tr>
 <script>
     $(document).ready(function() {
-        
+
         var totals = $('#totals').text();
         $('#subtotal').val(totals);
 
@@ -75,18 +75,19 @@ foreach ($data->result() as $d) {
             var nama_barang = $(this).attr('data-nama');
             var qty = $(this).attr('data-qty');
             var satuan = $(this).attr('data-satuan');
+            var stok = $(this).attr('data-stok');
             var harga_jual = $(this).attr('data-harga');
             var ket = $(this).attr('data-ket');
-            var stok = $(this).attr('data-stok');
             $('#ket').val(ket);
             $('#nama_barang').val(nama_barang);
             $('#kode_edit').val(1);
             $('#satuan').val(satuan);
-            $('#stok').val(stok);
+            $('#stok').val(formatAngka(stok * 1));
             $('#qty').val(formatAngka(qty));
             $('#harga_jual').val(formatAngka(harga_jual));
             $('#total').val(formatAngka(harga_jual * qty));
             $('#kode_barang').val(kode_barang);
+            $('#qty').focus();
 
         });
 

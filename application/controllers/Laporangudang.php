@@ -41,6 +41,84 @@ class Laporangudang extends CI_Controller
         $this->load->view('laporangudang/cetak_persediaan_barang', $data);
     }
 
+    function barang_minimum()
+    {
+        $kode_barang      = $this->input->post('kode_barang');
+        $data['barang']   = $this->Model_laporangudang->getBarang($kode_barang);
+        $this->template->load('template/template', 'laporangudang/barang_minimum', $data);
+    }
+
+    function cetak_barang_minimum()
+    {
+
+        $kode_barang            = $this->input->post('kode_barang');
+        $data['kode_barang']    = $kode_barang;
+        $data['barang']         = $this->Model_laporangudang->getBarang($kode_barang)->row_array();
+        $data['data']           = $this->Model_laporangudang->list_barang_minimum($kode_barang)->result();
+        if (isset($_POST['export'])) {
+            // Fungsi header dengan mengirimkan raw data excel
+            header("Content-type: application/vnd-ms-excel");
+
+            // Mendefinisikan nama file ekspor "hasil-export.xls"
+            header("Content-Disposition: attachment; filename=Laporan Stok Barang Minim.xls");
+        }
+        $this->load->view('laporangudang/cetak_barang_minimum', $data);
+    }
+
+    function barang_exp()
+    {
+        $kode_barang      = $this->input->post('kode_barang');
+        $data['barang']   = $this->Model_laporangudang->getBarang($kode_barang);
+        $this->template->load('template/template', 'laporangudang/barang_exp', $data);
+    }
+
+    function cetak_barang_exp()
+    {
+
+        $kode_barang            = $this->input->post('kode_barang');
+        $data['kode_barang']    = $kode_barang;
+        $data['barang']         = $this->Model_laporangudang->getBarang($kode_barang)->row_array();
+        $data['data']           = $this->Model_laporangudang->list_barang_exp($kode_barang)->result();
+        if (isset($_POST['export'])) {
+            // Fungsi header dengan mengirimkan raw data excel
+            header("Content-type: application/vnd-ms-excel");
+
+            // Mendefinisikan nama file ekspor "hasil-export.xls"
+            header("Content-Disposition: attachment; filename=Laporan Barang Kadaluarsa.xls");
+        }
+        $this->load->view('laporangudang/cetak_barang_exp', $data);
+    }
+
+    function barang_opname()
+    {
+        $data['tahun']     = date("Y");
+        $data['bulan']     = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+        $kode_barang      = $this->input->post('kode_barang');
+        $data['barang']  = $this->Model_laporangudang->getBarang($kode_barang);
+        $this->template->load('template/template', 'laporangudang/barang_opname', $data);
+    }
+
+    function cetak_barang_opname()
+    {
+
+        $bulan                  = $this->input->post('bulan');
+        $tahun                  = $this->input->post('tahun');
+        $kode_barang            = $this->input->post('kode_barang');
+        $data['tahun']          = $tahun;
+        $data['bulan']          = $bulan;
+        $data['kode_barang']    = $kode_barang;
+        $data['barang']         = $this->Model_laporangudang->getBarang($kode_barang)->row_array();
+        $data['data']           = $this->Model_laporangudang->list_persediaan_barang($bulan, $tahun, $kode_barang)->result();
+        if (isset($_POST['export'])) {
+            // Fungsi header dengan mengirimkan raw data excel
+            header("Content-type: application/vnd-ms-excel");
+
+            // Mendefinisikan nama file ekspor "hasil-export.xls"
+            header("Content-Disposition: attachment; filename=Laporan Rekap Barang Opname.xls");
+        }
+        $this->load->view('laporangudang/cetak_barang_opname', $data);
+    }
+
     function kartu_gudang()
     {
         $data['tahun']     = date("Y");

@@ -1,3 +1,29 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/geo-location-javascript/0.4.8/geo-min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    if (geo_position_js.init()) {
+        geo_position_js.getCurrentPosition(success_callback, error_callback, {
+            enableHighAccuracy: true
+        });
+    } else {
+        div_isi = $('#longitude').val(longitude);
+        div_isi.innerHTML = "Tidak ada fungsi geolocation";
+    }
+
+    function success_callback(p) {
+        latitude = p.coords.latitude;
+        longitude = p.coords.longitude;
+        // pesan = pesan + '<img src="https://maps.googleapis.com/maps/api/staticmap?size=400×400&amp;zoom=13&amp;markers=color:red%7Clabel:C%7C'+latitude +','+longitude+'"/>';
+        div_isi = $('#latitude').val(latitude);
+        div_isi = $('#longitude').val(longitude);
+        //alert(pesan);
+    }
+
+    function error_callback(p) {
+        div_isi = $('#latitude').val(latitude);
+        div_isi = $('#longitude').val(longitude);
+        div_isi.innerHTML = 'error=' + p.message;
+    }
+</script>
 <div class="col-lg-6">
     <div class="card">
         <div class="card-body">
@@ -48,7 +74,14 @@
                     <label>Foto</label>
                     <input type="file" name="foto" id="foto" class="form-control form-control-sm" placeholder="Foto" />
                 </div>
-
+                <div class="form-group">
+                    <label>Latitude</label>
+                    <input type="text" name="latitude" id="latitude" class="form-control form-control-sm" placeholder="Latitude" />
+                </div>
+                <div class="form-group">
+                    <label>Longitude</label>
+                    <input type="text" name="longitude" id="longitude" class="form-control form-control-sm" placeholder="Longitude" />
+                </div>
                 <div class="form-group mb-0">
                     <button type="submit" name="submit" class="btn btn-primary btn-sm waves-effect waves-light mr-1">
                         Simpan
@@ -62,11 +95,11 @@
 
 <script>
     $("#form").submit(function() {
-        var action            = $(this).attr('data-action');
-        var kode_perusahaan   = $('#kode_perusahaan').val();
-        var nama_perusahaan   = $('#nama_perusahaan').val();
-        var alamat            = $('#alamat').val();
-        var no_hp             = $('#no_hp').val();
+        var action = $(this).attr('data-action');
+        var kode_perusahaan = $('#kode_perusahaan').val();
+        var nama_perusahaan = $('#nama_perusahaan').val();
+        var alamat = $('#alamat').val();
+        var no_hp = $('#no_hp').val();
         if (kode_perusahaan == "") {
             Swal.fire("Oopss", "Data Tidak Boleh Kosong", "warning");
             $('#kode_perusahaan').focus();

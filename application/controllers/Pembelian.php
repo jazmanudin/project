@@ -245,14 +245,24 @@ class Pembelian extends CI_Controller
     {
         $this->Model_pembelian->codeotomatis();
     }
- 
-    public function codeotomatispemb()
-    {
-        $this->Model_pembelian->codeotomatispemb();
-    }
 
     public function cekbarang()
     {
         $this->Model_pembelian->cekbarang();
+    }
+
+    public function get_barangbarcode()
+    {
+        $this->Model_pembelian->get_barangbarcode();
+    }
+
+    public function get_supplier()
+    {
+        $this->Model_pembelian->get_supplier();
+    }
+
+    public function get_barang()
+    {
+        $this->Model_pembelian->get_barang();
     }
 }

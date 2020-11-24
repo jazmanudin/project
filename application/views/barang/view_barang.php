@@ -3,6 +3,21 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="header-title" align="center">DATA BARANG</h2>
+                <form class="form-horizontal" method="post" action="<?php echo base_url(); ?>barang/view_barang" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" value="<?php echo $kode_barang; ?>" name="kode_barang" placeholder="Kode Barang">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" value="<?php echo $nama_barang; ?>" name="nama_barang" placeholder="Nama Barang">
+                            </div>
+                            <div class="form-group" align="right">
+                                <button type="submit" name="submit" class="btn btn-info btn-sm btn-block mr-2" value="1"><i class="fa fa-search mr-2"></i>CARI</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 <div class="table-rep-plugin">
                     <a href="<?php echo base_url(); ?>barang/input_barang" class="btn btn-primary btn-sm input">Tambah Data</a>
                     <div class="table-responsive mb-0">
@@ -24,24 +39,28 @@
                             <tbody>
                                 <?php foreach ($data as $d) { ?>
                                     <tr>
-                                        <td><?php echo $d->kode_barang; ?></td>
-                                        <td><?php echo $d->nama_barang; ?></td>
-                                        <td><?php echo $d->satuan; ?></td>
-                                        <td><?php echo $d->nama_kategori; ?></td>
-                                        <!-- <td><?php echo $d->jenis_barang; ?></td> -->
-                                        <td align="right"><?php echo number_format($d->harga_modal); ?></td>
-                                        <td align="right"><?php echo number_format($d->diskon); ?></td>
-                                        <td align="right"><?php echo number_format($d->stok); ?></td>
-                                        <td><?php echo $d->keterangan; ?></td>
+                                        <td><?php echo $d['kode_barang']; ?></td>
+                                        <td><?php echo $d['nama_barang']; ?></td>
+                                        <td><?php echo $d['satuan']; ?></td>
+                                        <td><?php echo $d['nama_kategori']; ?></td>
+                                        <!-- <td><?php echo $d['jenis_barang']; ?></td> -->
+                                        <td align="right"><?php echo number_format($d['harga_modal']); ?></td>
+                                        <td align="right"><?php echo number_format($d['diskon']); ?></td>
+                                        <td align="right"><?php echo number_format($d['stok']); ?></td>
+                                        <td><?php echo $d['keterangan']; ?></td>
                                         <td>
-                                            <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d->kode_barang; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" href="#" data-href="<?php echo base_url(); ?>barang/hapus_barang/<?php echo $d->kode_barang; ?>"><i class="mdi mdi-trash-can"></i></a>
-                                            <a class="btn btn-warning btn-sm" href="<?php echo base_url(); ?>barang/edit_barang/<?php echo $d->kode_barang; ?>"><i class="mdi mdi-pencil"></i></a>
+                                            <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d['kode_barang']; ?>"><i class="mdi mdi-eye"></i></a>
+                                            <a class="btn btn-danger btn-sm delete" href="#" data-href="<?php echo base_url(); ?>barang/hapus_barang/<?php echo $d['kode_barang']; ?>"><i class="mdi mdi-trash-can"></i></a>
+                                            <a class="btn btn-warning btn-sm" href="<?php echo base_url(); ?>barang/edit_barang/<?php echo $d['kode_barang']; ?>"><i class="mdi mdi-pencil"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div style='margin-top: 10px;'>
+                        <?php echo $pagination; ?>
                     </div>
                 </div>
             </div>

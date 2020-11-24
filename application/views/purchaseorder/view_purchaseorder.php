@@ -66,10 +66,10 @@
                                         <td><?php echo $d['ppn']; ?></td>
                                         <td>
                                             <a class="btn btn-info btn-sm detail" href="#" data-kode="<?php echo $d['no_po']; ?>"><i class="mdi mdi-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>purchaseorder/hapus_purchaseorder/<?php echo $d['no_po']; ?>"><i class="fa fa-trash"></i></a>
-                                            <a class="btn btn-warning btn-sm" style="color:white;" href="<?php echo base_url(); ?>purchaseorder/edit_purchaseorder/<?php echo $d['no_po']; ?>"><i class="mdi mdi-pencil"></i></a>
                                             <?php if ($d['status'] == "0") { ?>
-                                                <a class="btn btn-primary btn-sm" style="color:white;" href="<?php echo base_url(); ?>pembelian/input_pembelian/<?php echo $d['no_po']; ?>/<?php echo $d['kode_supplier']; ?>/<?php echo $d['ppn']; ?>">Proses</a>
+                                                <a class="btn btn-danger btn-sm delete" style="color:white;" data-href="<?php echo base_url(); ?>purchaseorder/hapus_purchaseorder/<?php echo $d['no_po']; ?>"><i class="fa fa-trash"></i></a>
+                                                <a class="btn btn-warning btn-sm" style="color:white;" href="<?php echo base_url(); ?>purchaseorder/edit_purchaseorder/<?php echo $d['no_po']; ?>"><i class="mdi mdi-pencil"></i></a>
+                                                <a class="btn btn-primary btn-sm" style="color:white;" href="<?php echo base_url(); ?>pembelian/input_pembelian/<?php echo $d['no_po']; ?>/<?php echo $d['kode_supplier']; ?>/<?php echo $d['ppn']; ?>">Approve</a>
                                             <?php } ?>
                                         </td>
                                     </tr>
